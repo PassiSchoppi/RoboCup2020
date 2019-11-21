@@ -5,6 +5,6 @@
 #include "config.h"
 
 void sensorInit();
-void readSensor(float *sensorData);
+void readSensor(uint8_t *sensorData);
 
 #endif

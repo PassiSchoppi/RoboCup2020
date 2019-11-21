@@ -5,9 +5,9 @@ void sensorInit(){
 	pinMode(INTERUPT_PIN, OUTPUT);
 }
 
-void readSensor(float *sensorData){
-	int i=0;
-	float bufferVar;
+void readSensor(uint8_t *sensorData){
+	uint8_t i=0;
+	uint8_t bufferVar;
 	// set INTERUPT and wait for response
 	digitalWrite(INTERUPT_PIN, HIGH);
 	while(Serial1.available()==0){}
@@ -18,7 +18,7 @@ void readSensor(float *sensorData){
  	{
 		bufferVar = Serial1.read();
 		if(i<6){
-			sensorData[i]=round(bufferVar);
+			sensorData[i]=bufferVar;
 			++i;
 		}
 	}

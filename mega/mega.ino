@@ -4,7 +4,7 @@
 #include "sensor.h"
 #include "map.h"
 
-float sensorData[6];
+uint8_t sensorData[6];
 
 void setup() {
   	motorInit();
@@ -16,10 +16,10 @@ void setup() {
 
 void loop() {
 	readSensor(&sensorData[0]);
-	// Serial.println(sensorData[0]);
+	Serial.println(sensorData[0]);
 	// Serial.println(sensorData[1]);
 	// Serial.println(sensorData[2]);
-	Serial.println(sensorData[3]);
+	// Serial.println(sensorData[3]);
 	// Serial.println(sensorData[4]);
 	// Serial.println(sensorData[5]);
 	Serial.println("---");
