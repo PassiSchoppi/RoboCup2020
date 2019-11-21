@@ -1,7 +1,7 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-#define INTERUPT_PIN 	9
+#define INTERUPT_PIN 	8
 
 #define NOTH 			0
 #define EAST 			1
