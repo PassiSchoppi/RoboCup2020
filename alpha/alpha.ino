@@ -8,6 +8,7 @@ void setup() {
 
 void loop() {
 	uint8_t sensorData[6];
+	int calcVar;
 
 /*
  *
@@ -35,9 +36,9 @@ void loop() {
 	sensorData[5] = analogRead(ACC_Z);
 
 	if(digitalRead(INTERUPT_PIN)){
-		for(uint8_t i=0; i<sizeof(sensorData); ++i){
+	// if(true){
+		for(uint8_t i=0; i<5; ++i){
 			Serial.write(sensorData[i]);
 		}
-		delay(100);
 	}
 }
