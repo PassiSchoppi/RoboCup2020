@@ -25,7 +25,7 @@ void readSensor(uint8_t *sensorData){
 					bufferVar=32;
 				}
 				bufferVar=82600 / (25 * bufferVar - 31) - 9;
-				if(bufferVar>60){
+				if(bufferVar>20){
 					bufferVar=sensorData[i];
 				}
 			}

@@ -39,13 +39,13 @@ void motorSetSpeed(uint8_t i, int16_t speed) {
 }
 
 void motorSetLeftSpeed(int16_t speed) {
-  	motorSetSpeed(2, speed);
-  	motorSetSpeed(3, speed);
+  	motorSetSpeed(0, speed);
+  	motorSetSpeed(1, speed);
 }
 
 void motorSetRightSpeed(int16_t speed) {
-  	motorSetSpeed(0, speed);
-  	motorSetSpeed(1, speed);
+  	motorSetSpeed(2, speed);
+  	motorSetSpeed(3, speed);
 }
 
 void motorBrake() {
