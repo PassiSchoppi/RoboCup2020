@@ -19,12 +19,12 @@ void loop() {
 	readSensor(&sensorData[0]);
 	Serial.print(sensorData[0]);	
 	Serial.print(", ");
-	// Serial.print(sensorData[1]);
+	Serial.print(sensorData[1]);
 	// Serial.println(sensorData[2]);
 	// Serial.println(sensorData[3]);
 	// Serial.println(sensorData[4]);
 	// Serial.println(sensorData[5]);
 	Serial.println("---");
-	// motorSetLeftSpeed(pid(75, sensorData[0], sensorData[1], true));
-	// motorSetRightSpeed(pid(75, sensorData[2], sensorData[3], false));
+	motorSetLeftSpeed(pid(75, sensorData[0], sensorData[1], true));
+	motorSetRightSpeed(pid(75, sensorData[2], sensorData[3], true));
 }
