@@ -11,22 +11,27 @@ void readSensor(uint8_t *sensorData){
 
 	// set INTERUPT and wait for response
 	digitalWrite(INTERUPT_PIN, HIGH);
-	while(Serial1.available()<6){
-		// Serial.println(Serial1.available());
-	}
 	digitalWrite(INTERUPT_PIN, LOW);
-	// save first six vars to sensorData
 	
+	delay(100);
+
+	// save first six vars to sensorData
 	while(Serial1.available())
  	{
 		bufferVar = Serial1.read();
 		if(i<6){
-			bufferVar=82600 / (25 * bufferVar - 31) - 9;
-			if(bufferVar>14){
-				bufferVar=sensorData[i];
+			if(i<4){
+				if(bufferVar<32){
+					bufferVar=32;
+				}
+				bufferVar=82600 / (25 * bufferVar - 31) - 9;
+				if(bufferVar>60){
+					bufferVar=sensorData[i];
+				}
 			}
+			if(i>3 && i<6){}
 			sensorData[i]=bufferVar;
 			++i;
 		}
 	}
- }
+} 

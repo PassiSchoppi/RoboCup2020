@@ -2,8 +2,9 @@
 #include "config.h"
 
 void setup() {
-	pinMode(INTERUPT_PIN, INPUT);
+	pinMode(INTERUPT_PIN, INPUT_PULLUP);
 	Serial.begin(19200);
+	attachInterrupt(digitalPinToInterrupt(INTERUPT_PIN), interupt, RISING);
 }
 
 void loop() {
@@ -28,7 +29,7 @@ void loop() {
  * 
  */
 
-	sensorData[0] = analogRead(SHP_LF);
+/*	sensorData[0] = analogRead(SHP_LF);
 	sensorData[1] = analogRead(SHP_LB);
 	sensorData[2] = analogRead(SHP_RF);
 	sensorData[3] = analogRead(SHP_RB);
@@ -40,5 +41,20 @@ void loop() {
 		for(uint8_t i=0; i<5; ++i){
 			Serial.write(sensorData[i]);
 		}
+	}*/
+}
+
+void interupt(){
+	uint8_t sensorData[6];
+
+	sensorData[0] = analogRead(SHP_LF);
+	sensorData[1] = analogRead(SHP_LB);
+	sensorData[2] = analogRead(SHP_RF);
+	sensorData[3] = analogRead(SHP_RB);
+	sensorData[4] = analogRead(ACC_X);
+	sensorData[5] = analogRead(ACC_Z);
+
+	for(uint8_t i=0; i<6; ++i){
+		Serial.write(sensorData[i]);
 	}
 }
