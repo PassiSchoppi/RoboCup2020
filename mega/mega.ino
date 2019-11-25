@@ -5,7 +5,7 @@
 #include "map.h"
 #include "pid.h"
 
-uint8_t sensorData[6];
+uint8_t sensorData[12];
 
 void setup() {
   	motorInit();
@@ -17,14 +17,18 @@ void setup() {
 
 void loop() {
 	readSensor(&sensorData[0]);
-	Serial.print(sensorData[0]);	
+	Serial.print(sensorData[6]);	
 	Serial.print(", ");
-	Serial.print(sensorData[1]);
-	// Serial.println(sensorData[2]);
-	// Serial.println(sensorData[3]);
-	// Serial.println(sensorData[4]);
-	// Serial.println(sensorData[5]);
+	Serial.print(sensorData[7]);
+	Serial.print(", ");
+	Serial.print(sensorData[8]);
+	Serial.print(", ");
+	Serial.print(sensorData[9]);
+	Serial.print(", ");
+	Serial.print(sensorData[4]);
+	Serial.print(", ");
+	Serial.print(sensorData[5]);
 	Serial.println("---");
-	motorSetLeftSpeed(pid(75, sensorData[0], sensorData[1], true));
-	motorSetRightSpeed(pid(75, sensorData[2], sensorData[3], true));
+	// motorSetLeftSpeed(pid(75, sensorData[0], sensorData[1], true));
+	// motorSetRightSpeed(pid(75, sensorData[2], sensorData[3], true));
 }
