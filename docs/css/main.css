@@ -181,6 +181,14 @@ textarea {
   clear: both;
 }
 
+html, body, {
+    position:fixed;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+}
+
 input{
   width: 5%;
   text-align: center;
@@ -192,6 +200,13 @@ button{
   border-radius: 12px;
   background-color: #FF8C94;
   color: black;
+}
+
+div{
+  font-family: "Arial";
+  color: #f1f3f6;
+  text-shadow: 3px 3px 8px rgba(52, 117, 170, 0.1), -3px -3px 8px #ffffff;
+  font-size: 300%;
 }
 
 #container {
