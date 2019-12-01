@@ -203,9 +203,10 @@ button{
 }
 
 div{
+  font-family: "Arial";
   color: #f1f3f6;
-  text-shadow: 3px 3px 8px rgba(52, 117, 170, 0.1), -3px -3px 8px #ffffff;
-  font-size: 300%;
+  text-shadow: 1px 1px 2px rgba(52, 117, 170, 0.20), -1px -1px 2px #ffffff;
+  font-size: 400%;
 }
 
 #container {
