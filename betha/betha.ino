@@ -3,15 +3,17 @@
 
 void setup() {
 	pinMode(INTERUPT_PIN, INPUT_PULLUP);
-	Serial.begin(38400);
+	pinMode(SHP_FL, INPUT);
+	pinMode(SHP_FC, INPUT);
+	pinMode(SHP_FR, INPUT);
+	pinMode(SHP_BL, INPUT);
+	pinMode(SHP_BR, INPUT);
+	pinMode(LED_BUILTIN, OUTPUT);
+	Serial.begin(4800);
 	attachInterrupt(digitalPinToInterrupt(INTERUPT_PIN), interupt, RISING);
 }
 
 void loop() {
-	uint8_t sensorData[5];
-	int calcVar;
-
-
 	//              EDIT THIS \/ \/ \/
 
 	/*
@@ -31,13 +33,10 @@ void loop() {
 	 *
 	 * 
 	 */
-
-	 // interupt();
-	Serial.write(69);
 }
 
 void interupt(){
-	uint8_t sensorData[6];
+	uint8_t sensorData[5];
 
 	sensorData[0] = analogRead(SHP_FL);
 	sensorData[1] = analogRead(SHP_FC);
@@ -48,4 +47,6 @@ void interupt(){
 	for(uint8_t i=0; i<5; ++i){
 		Serial.write(sensorData[i]);
 	}
+	digitalWrite(LED_BUILTIN, HIGH);
+	digitalWrite(LED_BUILTIN, LOW);
 }

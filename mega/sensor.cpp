@@ -4,7 +4,7 @@ void sensorInit(){
 	Serial1.begin(19200);
 	pinMode(INTERUPT_PIN_A, OUTPUT);
 
-	Serial2.begin(38400);
+	Serial3.begin(4800);
 	pinMode(INTERUPT_PIN_B, OUTPUT);
 }
 
@@ -16,7 +16,7 @@ void readSensor(uint8_t *sensorData){
 	digitalWrite(INTERUPT_PIN_A, HIGH);
 	digitalWrite(INTERUPT_PIN_A, LOW);
 	
-	delay(100);
+	// delay(100);
 
 	while(Serial1.available())
  	{
@@ -41,25 +41,44 @@ void readSensor(uint8_t *sensorData){
 	digitalWrite(INTERUPT_PIN_B, HIGH);
 	digitalWrite(INTERUPT_PIN_B, LOW);
 
-	delay(100);
+	// delay(100);
 	
-	Serial.write("hey");
-	Serial.write(Serial2.available());
-	Serial.write(",, ");
-	while(Serial2.available())
+	while(Serial3.available())
 	{
-		bufferVar=2;
-		// bufferVar = Serial2.read();
-		if(i<10){
+		bufferVar = Serial3.read();
+		// Serial.println("i:");
+		// Serial.println(i);
+		if(i<11){
+			// Serial.println(bufferVar);
 			if(bufferVar<32){
 				bufferVar=32;
 			}
 			bufferVar=82600 / (25 * bufferVar -32) - 9;
 			if(bufferVar>20){
-				bufferVar=sensorData[i];
+			 	bufferVar=sensorData[i];
 			}
+			// Serial.println("//");
+			// Serial.println(bufferVar);
 			sensorData[i]=bufferVar;
 			++i;
 		}
 	}
+
+	// 															TEMP SENSOR
+	// sensorData[]
+	
+	
+	// [LF,
+	//  LB,
+	//  RF,
+	//  RB,
+	//  ACC_X,
+	//  ACC_Z,
+	//  FL,
+	//  FC,
+	//  FR,
+	//  BL,
+	//  BR,
+	//  TEMP_L,
+	//  TEMP_R]
 } 
