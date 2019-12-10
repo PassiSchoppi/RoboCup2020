@@ -6,6 +6,6 @@
 
 uint8_t nothing();
 
-uint8_t changeState();
+void changeState(uint8_t *state, uint8_t *sensorData);
 
 #endif

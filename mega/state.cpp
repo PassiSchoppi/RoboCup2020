@@ -1,18 +1,23 @@
 #include <Arduino.h>
 #include "state.h"
+#include "motor.h"
+#include "pid.h"
 
 uint8_t nothing(){
-	Serial.println("hey");
 	return 0;
 }
 
-uint8_t changeState(){
-	switch((int) 0) {
+void changeState(uint8_t *state, uint8_t *sensorData){
+	Serial.println(atoi((const char *)state));
+	switch(1) {
 		case 0 :
-			return nothing();
+			state = nothing();
 			break;
 		case 1 :
-			return 1;
+			Serial.println("hello");
+			motorSetLeftSpeed(pid(75, sensorData[0], sensorData[1], true));
+			motorSetRightSpeed(pid(75, sensorData[2], sensorData[3], true));
+			state = 1;
 			break;
 	}
 }

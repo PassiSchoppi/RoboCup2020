@@ -7,7 +7,7 @@
 #include "state.h"
 
 uint8_t sensorData[11];
-uint8_t state = 0;
+uint8_t state = 1;
 
 void setup() {
   	motorInit();
@@ -18,6 +18,6 @@ void setup() {
 }
 
 void loop() {
-	// nothing();
-	changeState();
+	readSensor(&sensorData[0]);
+	changeState(&state, &sensorData[0]);
 }
