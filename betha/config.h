@@ -9,4 +9,8 @@
 #define SHP_FC 			18
 #define SHP_BL 			19
 
+#define LED_R 			6
+#define LED_B 			7
+#define LED_G 			8
+
 #endif

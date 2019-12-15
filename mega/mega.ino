@@ -7,17 +7,26 @@
 #include "state.h"
 
 uint8_t sensorData[11];
-uint8_t state = 1;
+uint8_t state;
 
 void setup() {
+	state = 1;
   	motorInit();
 	sensorInit();
 	initMap();
-
 	Serial.begin(9600);
 }
 
 void loop() {
+	digitalWrite(13, !digitalRead(13));
+
+	state = 1;
 	readSensor(&sensorData[0]);
+	Serial.println(sensorData[0]);
+	// Serial.println(sensorData[1]);
+	// Serial.println(sensorData[2]);
+	// Serial.println(sensorData[3]);
+	// Serial.println(sensorData[4]);
+	
 	changeState(&state, &sensorData[0]);
 }

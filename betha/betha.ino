@@ -1,6 +1,8 @@
 #include "Arduino.h"
 #include "config.h"
 
+uint8_t bufferVar;
+
 void setup() {
 	pinMode(INTERUPT_PIN, INPUT_PULLUP);
 	pinMode(SHP_FL, INPUT);
@@ -8,7 +10,9 @@ void setup() {
 	pinMode(SHP_FR, INPUT);
 	pinMode(SHP_BL, INPUT);
 	pinMode(SHP_BR, INPUT);
-	pinMode(LED_BUILTIN, OUTPUT);
+	pinMode(LED_R, INPUT);
+	pinMode(LED_G, INPUT);
+	pinMode(LED_B, INPUT);
 	Serial.begin(4800);
 	attachInterrupt(digitalPinToInterrupt(INTERUPT_PIN), interupt, RISING);
 }
@@ -33,6 +37,20 @@ void loop() {
 	 *
 	 * 
 	 */
+	while(Serial.available()){
+		bufferVar = Serial.read();
+		switch(bufferVar) {
+			case 0:
+				digitalWrite(LED_R, LOW);
+				digitalWrite(LED_G, LOW);
+				digitalWrite(LED_B, LOW);
+				break;
+			case 1:
+				digitalWrite(LED_R, HIGH);
+				digitalWrite(LED_G, HIGH);
+				digitalWrite(LED_B, HIGH);
+		}
+	}
 }
 
 void interupt(){

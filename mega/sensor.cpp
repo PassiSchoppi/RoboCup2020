@@ -16,7 +16,7 @@ void readSensor(uint8_t *sensorData){
 	digitalWrite(INTERUPT_PIN_A, HIGH);
 	digitalWrite(INTERUPT_PIN_A, LOW);
 	
-	// delay(100);
+	delay(10);
 
 	while(Serial1.available())
  	{
@@ -41,7 +41,7 @@ void readSensor(uint8_t *sensorData){
 	digitalWrite(INTERUPT_PIN_B, HIGH);
 	digitalWrite(INTERUPT_PIN_B, LOW);
 
-	// delay(100);
+	delay(10);
 	
 	while(Serial3.available())
 	{
