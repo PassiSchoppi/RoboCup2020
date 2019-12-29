@@ -4,6 +4,7 @@
 #include "pid.h"
 #include "sensor.h"
 #include "wall.h"
+#include "led.h"
 
 uint8_t nothing(){
 	return 0;
@@ -22,7 +23,7 @@ void changeState(uint8_t *state, uint8_t *sensorData){
 				// Serial.println("wall in front");
 				state = 0;
 			}
-			Serial3.write(1);
+			setLED(WHITE);
 			break;
 	}
 }

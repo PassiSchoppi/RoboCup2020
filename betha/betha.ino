@@ -49,6 +49,37 @@ void loop() {
 				digitalWrite(LED_R, HIGH);
 				digitalWrite(LED_G, HIGH);
 				digitalWrite(LED_B, HIGH);
+				break;
+			case 2:
+				digitalWrite(LED_R, HIGH);
+				digitalWrite(LED_G, LOW);
+				digitalWrite(LED_B, LOW);
+				break;
+			case 3:
+				digitalWrite(LED_R, LOW);
+				digitalWrite(LED_G, HIGH);
+				digitalWrite(LED_B, LOW);
+				break;
+			case 4:
+				digitalWrite(LED_R, LOW);
+				digitalWrite(LED_G, LOW);
+				digitalWrite(LED_B, HIGH);
+				break;
+			case 5:
+				digitalWrite(LED_R, HIGH);
+				digitalWrite(LED_G, LOW);
+				digitalWrite(LED_B, HIGH);
+				break;
+			case 6:
+				digitalWrite(LED_R, HIGH);
+				digitalWrite(LED_G, HIGH);
+				digitalWrite(LED_B, LOW);
+				break;
+			case 7:
+				digitalWrite(LED_R, LOW);
+				digitalWrite(LED_G, HIGH);
+				digitalWrite(LED_B, HIGH);
+				break;
 		}
 	}
 }

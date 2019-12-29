@@ -5,6 +5,7 @@
 #include "map.h"
 #include "pid.h"
 #include "state.h"
+#include "led.h"
 
 uint8_t sensorData[11];
 uint8_t state;

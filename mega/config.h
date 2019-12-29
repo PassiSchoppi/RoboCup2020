@@ -14,4 +14,13 @@
 #define BACK 			2
 #define LEFT 			3
 
+#define OFF 			0
+#define WHITE 			1
+#define RED 			2
+#define GREEN 			3
+#define BLUE 			4
+#define PINK 			5
+#define YELLOW 			6
+#define TURQUOISE 		7
+
 #endif
