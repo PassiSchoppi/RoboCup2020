@@ -14,6 +14,8 @@
 #define BACK 			2
 #define LEFT 			3
 
+#define DISTANCETOWALL 	16
+
 #define OFF 			0
 #define WHITE 			1
 #define RED 			2

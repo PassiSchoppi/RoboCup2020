@@ -68,17 +68,17 @@ void readSensor(uint8_t *sensorData){
 	// sensorData[]
 	
 	
-	// [LF,
-	//  LB,
-	//  RF,
-	//  RB,
-	//  ACC_X,
-	//  ACC_Z,
-	//  FL,
-	//  FC,
-	//  FR,
-	//  BL,
-	//  BR,
-	//  TEMP_L,
-	//  TEMP_R]
+	//0   [LF,
+	//1   LB,
+	//2   RF,
+	//3   RB,
+	//4   ACC_X,
+	//5   ACC_Z,
+	//6   FL,
+	//7   FC,
+	//8   FR,
+	//9   BL,
+	//10  BR,
+	//11  TEMP_L,
+	//12  TEMP_R]
 } 
