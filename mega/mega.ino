@@ -21,13 +21,13 @@ void setup() {
 void loop() {
 	digitalWrite(13, !digitalRead(13));
 
-	state = 1;
+	// state = 1;
 	readSensor(&sensorData[0]);
-	// Serial.println(sensorData[0]);
-	// Serial.println(sensorData[1]);
-	// Serial.println(sensorData[2]);
-	// Serial.println(sensorData[3]);
-	// Serial.println(sensorData[4]);
-	// Serial.println(state);
+	Serial.println(sensorData[0]);
+	Serial.println(sensorData[1]);
+	Serial.println(sensorData[2]);
+	Serial.println(sensorData[3]);
+	Serial.println(sensorData[4]);
+	//Serial.println(state);
 	changeState(&state, &sensorData[0]);
 }
