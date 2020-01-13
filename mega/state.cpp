@@ -35,19 +35,23 @@ void changeState(uint8_t *state, uint8_t *sensorData){
 			}else{
 				*state = 0;
 			}
-			*state = 3;
+			*state = 2;
 			break;
 		case 2:
 			// turn right
 			motorSetRightSpeed(-100);
 			motorSetLeftSpeed(100);
 			*state = 1;
+			setLED(GREEN);
 			break;
 		case 3:
 			// drive straight
-			motorSetRightSpeed(pid(100, sensorData[2], sensorData[3], false));
-			motorSetLeftSpeed(pid(100, sensorData[0], sensorData[1], true));
+			// motorSetRightSpeed(pid(100, sensorData[2], sensorData[3], false));
+			motorSetRightSpeed(100);
+			// motorSetLeftSpeed(pid(100, sensorData[0], sensorData[1], true));
+			motorSetLeftSpeed(100);
 			*state = 1;
+			setLED(BLUE);
 			break;
 		case 4:
 			// turn left
@@ -55,11 +59,13 @@ void changeState(uint8_t *state, uint8_t *sensorData){
 			motorSetLeftSpeed(-100);
 			*state = 1;
 			break;
+			setLED(RED);
 		case 5:
 			// full turn
 			motorSetRightSpeed(100);
 			motorSetLeftSpeed(-100);
 			*state = 1;
+			setLED(YELLOW);
 			break;
 	}
 }
