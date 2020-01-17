@@ -10,6 +10,8 @@
 uint8_t sensorData[11];
 uint8_t state;
 
+bool lastTimeEncState;
+
 void setup() {
 	state = 1;
   	motorInit();
@@ -24,6 +26,10 @@ void loop() {
 
 	// state = 1;
 	readSensor(&sensorData[0]);
+	for(uint8_t i=0; i<3; i++){
+		checkForStepsMade(i);
+	}
+	Serial.println(stepsMotorMade(0));
 	// Serial.println(sensorData[0]);
 	// Serial.println(sensorData[1]);
 	// Serial.println(sensorData[2]);
