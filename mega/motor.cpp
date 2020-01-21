@@ -13,24 +13,24 @@ void motorInit() {
 
   	motor[1].pin1 = 23;
   	motor[1].pin2 = 25;
-	motor[1].enc1 = 35;
-	motor[1].enc2 = 37;
+	motor[1].enc1 = 37;
+	motor[1].enc2 = 35;
 	motor[1].steps = 0;
   	motor[1].pwm = 3;
   	motor[1].factor = 0.9708457497;
 
   	motor[2].pin1 = 49;
   	motor[2].pin2 = 47;
-	motor[2].enc1 = 45;
-	motor[2].enc2 = 43;
+	motor[2].enc1 = 43;
+	motor[2].enc2 = 45;
 	motor[2].steps = 0;
   	motor[2].pwm = 5;
   	motor[2].factor = 0.9565686154;
 
   	motor[3].pin1 = 51;
   	motor[3].pin2 = 53;
-	motor[3].enc1 = 39;
-	motor[3].enc2 = 41;
+	motor[3].enc1 = 41;
+	motor[3].enc2 = 39;
 	motor[3].steps = 0;
   	motor[3].pwm = 6;
   	motor[3].factor = 1.00000000;

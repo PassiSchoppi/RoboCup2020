@@ -22,14 +22,20 @@ void setup() {
 }
 
 void loop() {
+	Serial.println("anfange");
 	digitalWrite(13, !digitalRead(13));
 
 	// state = 1;
 	readSensor(&sensorData[0]);
-	for(uint8_t i=0; i<3; i++){
+	for(uint8_t i=0; i<4; i++){
 		checkForStepsMade(i);
 	}
-	Serial.println(stepsMotorMade(0));
+	// motorSetLeftSpeed(50);
+	// motorSetRightSpeed(50);
+    // Serial.println(stepsMotorMade(0));
+	// Serial.println(stepsMotorMade(1));
+	// Serial.println(stepsMotorMade(2));
+	// Serial.println(stepsMotorMade(3));
 	// Serial.println(sensorData[0]);
 	// Serial.println(sensorData[1]);
 	// Serial.println(sensorData[2]);
@@ -38,5 +44,9 @@ void loop() {
 	// Serial.println(sensorData[5]);
 	// Serial.println(state);
 	// Serial.println(analogRead(3));
+	
 	changeState(&state, &sensorData[0]);
+	Serial.println(state);
+	Serial.println("ende");
 }
+
