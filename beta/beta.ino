@@ -2,6 +2,8 @@
 #include "config.h"
 
 uint8_t bufferVar;
+uint8_t sensorData[5];
+
 
 void setup() {
 	pinMode(INTERUPT_PIN, INPUT_PULLUP);
@@ -10,10 +12,11 @@ void setup() {
 	pinMode(SHP_FR, INPUT);
 	pinMode(SHP_BL, INPUT);
 	pinMode(SHP_BR, INPUT);
+	
 	pinMode(LED_R, INPUT);
 	pinMode(LED_G, INPUT);
 	pinMode(LED_B, INPUT);
-	Serial.begin(4800);
+	Serial.begin(9600);
 	attachInterrupt(digitalPinToInterrupt(INTERUPT_PIN), interupt, RISING);
 }
 
@@ -82,20 +85,20 @@ void loop() {
 				break;
 		}
 	}
-}
-
-void interupt(){
-	uint8_t sensorData[5];
 
 	sensorData[0] = analogRead(SHP_FL);
 	sensorData[1] = analogRead(SHP_FC);
 	sensorData[2] = analogRead(SHP_FR);
 	sensorData[3] = analogRead(SHP_BL);
 	sensorData[4] = analogRead(SHP_BR);
+	interupt();
+	delay(50000);
+}
 
+void interupt(){
 	for(uint8_t i=0; i<5; ++i){
-		Serial.write(sensorData[i]);
+		//FIXME write statt println
+		Serial.println(sensorData[i]);
 	}
-	digitalWrite(LED_BUILTIN, HIGH);
-	digitalWrite(LED_BUILTIN, LOW);
+	digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));
 }

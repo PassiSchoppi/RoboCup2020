@@ -1,9 +1,11 @@
 #include "Arduino.h"
 #include "config.h"
 
+uint8_t sensorData[6];
+
 void setup() {
 	pinMode(INTERUPT_PIN, INPUT_PULLUP);
-	Serial.begin(19200);
+	Serial.begin(9600);
 	attachInterrupt(digitalPinToInterrupt(INTERUPT_PIN), interupt, RISING);
 }
 
@@ -25,18 +27,15 @@ void loop() {
  *
  * 
  */
-}
-
-void interupt(){
-	uint8_t sensorData[6];
-
 	sensorData[0] = analogRead(SHP_LF);
 	sensorData[1] = analogRead(SHP_LB);
 	sensorData[2] = analogRead(SHP_RF);
 	sensorData[3] = analogRead(SHP_RB);
 	sensorData[4] = analogRead(ACC_X);
 	sensorData[5] = analogRead(ACC_Z);
+}
 
+void interupt(){
 	for(uint8_t i=0; i<6; ++i){
 		Serial.write(sensorData[i]);
 	}

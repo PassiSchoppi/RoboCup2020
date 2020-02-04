@@ -1,65 +1,68 @@
 #include "sensor.h"
+#include "buffer.h"
 
 void sensorInit(){
-	Serial1.begin(19200);
+	Serial1.begin(9600);
 	pinMode(INTERUPT_PIN_A, OUTPUT);
 
-	Serial3.begin(4800);
+	Serial3.begin(9600);
 	pinMode(INTERUPT_PIN_B, OUTPUT);
+
+	Buffer<4> sensorBuffer;
 }
 
 void readSensor(uint8_t *sensorData){
 	uint8_t i=0;
-	uint8_t bufferVar;
+	uint8_t bufferVar=0;
+	uint8_t newBufferVar;
 
 	// 														ALPHA
-	digitalWrite(INTERUPT_PIN_A, HIGH);
-	digitalWrite(INTERUPT_PIN_A, LOW);
-	
-	delay(1);
-
+	//wenn noch Daten da sind kein Interrupt
+	if(!Serial1.available()){
+		digitalWrite(INTERUPT_PIN_A, HIGH);
+		digitalWrite(INTERUPT_PIN_A, LOW);
+	}
+	// warten auf Antwort (Programm könnte stecken bleiben)
+	while(Serial1.available()<6){}
 	while(Serial1.available())
  	{
 		bufferVar = Serial1.read();
+		// nur die ersten sechs weil alpha nur 0..5 sensoren schickt
 		if(i<6){
-			if(i<4){
-				if(bufferVar<32){
-					bufferVar=32;
-				}
-				bufferVar=82600 / (25 * bufferVar - 31) - 9;
-				if(bufferVar>20){
-					bufferVar=sensorData[i];
-				}
+			if(bufferVar>100){
+				sensorData[i]=(8*sensorData[i]+bufferVar)/9;
+			}else{
+				sensorData[i]=(8*sensorData[i]+100)/9;
 			}
-			if(i>3 && i<6){}
-			sensorData[i]=bufferVar;
 			++i;
 		}
 	}
 
-	// 														BETHA
-	digitalWrite(INTERUPT_PIN_B, HIGH);
-	digitalWrite(INTERUPT_PIN_B, LOW);
 
-	delay(1);
-	
+	// 														BETA
+	// wenn noch daten da sind kein Interrupt
+	if(!Serial3.available()){
+		digitalWrite(INTERUPT_PIN_B, HIGH);
+		digitalWrite(INTERUPT_PIN_B, LOW);
+	}
+	// auf Antwort warten (Programm könnte stecken bleiben)
+	while(Serial3.available()<6){
+		// Serial.println(Serial3.available());
+	}
 	while(Serial3.available())
 	{
+		if(i==10){
+			Serial3.read();
+		}
 		bufferVar = Serial3.read();
-		// Serial.println("i:");
-		// Serial.println(i);
+		// zusammen mit alpha gibt es nun 0..10 sensordaten --> 11 sensoren
 		if(i<11){
-			// Serial.println(bufferVar);
-			if(bufferVar<32){
-				bufferVar=32;
+			if(bufferVar>100){
+		 		sensorData[i]=(8*sensorData[i]+bufferVar)/9;
+			}else{
+		 		sensorData[i]=(8*sensorData[i]+100)/9;
 			}
-			bufferVar=82600 / (25 * bufferVar -32) - 9;
-			if(bufferVar>20){
-			 	bufferVar=sensorData[i];
-			}
-			// Serial.println("//");
-			// Serial.println(bufferVar);
-			sensorData[i]=bufferVar;
+			// sensorData[i]=bufferVar;
 			++i;
 		}
 	}
@@ -74,11 +77,11 @@ void readSensor(uint8_t *sensorData){
 	//3   RB,
 	//4   ACC_X,
 	//5   ACC_Z,
-	//6   FL,
-	//7   FC,
-	//8   FR,
-	//9   BL,
-	//10  BR,
+	//6   BL,
+	//7   FL,
+	//8   BR,
+	//9   FC,
+	//10  BL,
 	//11  TEMP_L,
 	//12  TEMP_R]
 } 
