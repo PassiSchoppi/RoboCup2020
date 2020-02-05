@@ -7,7 +7,7 @@
 #include "state.h"
 #include "led.h"
 #include "buffer.h"
-
+#include "wall.h"
 
 uint8_t sensorData[11];
 uint8_t state;
@@ -27,7 +27,7 @@ void loop() {
 	// ## LED ##
 	// Serial.println("anfang");
 	digitalWrite(13, !digitalRead(13));
-
+	
 	// ## SENSORS ##
 	readSensor(&sensorData[0]);
 	
@@ -42,7 +42,7 @@ void loop() {
     // Serial.println(stepsMotorMade(0));
 	// Serial.println(stepsMotorMade(1));
 	// Serial.println(stepsMotorMade(2));
-	// Serial.println(stepsMotorMade(3));
+	Serial.println(stepsMotorMade(3));
 	// # SIDE SHARPS #
 	// Serial.println(sensorData[0]);
 	// Serial.println(sensorData[1]);
@@ -52,20 +52,15 @@ void loop() {
 	// Serial.println(sensorData[4]);
 	// Serial.println(sensorData[5]);
 	// # FRONT/BACK SHARPS #
-	Serial.write("6:  ");Serial.println(sensorData[6]);
-	Serial.println();
+	// Serial.write("6:  ");Serial.println(sensorData[6]);
 	// Serial.write("7:  ");Serial.println(sensorData[7]);
-	// Serial.println();
 	// Serial.write("8:  ");Serial.println(sensorData[8]);
-	// Serial.println();
 	// Serial.write("9:  ");Serial.println(sensorData[9]);
-	// Serial.println();
 	// Serial.write("10: ");Serial.println(sensorData[10]);
-	// Serial.println();
 	// Serial.println(state);
 	// Serial.println(analogRead(3));
-	
-	// changeState(&state, &sensorData[0]);
+	// Serial.println(isWall(RIGHT, &sensorData[0]));
+	changeState(&state, &sensorData[0]);
 	// Serial.println(state);
 	// Serial.println("ende");
 

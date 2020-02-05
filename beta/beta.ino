@@ -91,14 +91,11 @@ void loop() {
 	sensorData[2] = analogRead(SHP_FR);
 	sensorData[3] = analogRead(SHP_BL);
 	sensorData[4] = analogRead(SHP_BR);
-	interupt();
-	delay(50000);
 }
 
 void interupt(){
 	for(uint8_t i=0; i<5; ++i){
-		//FIXME write statt println
-		Serial.println(sensorData[i]);
+		Serial.write(sensorData[i]);
 	}
 	digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));
 }

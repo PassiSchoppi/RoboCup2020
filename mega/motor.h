@@ -31,6 +31,7 @@ struct Motor {
 	bool 	lastEncSignal;
     uint8_t pwm;
     double  factor;
+	int16_t direction;
 };
 
 void motorInit();

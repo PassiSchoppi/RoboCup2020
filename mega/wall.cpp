@@ -13,7 +13,7 @@ bool isWall(uint8_t where, uint8_t *sensorData){
 			// if(sensorData[6]<DISTANCETOWALL && sensorData[7]<DISTANCETOWALL && sensorData[8]<DISTANCETOWALL){
 			//  	return true;
 			// }
-			if(sensorData[7]<DISTANCETOWALL && sensorData[8]<DISTANCETOWALL){
+			if(sensorData[7]>DISTANCETOWALL && sensorData[8]>DISTANCETOWALL){
 				return true;
 			}
 			break;
@@ -23,12 +23,13 @@ bool isWall(uint8_t where, uint8_t *sensorData){
 			// FIXME
 			// so the sharp facing right at the front is broken
 			// put this back in if it is fixed
-			// if(sensorData[2]<DISTANCETOWALL && sensorData[3]<DISTANCETOWALL){
+			// if(sensorData[2]>DISTANCETOWALL && sensorData[3]>DISTANCETOWALL){
 			//  	return true;
 			// }
-			if(sensorData[3]<DISTANCETOWALL){
+			if(sensorData[3]>DISTANCETOWALL){
 				return true;
 			}
+
 			break;
 		case BACK :
 			// Serial.println(sensorData[9]);
@@ -36,17 +37,17 @@ bool isWall(uint8_t where, uint8_t *sensorData){
 			// FIXME
 			// so the sharp facing back on the right is broken
 			// put this back in if it is fixed
-			// if(sensorData[9]<DISTANCETOWALL && sensorData[10]<DISTANCETOWALL){
+			// if(sensorData[9]>DISTANCETOWALL && sensorData[10]>DISTANCETOWALL){
 			//  	return true;
 			// }
-			if(sensorData[9]<DISTANCETOWALL){
+			if(sensorData[9]>DISTANCETOWALL){
 				return true;
 			}
 			break;
 		case LEFT :
 			// Serial.println(sensorData[0]);
 			// Serial.println(sensorData[1]);
-			if(sensorData[0]<DISTANCETOWALL && sensorData[1]<DISTANCETOWALL){
+			if(sensorData[0]>DISTANCETOWALL && sensorData[1]>DISTANCETOWALL){
 				return true;
 			}
 			break;

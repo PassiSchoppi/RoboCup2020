@@ -46,23 +46,17 @@ void readSensor(uint8_t *sensorData){
 		digitalWrite(INTERUPT_PIN_B, LOW);
 	}
 	// auf Antwort warten (Programm könnte stecken bleiben)
-	while(Serial3.available()<6){
-		// Serial.println(Serial3.available());
-	}
+	while(Serial3.available()<5){}
 	while(Serial3.available())
 	{
-		if(i==10){
-			Serial3.read();
-		}
 		bufferVar = Serial3.read();
 		// zusammen mit alpha gibt es nun 0..10 sensordaten --> 11 sensoren
 		if(i<11){
 			if(bufferVar>100){
-		 		sensorData[i]=(8*sensorData[i]+bufferVar)/9;
+		 		sensorData[i]=(15*sensorData[i]+bufferVar)/16;
 			}else{
-		 		sensorData[i]=(8*sensorData[i]+100)/9;
+		 		sensorData[i]=(15*sensorData[i]+100)/16;
 			}
-			// sensorData[i]=bufferVar;
 			++i;
 		}
 	}
@@ -77,11 +71,11 @@ void readSensor(uint8_t *sensorData){
 	//3   RB,
 	//4   ACC_X,
 	//5   ACC_Z,
-	//6   BL,
-	//7   FL,
-	//8   BR,
-	//9   FC,
-	//10  BL,
+	//6   FL,
+	//7   FC,
+	//8   FR, ???
+	//9   BL,
+	//10  BR,
 	//11  TEMP_L,
 	//12  TEMP_R]
 } 
