@@ -7,6 +7,8 @@
 #include "led.h"
 #include "config.h"
 
+int average;
+
 uint8_t nothing(){
 	return 0;
 }
@@ -23,70 +25,103 @@ void changeState(uint8_t *state, uint8_t *sensorData){
 			motorBrake();
 			// Serial.println("new status");
 			setLED(WHITE);
+
 			delay(1000);
-			// get direction to drive to
-			if(!isWall(RIGHT, &sensorData[0])){
-				Serial.println("drehe rechts");
-				*state = 2;
-				motorSetRightSpeed(-60);
-				motorSetLeftSpeed(90);
-				setLED(GREEN);
-				break;
-			}else if(!isWall(FRONT, &sensorData[0])){
-				Serial.println("fahre nach vorn");
+			// ## get direction to drive to ##
+			
+			// wenn gar keine Wand dann fahre nach vorne
+			if(!isWall(FRONT, &sensorData[0]) && !isWall(RIGHT, &sensorData[0]) && !isWall(LEFT, &sensorData[0]) && !isWall(BACK, &sensorData[0])){
 				*state = 3;
-				motorSetRightSpeed(50);
-				motorSetLeftSpeed(50);
 				setLED(BLUE);
 				break;
-			}else if(!isWall(LEFT, &sensorData[0])){
-				Serial.println("drehe links1");
+			}
+
+			if(!isWall(RIGHT, &sensorData[0])){
+				*state = 2;
+				setLED(GREEN);
+				break;
+			}
+
+			if(!isWall(FRONT, &sensorData[0])){
+				*state = 3;
+				setLED(BLUE);
+				break;
+			}
+
+			if(!isWall(LEFT, &sensorData[0])){
 				*state = 4;
-				motorSetRightSpeed(50);
-				motorSetLeftSpeed(-50);
 				setLED(RED);
 				break;
-			}else if(!isWall(BACK, &sensorData[0])){
-				Serial.println("drehe links2");
-				*state = 5;
-				motorSetRightSpeed(50);
-				motorSetLeftSpeed(-50);
-				setLED(YELLOW);
-				break;
-			}else{
-				*state = 1;
 			}
-			// *state = 2;
+
+			if(!isWall(BACK, &sensorData[0])){
+				*state = 5;
+				setLED(TURQUOISE);
+				break;
+			}
+
+			// wenn überall Wände sind:::
+			*state = 1;
+			setLED(OFF);
+
 			Serial.println("kein neuer status");
+			
 			break;
 		case 2:
-			// if(stepsMotorMade(0)>90 && stepsMotorMade(1)>90 && stepsMotorMade(2)<-90 && stepsMotorMade(3)<-90){
-			// if(true){
-			if(stepsMotorMade(3)<-90){
+			motorSetRightSpeed(-80);
+			motorSetLeftSpeed(70);
+			average = 0;
+			for(uint8_t i=0; i<4; ++i){
+				average = average + abs(stepsMotorMade(i));
+			}
+			average = average/4;
+			if( average > STEPFFORTURN )
+			{
 				resetAllSteps();
 				*state = 1;
 			}
 			break;
 		case 3:
-			// if(stepsMotorMade(0)>90 && stepsMotorMade(1)>90 && stepsMotorMade(2)>90 && stepsMotorMade(3)>90){
-			if(true){
-			// if(stepsMotorMade(0)>90){
+			// motorSetRightSpeed(pid(70, sensorData[2], sensorData[3], false));
+			// motorSetLeftSpeed(pid(70, sensorData[0], sensorData[1], true));
+			motorSetRightSpeed(70);
+			motorSetLeftSpeed(70);
+			average = 0;
+			for(uint8_t i=0; i<4; ++i){
+				average = average + stepsMotorMade(i);
+			}
+			average = average/4;
+			// Serial.println(average);
+			if( average>STEPSFORONE ){
 				resetAllSteps();
 				*state = 1;
 			}
 			break;
 		case 4:
-			// if(stepsMotorMade(0)<-90 && stepsMotorMade(1)<-90 && stepsMotorMade(2)>90 && stepsMotorMade(3)>90){
-			if(true){
-			// if(stepsMotorMade(2)>90){
+			motorSetRightSpeed(70);
+			motorSetLeftSpeed(-80);
+			average = 0;
+			for(uint8_t i=0; i<4; ++i){
+					average = average + abs(stepsMotorMade(i));
+			}
+			average = average/4;
+			// Serial.println(average);
+			if(average > STEPFFORTURN)
+			{
 				resetAllSteps();
 				*state = 1;
 			}
 			break;
 		case 5:
-			// if(stepsMotorMade(0)<-90 && stepsMotorMade(1)<-90 && stepsMotorMade(2)>90 && stepsMotorMade(3)>90){
-			if(true){
-			// if(stepsMotorMade(2)>90){
+			motorSetRightSpeed(70);
+			motorSetLeftSpeed(-80);
+			average = 0;
+			for(uint8_t i=0; i<4; ++i){
+					average = average + abs(stepsMotorMade(i));
+			}
+			average = average/4;
+			if(average > STEPFFORTURN)
+			{
 				resetAllSteps();
 				*state = 1;
 			}

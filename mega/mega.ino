@@ -21,49 +21,69 @@ void setup() {
 	initMap();
 	Serial.begin(9600);
 	pinMode(A3, INPUT);
+	
+
+  	DDRA |= (1 << PA7);
+  	DDRA |= (1 << PA5);
+  	DDRG |= (1 << PG5);
+  
+  	DDRC &= ~(1 << PC4);
+  	DDRC &= ~(1 << PC6);
+  	
+	// PORTA |= (1 << PA5);
+  	// PORTG |= (1 << PG5);
 }
+	bool lastState = false;
+int counter = 0;
+unsigned long loopCnt = 0;
+
 
 void loop() {
 	// ## LED ##
-	// Serial.println("anfang");
 	digitalWrite(13, !digitalRead(13));
 	
+	// motorSetRightSpeed(70);
+	// motorSetLeftSpeed(70);
+
 	// ## SENSORS ##
 	readSensor(&sensorData[0]);
-	
+
 	// ## MOTOR ##
 	for(uint8_t i=0; i<4; i++){
-	 	checkForStepsMade(i);
+		checkForStepsMade(i);
 	}
-	
+
 	// ## OUTPUT ##
-	// motorSetLeftSpeed(50);
-	// motorSetRightSpeed(50);
-    // Serial.println(stepsMotorMade(0));
-	// Serial.println(stepsMotorMade(1));
-	// Serial.println(stepsMotorMade(2));
-	Serial.println(stepsMotorMade(3));
+    // # motoren #
+	/* Serial.print(stepsMotorMade(0));Serial.print(" ");
+	 Serial.print(stepsMotorMade(1));Serial.print(" ");
+	 Serial.print(stepsMotorMade(2));Serial.print(" ");
+	 Serial.println(stepsMotorMade(3));*/
 	// # SIDE SHARPS #
-	// Serial.println(sensorData[0]);
-	// Serial.println(sensorData[1]);
-	// Serial.println(sensorData[2]);
+	// Serial.println(sensorData[0]);Serial.print(" ");
+	// Serial.print(sensorData[1]);Serial.print(" ");
+	// Serial.print(sensorData[2]);Serial.print(" ");
 	// Serial.println(sensorData[3]);
 	// # TEMP #
 	// Serial.println(sensorData[4]);
 	// Serial.println(sensorData[5]);
 	// # FRONT/BACK SHARPS #
-	// Serial.write("6:  ");Serial.println(sensorData[6]);
-	// Serial.write("7:  ");Serial.println(sensorData[7]);
-	// Serial.write("8:  ");Serial.println(sensorData[8]);
-	// Serial.write("9:  ");Serial.println(sensorData[9]);
-	// Serial.write("10: ");Serial.println(sensorData[10]);
-	// Serial.println(state);
-	// Serial.println(analogRead(3));
-	// Serial.println(isWall(RIGHT, &sensorData[0]));
+	// Serial.print(sensorData[6]);Serial.print(" ");
+	// Serial.print(sensorData[7]);Serial.print(" ");
+	// Serial.print(sensorData[8]);Serial.print(" ");
+	// Serial.print(sensorData[9]);Serial.print(" ");
+	// Serial.println(sensorData[10]);
+	// # ISWALL #
+	Serial.print(isWall(0, &sensorData[0]));Serial.print(" ");
+	 Serial.print(isWall(1, &sensorData[0]));Serial.print(" ");
+	 Serial.print(isWall(2, &sensorData[0]));Serial.print(" ");
+	 Serial.println(isWall(3, &sensorData[0]));
+
+
+	// ## state ##
 	changeState(&state, &sensorData[0]);
 	// Serial.println(state);
-	// Serial.println("ende");
-
+	
 	//FIXME
 	// delay(100000);
 }

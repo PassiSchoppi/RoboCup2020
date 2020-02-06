@@ -14,7 +14,10 @@
 #define BACK 			2
 #define LEFT 			3
 
-#define DISTANCETOWALL 	165
+#define DISTANCETOWALL 	170
+
+#define STEPSFORONE 	65
+#define STEPFFORTURN 	70
 
 #define OFF 			0
 #define WHITE 			1

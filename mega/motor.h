@@ -25,8 +25,10 @@
 struct Motor {
     uint8_t pin1;
     uint8_t pin2;
-	uint8_t enc1;
-	uint8_t enc2;
+	volatile uint8_t* enc;
+	uint8_t encbit;
+	// volatile uint8_t* enc2;
+	// uint8_t enc2bit;
 	short int 	steps;
 	bool 	lastEncSignal;
     uint8_t pwm;
