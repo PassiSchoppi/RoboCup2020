@@ -8,45 +8,38 @@
 #include "led.h"
 #include "buffer.h"
 #include "wall.h"
+#include "i2cmaster.h"
+#include "melexis.h"
 
 uint8_t sensorData[11];
 uint8_t state;
 
-bool lastTimeEncState;
-
 void setup() {
 	state = 1;
+
+	// ## INIT ##
   	motorInit();
 	sensorInit();
+	melexisInit();
 	initMap();
-	Serial.begin(9600);
-	pinMode(A3, INPUT);
 	
-
-  	DDRA |= (1 << PA7);
-  	DDRA |= (1 << PA5);
-  	DDRG |= (1 << PG5);
-  
-  	DDRC &= ~(1 << PC4);
-  	DDRC &= ~(1 << PC6);
-  	
-	// PORTA |= (1 << PA5);
-  	// PORTG |= (1 << PG5);
+	Serial.begin(9600);
 }
-	bool lastState = false;
-int counter = 0;
-unsigned long loopCnt = 0;
 
 
 void loop() {
 	// ## LED ##
 	digitalWrite(13, !digitalRead(13));
 	
-	// motorSetRightSpeed(70);
-	// motorSetLeftSpeed(70);
-
 	// ## SENSORS ##
 	readSensor(&sensorData[0]);
+	melexisInterrupt();
+	Serial.println(melexis[0].value);
+
+	// ## PLAYGROUND ##
+	// analogWrite(7, 100);
+	// Serial.print(analogRead(6));Serial.print(" ");
+	// Serial.println(analogRead(A7));
 
 	// ## MOTOR ##
 	for(uint8_t i=0; i<4; i++){
@@ -54,16 +47,16 @@ void loop() {
 	}
 
 	// ## OUTPUT ##
-    // # motoren #
-	/* Serial.print(stepsMotorMade(0));Serial.print(" ");
+    // # MOTOREN #
+	/*Serial.print(stepsMotorMade(0));Serial.print(" ");
 	 Serial.print(stepsMotorMade(1));Serial.print(" ");
 	 Serial.print(stepsMotorMade(2));Serial.print(" ");
 	 Serial.println(stepsMotorMade(3));*/
 	// # SIDE SHARPS #
-	// Serial.println(sensorData[0]);Serial.print(" ");
-	// Serial.print(sensorData[1]);Serial.print(" ");
-	// Serial.print(sensorData[2]);Serial.print(" ");
-	// Serial.println(sensorData[3]);
+	 /*Serial.print(sensorData[0]);Serial.print(" ");
+	 Serial.print(sensorData[1]);Serial.print(" ");
+	 Serial.print(sensorData[2]);Serial.print(" ");
+	 Serial.println(sensorData[3]);*/
 	// # TEMP #
 	// Serial.println(sensorData[4]);
 	// Serial.println(sensorData[5]);
@@ -74,13 +67,13 @@ void loop() {
 	// Serial.print(sensorData[9]);Serial.print(" ");
 	// Serial.println(sensorData[10]);
 	// # ISWALL #
-	Serial.print(isWall(0, &sensorData[0]));Serial.print(" ");
+	/* Serial.print(isWall(0, &sensorData[0]));Serial.print(" ");
 	 Serial.print(isWall(1, &sensorData[0]));Serial.print(" ");
 	 Serial.print(isWall(2, &sensorData[0]));Serial.print(" ");
-	 Serial.println(isWall(3, &sensorData[0]));
+	 Serial.println(isWall(3, &sensorData[0])); */
 
 
-	// ## state ##
+	// ## STATE ##
 	changeState(&state, &sensorData[0]);
 	// Serial.println(state);
 	

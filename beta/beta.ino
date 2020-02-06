@@ -86,11 +86,11 @@ void loop() {
 		}
 	}
 
-	sensorData[0] = analogRead(SHP_FL);
-	sensorData[1] = analogRead(SHP_FC);
-	sensorData[2] = analogRead(SHP_FR);
-	sensorData[3] = analogRead(SHP_BL);
-	sensorData[4] = analogRead(SHP_BR);
+	sensorData[0] = analogRead(SHP_FL) >> 2;
+	sensorData[1] = analogRead(SHP_FC) >> 2;
+	sensorData[2] = analogRead(SHP_FR) >> 2;
+	sensorData[3] = analogRead(SHP_BL) >> 2;
+	sensorData[4] = analogRead(SHP_BR) >> 2;
 }
 
 void interupt(){

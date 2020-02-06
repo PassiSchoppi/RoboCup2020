@@ -27,12 +27,12 @@ void loop() {
  *
  * 
  */
-	sensorData[0] = analogRead(SHP_LF);
-	sensorData[1] = analogRead(SHP_LB);
-	sensorData[2] = analogRead(SHP_RF);
-	sensorData[3] = analogRead(SHP_RB);
-	sensorData[4] = analogRead(ACC_X);
-	sensorData[5] = analogRead(ACC_Z);
+	sensorData[0] = analogRead(SHP_LF) >> 2;
+	sensorData[1] = analogRead(SHP_LB) >> 2;
+	sensorData[2] = analogRead(SHP_RF) >> 2;
+	sensorData[3] = analogRead(SHP_RB) >> 2;
+	sensorData[4] = analogRead(ACC_X) >> 2;
+	sensorData[5] = analogRead(ACC_Z) >> 2;
 }
 
 void interupt(){

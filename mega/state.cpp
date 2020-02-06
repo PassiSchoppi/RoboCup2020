@@ -26,9 +26,13 @@ void changeState(uint8_t *state, uint8_t *sensorData){
 			// Serial.println("new status");
 			setLED(WHITE);
 
+			//FIXME
 			delay(1000);
 			// ## get direction to drive to ##
-			
+			/*Serial.print(isWall(FRONT, &sensorData[0]));Serial.print(" ");
+			Serial.print(isWall(LEFT, &sensorData[0])); Serial.print(" ");
+			Serial.print(isWall(RIGHT, &sensorData[0]));Serial.print(" ");
+			Serial.println(isWall(BACK, &sensorData[0])); Serial.print(" ")*/;
 			// wenn gar keine Wand dann fahre nach vorne
 			if(!isWall(FRONT, &sensorData[0]) && !isWall(RIGHT, &sensorData[0]) && !isWall(LEFT, &sensorData[0]) && !isWall(BACK, &sensorData[0])){
 				*state = 3;
@@ -68,8 +72,8 @@ void changeState(uint8_t *state, uint8_t *sensorData){
 			
 			break;
 		case 2:
-			motorSetRightSpeed(-80);
-			motorSetLeftSpeed(70);
+			motorSetRightSpeed(-110);
+			motorSetLeftSpeed(100);
 			average = 0;
 			for(uint8_t i=0; i<4; ++i){
 				average = average + abs(stepsMotorMade(i));
@@ -84,8 +88,8 @@ void changeState(uint8_t *state, uint8_t *sensorData){
 		case 3:
 			// motorSetRightSpeed(pid(70, sensorData[2], sensorData[3], false));
 			// motorSetLeftSpeed(pid(70, sensorData[0], sensorData[1], true));
-			motorSetRightSpeed(70);
-			motorSetLeftSpeed(70);
+			motorSetRightSpeed(100);
+			motorSetLeftSpeed(100);
 			average = 0;
 			for(uint8_t i=0; i<4; ++i){
 				average = average + stepsMotorMade(i);
@@ -98,8 +102,8 @@ void changeState(uint8_t *state, uint8_t *sensorData){
 			}
 			break;
 		case 4:
-			motorSetRightSpeed(70);
-			motorSetLeftSpeed(-80);
+			motorSetRightSpeed(100);
+			motorSetLeftSpeed(-110);
 			average = 0;
 			for(uint8_t i=0; i<4; ++i){
 					average = average + abs(stepsMotorMade(i));

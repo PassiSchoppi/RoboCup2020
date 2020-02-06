@@ -6,7 +6,7 @@ Motor motor[4];
 void motorInit() {
   	motor[0].pin1 = 29;
   	motor[0].pin2 = 27;
-  	motor[0].enc = PINC;
+  	motor[0].enc = &PINC;
 	motor[0].encbit = 4;
 	// motor[0].enc2 = PINC;
 	// motor[0].enc2bit = 6;
@@ -17,7 +17,7 @@ void motorInit() {
 
   	motor[1].pin1 = 23;
   	motor[1].pin2 = 25;
-	motor[1].enc = PINC;
+	motor[1].enc = &PINC;
 	motor[1].encbit = 0;
 	// motor[1].enc2 = PINC;
 	// motor[1].enc2bit = 2;
@@ -28,7 +28,7 @@ void motorInit() {
 
   	motor[2].pin1 = 49;
   	motor[2].pin2 = 43;
-	motor[2].enc = PINL;
+	motor[2].enc = &PINL;
 	motor[2].encbit = 4;
 	// motor[2].enc2 = PINL;
 	// motor[2].enc2bit = 2;
@@ -39,7 +39,7 @@ void motorInit() {
 
   	motor[3].pin1 = 51;
   	motor[3].pin2 = 53;
-	motor[3].enc = PING;
+	motor[3].enc = &PING;
 	motor[3].encbit = 0;
 	// motor[3].enc2 = PING;
 	// motor[3].enc2bit = 2;
@@ -67,29 +67,9 @@ void motorSetSpeed(uint8_t i, int16_t speed) {
 }
 
 void checkForStepsMade(uint8_t i){
-	// FIXME: ich verstehe den OUTPUT der nächsten Zeilen nicht
- 	/* volatile uint8_t* pinabc;
-	pinabc = PINC;
-	Serial.print(*pinabc);
-	Serial.print(" ");
-	Serial.print(PINC);
-	Serial.print(" ");
-	Serial.println(*motor[0].enc);*/
-	
 	// momentanes siganal auf enc1 des Motors i
 	bool currentEncSignal;
-	if(i==0){
-		currentEncSignal = (PINC >> motor[0].encbit & 1);
-	}
-	if(i==1){
-		currentEncSignal = (PINC >> motor[1].encbit & 1);
-	}
-	if(i==2){
-		currentEncSignal = (PINL >> motor[2].encbit & 1);
-	}
-	if(i==3){
-		currentEncSignal = (PING >> motor[3].encbit & 1);
-	}
+	currentEncSignal = (*motor[i].enc >> motor[i].encbit & 1);
 
 	// wenn ein rising edge auf current state ist
 	if(motor[i].lastEncSignal != currentEncSignal && currentEncSignal == HIGH){

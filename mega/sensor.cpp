@@ -29,10 +29,10 @@ void readSensor(uint8_t *sensorData){
 		bufferVar = Serial1.read();
 		// nur die ersten sechs weil alpha nur 0..5 sensoren schickt
 		if(i<6){
-			if(bufferVar>100){
+			if(bufferVar>25){
 				sensorData[i]=(8*sensorData[i]+bufferVar)/9;
 			}else{
-				sensorData[i]=(8*sensorData[i]+100)/9;
+				sensorData[i]=(8*sensorData[i]+25)/9;
 			}
 			++i;
 		}
@@ -52,14 +52,16 @@ void readSensor(uint8_t *sensorData){
 		bufferVar = Serial3.read();
 		// zusammen mit alpha gibt es nun 0..10 sensordaten --> 11 sensoren
 		if(i<11){
-			if(bufferVar>100){
+			if(bufferVar>25){
 		 		sensorData[i]=(15*sensorData[i]+bufferVar)/16;
 			}else{
-		 		sensorData[i]=(15*sensorData[i]+100)/16;
+		 		sensorData[i]=(15*sensorData[i]+25)/16;
 			}
 			++i;
 		}
 	}
+
+	// Serial.println(i);
 
 	// 															TEMP SENSOR
 	// sensorData[]
