@@ -6,7 +6,6 @@
 #include "pid.h"
 #include "state.h"
 #include "led.h"
-#include "buffer.h"
 #include "wall.h"
 #include "i2cmaster.h"
 #include "melexis.h"
@@ -21,7 +20,7 @@ void setup() {
   	motorInit();
 	sensorInit();
 	melexisInit();
-	initMap();
+	mapInit();
 	
 	Serial.begin(9600);
 }
@@ -34,7 +33,7 @@ void loop() {
 	// ## SENSORS ##
 	readSensor(&sensorData[0]);
 	melexisInterrupt();
-	Serial.println(melexis[0].value);
+	Serial.println(melexisGetValue(0));
 
 	// ## PLAYGROUND ##
 	// analogWrite(7, 100);

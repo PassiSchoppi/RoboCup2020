@@ -3,6 +3,6 @@
 
 #include <Arduino.h>
 
-void setLED(uint8_t color);
+void LEDSetColor(uint8_t color);
 
 #endif

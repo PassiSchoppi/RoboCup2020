@@ -9,10 +9,10 @@ struct Field{
 	bool visited;
 };
 
-void initMap();
-void createNewField();
-void updateField();
-void searchForUnvisited();
-void whereToDrive();
+void mapInit();
+void mapNewField();
+void mapUpdateField();
+void mapSearchForUnvisited();
+void mapWhereToDrive();
 
 #endif MAP_H

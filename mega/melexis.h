@@ -28,6 +28,7 @@ struct Melexis {
 };
 // extern Melexis melexis[2];
 
+float melexisGetValue(uint8_t i);
 
 // extern uint8_t nextMelexis;
 

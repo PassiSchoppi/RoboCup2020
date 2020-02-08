@@ -1,5 +1,4 @@
 #include "sensor.h"
-#include "buffer.h"
 
 void sensorInit(){
 	Serial1.begin(9600);
@@ -7,8 +6,6 @@ void sensorInit(){
 
 	Serial3.begin(9600);
 	pinMode(INTERUPT_PIN_B, OUTPUT);
-
-	Buffer<4> sensorBuffer;
 }
 
 void readSensor(uint8_t *sensorData){

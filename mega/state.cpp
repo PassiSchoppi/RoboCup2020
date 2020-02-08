@@ -19,12 +19,12 @@ void changeState(uint8_t *state, uint8_t *sensorData){
 			// the end
 			motorBrake();
 			*state = nothing();
-			setLED(OFF);
+			LEDSetColor(OFF);
 			break;
 		case 1:
 			motorBrake();
 			// Serial.println("new status");
-			setLED(WHITE);
+			LEDSetColor(WHITE);
 
 			//FIXME
 			delay(1000);
@@ -36,37 +36,37 @@ void changeState(uint8_t *state, uint8_t *sensorData){
 			// wenn gar keine Wand dann fahre nach vorne
 			if(!isWall(FRONT, &sensorData[0]) && !isWall(RIGHT, &sensorData[0]) && !isWall(LEFT, &sensorData[0]) && !isWall(BACK, &sensorData[0])){
 				*state = 3;
-				setLED(BLUE);
+				LEDSetColor(BLUE);
 				break;
 			}
 
 			if(!isWall(RIGHT, &sensorData[0])){
 				*state = 2;
-				setLED(GREEN);
+				LEDSetColor(GREEN);
 				break;
 			}
 
 			if(!isWall(FRONT, &sensorData[0])){
 				*state = 3;
-				setLED(BLUE);
+				LEDSetColor(BLUE);
 				break;
 			}
 
 			if(!isWall(LEFT, &sensorData[0])){
 				*state = 4;
-				setLED(RED);
+				LEDSetColor(RED);
 				break;
 			}
 
 			if(!isWall(BACK, &sensorData[0])){
 				*state = 5;
-				setLED(TURQUOISE);
+				LEDSetColor(TURQUOISE);
 				break;
 			}
 
 			// wenn überall Wände sind:::
 			*state = 1;
-			setLED(OFF);
+			LEDSetColor(OFF);
 
 			Serial.println("kein neuer status");
 			
