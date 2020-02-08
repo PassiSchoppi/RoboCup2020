@@ -14,7 +14,8 @@
 #define BACK 			2
 #define LEFT 			3
 
-#define DISTANCETOWALL 	42
+#define DISTANCETOWALL 	25
+#define CUTDATAVAL 		0
 
 #define STEPSFORONE 	35
 #define STEPFFORTURN 	35

@@ -3,6 +3,7 @@
 
 #include <Arduino.h>
 #include "config.h"
+#include "melexis.h"
 
 void sensorInit();
 void readSensor(uint8_t *sensorData);

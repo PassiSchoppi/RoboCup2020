@@ -9,10 +9,9 @@ void melexisInit() {
     pinMode(SDA, INPUT_PULLUP);
     pinMode(SCL, INPUT_PULLUP);
     i2c_init();
-
+	
     melexis[0].address = 0xA0;
     melexis[1].address = 0xA6;
-
     nextMelexis = 0;
 }
 
@@ -21,6 +20,7 @@ float melexisGetValue(uint8_t i){
 }
 
 void melexisInterrupt() {
+	// Serial.println("interrupt");
     float value = melexis[nextMelexis].value;
 
     melexis[nextMelexis].value = melexisTemperature(melexis[nextMelexis].address);
@@ -70,7 +70,8 @@ float melexisTemperature(uint8_t address)
 
 int melexisChangeAddress(uint8_t newAddress)
 {
-    i2c_start_wait(0x00 + I2C_WRITE);   		// Send start condition and write bit.
+	Serial.print("new address: ");Serial.println(newAddress);
+	i2c_start_wait(0x00 + I2C_WRITE);   		// Send start condition and write bit.
     i2c_write(0x2E);    			            // Send command for device to return address (0x2E).
     i2c_write(0x00);                			// Send low byte zero to erase.
     i2c_write(0x00);    		            	// Send high byte zero to erase.

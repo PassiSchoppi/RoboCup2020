@@ -31,8 +31,8 @@ void loop() {
 	sensorData[1] = analogRead(SHP_LB) >> 2;
 	sensorData[2] = analogRead(SHP_RF) >> 2;
 	sensorData[3] = analogRead(SHP_RB) >> 2;
-	sensorData[4] = analogRead(ACC_X) >> 2;
-	sensorData[5] = analogRead(ACC_Z) >> 2;
+	sensorData[4] = (analogRead(ACC_X)-30) >> 2;
+	sensorData[5] = (analogRead(ACC_Z)-30) >> 2;
 }
 
 void interupt(){
