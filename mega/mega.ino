@@ -10,7 +10,7 @@
 #include "i2cmaster.h"
 #include "melexis.h"
 
-uint8_t sensorData[11];
+uint8_t sensorData[15];
 uint8_t state;
 
 void setup() {
@@ -52,27 +52,30 @@ void loop() {
 	 Serial.print(stepsMotorMade(2));Serial.print(" ");
 	 Serial.println(stepsMotorMade(3));*/
 	// # SIDE SHARPS #
-	/* Serial.print(sensorData[0]);Serial.print(" ");
-	 Serial.print(sensorData[1]);Serial.print(" ");
-	 Serial.print(sensorData[2]);Serial.print(" ");
-	 Serial.print(sensorData[3]);Serial.print(" "); */
+	// Serial.println(sensorData[0]);Serial.print(" ");
+	 // Serial.println(sensorData[1]);Serial.print(" ");
+	 // Serial.println(sensorData[2]);Serial.print(" ");
+	 // Serial.println(sensorData[3]);Serial.print(" ");
 	// # ACC #
 	/*Serial.print(sensorData[4]);Serial.print(" ");
 	 Serial.println(sensorData[5]);*/
 	// # FRONT/BACK SHARPS #
-	/* Serial.print(sensorData[6]);Serial.print(" ");
-	 Serial.print(sensorData[7]);Serial.print(" ");
-	 Serial.print(sensorData[8]);Serial.print(" ");
-	 Serial.print(sensorData[9]);Serial.print(" ");
-	 Serial.println(sensorData[10]); */
+	// Serial.println(sensorData[6]);Serial.print(" ");
+	 // Serial.println(sensorData[7]);Serial.print(" ");
+	 // Serial.println(sensorData[8]);Serial.print(" ");
+	 // Serial.println(sensorData[9]);Serial.print(" ");
+	 // Serial.println(sensorData[10]);
 	// # MELEXIS #
 	/*Serial.print(sensorData[11]);Serial.print(" ");
 	 Serial.println(sensorData[12]);*/
+	// # LIGHT #
+	/*Serial.print(sensorData[13]);Serial.print(" ");
+	 Serial.println(sensorData[14]);*/
 	// # ISWALL #
-	/* Serial.print(isWall(0, &sensorData[0]));Serial.print(" ");
-	 Serial.print(isWall(1, &sensorData[0]));Serial.print(" ");
-	 Serial.print(isWall(2, &sensorData[0]));Serial.print(" ");
-	 Serial.println(isWall(3, &sensorData[0])); */
+	Serial.print(isWall(FRONT, &sensorData[0]));Serial.print(" ");
+	 Serial.print(isWall(RIGHT, &sensorData[0]));Serial.print(" ");
+	 Serial.print(isWall(LEFT, &sensorData[0]));Serial.print(" ");
+	 Serial.println(isWall(BACK, &sensorData[0]));
 
 
 	// ## STATE ##

@@ -27,7 +27,7 @@ void motorInit() {
 	motor[1].direction = 0;
 
   	motor[2].pin1 = 49;
-  	motor[2].pin2 = 43;
+  	motor[2].pin2 = 47;
 	motor[2].enc = &PINL;
 	motor[2].encbit = 4;
 	// motor[2].enc2 = PINL;

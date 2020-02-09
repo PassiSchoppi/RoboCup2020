@@ -6,12 +6,16 @@ void sensorInit(){
 
 	Serial3.begin(9600);
 	pinMode(INTERUPT_PIN_B, OUTPUT);
+
+	pinMode(7, OUTPUT);
 }
 
 void readSensor(uint8_t *sensorData){
 	uint8_t i=0;
 	uint8_t bufferVar=0;
 	uint8_t newBufferVar;
+	
+	// digitalWrite(7, HIGH);
 
 	// 														ALPHA
 	//wenn noch Daten da sind kein Interrupt
@@ -20,31 +24,17 @@ void readSensor(uint8_t *sensorData){
 		digitalWrite(INTERUPT_PIN_A, LOW);
 	}
 	// warten auf Antwort (Programm könnte stecken bleiben)
-	while(Serial1.available()<6){
-		++i;
-		if(i>100)
-			break;
-	}
-	if(i<=100){
-		i=0;
-		while(Serial1.available())
- 		{
-			bufferVar = Serial1.read();
-			// nur die ersten sechs weil alpha nur 0..5 sensoren schickt
-			if(i<4){
-				// daten der sharps
-				if(bufferVar>CUTDATAVAL){
-					sensorData[i]=(8*sensorData[i]+bufferVar)/9;
-				}else{
-					sensorData[i]=(8*sensorData[i]+CUTDATAVAL)/9;
-				}
-			}else if(i<6){
-				// daten der acc
-				sensorData[i]=bufferVar;
-			}
+	while(Serial1.available()<6){}
+	while(Serial1.available())
+	{
+		bufferVar = Serial1.read();
+		if(i<6){
+			// Serial.println(i);
+			sensorData[i]=bufferVar;
 			++i;
 		}
 	}
+	
 	// 														BETA
 	// wenn noch daten da sind kein Interrupt
 	if(!Serial3.available()){
@@ -52,39 +42,27 @@ void readSensor(uint8_t *sensorData){
 		digitalWrite(INTERUPT_PIN_B, LOW);
 	}
 	// auf Antwort warten (Programm könnte stecken bleiben)
-	i=0;
-	while(Serial3.available()<5){
-		++i;
-		if(i>100)
-			break;
-	}
-	if(i<=100){
-		while(Serial3.available())
-		{
-			bufferVar = Serial3.read();
-			// zusammen mit alpha gibt es nun 0..10 sensordaten --> 11 sensoren
-			if(i<11){
-				if(bufferVar>CUTDATAVAL){
-			 		sensorData[i]=(15*sensorData[i]+bufferVar)/16;
-				}else{
-			 		sensorData[i]=(15*sensorData[i]+CUTDATAVAL)/16;
-				}
-				++i;
-			}
+	while(Serial3.available()<5){}
+	while(Serial3.available())
+	{
+		bufferVar = Serial3.read();
+		if(i<11){
+			// Serial.println(i);
+			sensorData[i]=bufferVar;
+			++i;
 		}
 	}
 	// 														MELEXIS
 	melexisInterrupt();
-	Serial.print(melexisGetValue(0));Serial.print(" ");
-	Serial.println(melexisGetValue(1));
-	sensorData[11]=0;
-	sensorData[12]=0;
-	// sensorData[11]=((int)melexisGetValue(0))>>2;
-	// sensorData[12]=((int)melexisGetValue(1))>>2;
+	sensorData[11]=((int)melexisGetValue(0));
+	sensorData[12]=((int)melexisGetValue(1));
 	
 	// 														LIGHT SENSOR
-	
-	
+	// digitalWrite(7, HIGH);
+	sensorData[13]=(analogRead(A6)>>2)-5;
+	sensorData[14]=analogRead(7)>>2;
+	digitalWrite(7, LOW);
+
 	//0   [LF,
 	//1   LB,
 	//2   RF, ???
@@ -97,5 +75,7 @@ void readSensor(uint8_t *sensorData){
 	//9   BL,
 	//10  BR,
 	//11  TEMP_L,
-	//12  TEMP_R]
+	//12  TEMP_R
+	//13  LIGHT_R
+	//14  LIGHT_L]
 } 

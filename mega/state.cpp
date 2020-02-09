@@ -25,9 +25,10 @@ void changeState(uint8_t *state, uint8_t *sensorData){
 			motorBrake();
 			// Serial.println("new status");
 			LEDSetColor(WHITE);
-
-			//FIXME
+			
+			// FIXME
 			delay(1000);
+
 			// ## get direction to drive to ##
 			/*Serial.print(isWall(FRONT, &sensorData[0]));Serial.print(" ");
 			Serial.print(isWall(LEFT, &sensorData[0])); Serial.print(" ");
@@ -72,7 +73,7 @@ void changeState(uint8_t *state, uint8_t *sensorData){
 			
 			break;
 		case 2:
-			motorSetRightSpeed(-110);
+			motorSetRightSpeed(-100);
 			motorSetLeftSpeed(100);
 			average = 0;
 			for(uint8_t i=0; i<4; ++i){
@@ -95,7 +96,6 @@ void changeState(uint8_t *state, uint8_t *sensorData){
 				average = average + stepsMotorMade(i);
 			}
 			average = average/4;
-			// Serial.println(average);
 			if( average>STEPSFORONE ){
 				resetAllSteps();
 				*state = 1;
@@ -103,13 +103,12 @@ void changeState(uint8_t *state, uint8_t *sensorData){
 			break;
 		case 4:
 			motorSetRightSpeed(100);
-			motorSetLeftSpeed(-110);
+			motorSetLeftSpeed(-100);
 			average = 0;
 			for(uint8_t i=0; i<4; ++i){
 					average = average + abs(stepsMotorMade(i));
 			}
 			average = average/4;
-			// Serial.println(average);
 			if(average > STEPFFORTURN)
 			{
 				resetAllSteps();
@@ -117,8 +116,8 @@ void changeState(uint8_t *state, uint8_t *sensorData){
 			}
 			break;
 		case 5:
-			motorSetRightSpeed(70);
-			motorSetLeftSpeed(-80);
+			motorSetRightSpeed(100);
+			motorSetLeftSpeed(-100);
 			average = 0;
 			for(uint8_t i=0; i<4; ++i){
 					average = average + abs(stepsMotorMade(i));
