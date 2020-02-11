@@ -8,6 +8,7 @@
 #include "config.h"
 
 int average;
+uint8_t lastState=0;
 
 uint8_t nothing(){
 	return 0;
@@ -37,31 +38,26 @@ void changeState(uint8_t *state, uint8_t *sensorData){
 			// wenn gar keine Wand dann fahre nach vorne
 			if(!isWall(FRONT, &sensorData[0]) && !isWall(RIGHT, &sensorData[0]) && !isWall(LEFT, &sensorData[0]) && !isWall(BACK, &sensorData[0])){
 				*state = 3;
-				LEDSetColor(BLUE);
 				break;
 			}
 
 			if(!isWall(RIGHT, &sensorData[0])){
 				*state = 2;
-				LEDSetColor(GREEN);
 				break;
 			}
 
 			if(!isWall(FRONT, &sensorData[0])){
 				*state = 3;
-				LEDSetColor(BLUE);
 				break;
 			}
 
 			if(!isWall(LEFT, &sensorData[0])){
 				*state = 4;
-				LEDSetColor(RED);
 				break;
 			}
 
 			if(!isWall(BACK, &sensorData[0])){
 				*state = 5;
-				LEDSetColor(TURQUOISE);
 				break;
 			}
 
@@ -73,8 +69,9 @@ void changeState(uint8_t *state, uint8_t *sensorData){
 			
 			break;
 		case 2:
-			motorSetRightSpeed(-100);
-			motorSetLeftSpeed(100);
+			LEDSetColor(GREEN);
+			motorSetRightSpeed(-BASESPEED);
+			motorSetLeftSpeed(BASESPEED);
 			average = 0;
 			for(uint8_t i=0; i<4; ++i){
 				average = average + abs(stepsMotorMade(i));
@@ -85,12 +82,17 @@ void changeState(uint8_t *state, uint8_t *sensorData){
 				resetAllSteps();
 				*state = 1;
 			}
+			if( sensorData[11]>VICTIMTEMP || sensorData[12]>VICTIMTEMP ){
+				lastState = *state;
+				*state = 6;
+			}
 			break;
 		case 3:
+			LEDSetColor(BLUE);
 			// motorSetRightSpeed(pid(70, sensorData[2], sensorData[3], false));
 			// motorSetLeftSpeed(pid(70, sensorData[0], sensorData[1], true));
-			motorSetRightSpeed(100);
-			motorSetLeftSpeed(100);
+			motorSetRightSpeed(BASESPEED);
+			motorSetLeftSpeed(BASESPEED);
 			average = 0;
 			for(uint8_t i=0; i<4; ++i){
 				average = average + stepsMotorMade(i);
@@ -100,10 +102,15 @@ void changeState(uint8_t *state, uint8_t *sensorData){
 				resetAllSteps();
 				*state = 1;
 			}
+			if( sensorData[11]>VICTIMTEMP || sensorData[12]>VICTIMTEMP ){
+				lastState = *state;
+				*state = 6;
+			}
 			break;
 		case 4:
-			motorSetRightSpeed(100);
-			motorSetLeftSpeed(-100);
+			LEDSetColor(RED);
+			motorSetRightSpeed(BASESPEED);
+			motorSetLeftSpeed(-BASESPEED);
 			average = 0;
 			for(uint8_t i=0; i<4; ++i){
 					average = average + abs(stepsMotorMade(i));
@@ -113,11 +120,16 @@ void changeState(uint8_t *state, uint8_t *sensorData){
 			{
 				resetAllSteps();
 				*state = 1;
+			}
+			if( sensorData[11]>VICTIMTEMP || sensorData[12]>VICTIMTEMP ){
+				lastState = *state;
+				*state = 6;
 			}
 			break;
 		case 5:
-			motorSetRightSpeed(100);
-			motorSetLeftSpeed(-100);
+			LEDSetColor(TURQUOISE);
+			motorSetRightSpeed(BASESPEED);
+			motorSetLeftSpeed(-BASESPEED);
 			average = 0;
 			for(uint8_t i=0; i<4; ++i){
 					average = average + abs(stepsMotorMade(i));
@@ -128,6 +140,31 @@ void changeState(uint8_t *state, uint8_t *sensorData){
 				resetAllSteps();
 				*state = 1;
 			}
+			if( sensorData[11]>VICTIMTEMP || sensorData[12]>VICTIMTEMP ){
+				lastState = *state;
+				*state = 6;
+			}
+			break;
+		case 6:
+			motorBrake();
+			LEDSetColor(RED);
+			delay(1000);
+			if( sensorData[11]>VICTIMTEMP || sensorData[12]>VICTIMTEMP ){
+				delay(1000);
+				if( sensorData[11]>VICTIMTEMP || sensorData[12]>VICTIMTEMP ){
+					delay(1000);
+					if( sensorData[11]>VICTIMTEMP || sensorData[12]>VICTIMTEMP ){
+						delay(1000);
+						if( sensorData[11]>VICTIMTEMP || sensorData[12]>VICTIMTEMP ){
+							delay(1000);
+							if( sensorData[11]>VICTIMTEMP || sensorData[12]>VICTIMTEMP ){
+								//move the servo motor
+							}
+						}
+					}
+				}
+			}
+			*state = lastState;
 			break;
 	}
 }

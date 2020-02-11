@@ -17,6 +17,10 @@
 #define DISTANCETOWALL 	50
 #define CUTDATAVAL 		0
 
+#define VICTIMTEMP 		29
+
+#define BASESPEED 		0
+
 #define STEPSFORONE 	125
 #define STEPFFORTURN 	75
 
