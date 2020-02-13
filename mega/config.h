@@ -9,6 +9,8 @@
 #define SOUTH 			2
 #define WEST 			3
 
+#define STOP 			0
+
 #define FRONT 			0
 #define RIGHT 			1
 #define BACK 			2
@@ -17,12 +19,15 @@
 #define DISTANCETOWALL 	50
 #define CUTDATAVAL 		0
 
-#define VICTIMTEMP 		29
+#define VICTIMTEMP 		58
 
-#define BASESPEED 		0
+#define BASESPEED 		100
 
-#define STEPSFORONE 	125
-#define STEPFFORTURN 	75
+#define STEPSFORONE 	130
+#define STEPFFORTURN 	74
+
+#define MAXWHITE 		190
+#define MINWHITE 		150
 
 #define OFF 			0
 #define WHITE 			1

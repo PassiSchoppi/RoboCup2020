@@ -5,7 +5,7 @@ uint8_t sensorData[6];
 
 void setup() {
 	pinMode(INTERUPT_PIN, INPUT_PULLUP);
-	Serial.begin(57600);
+	Serial.begin(115200);
 	attachInterrupt(digitalPinToInterrupt(INTERUPT_PIN), interupt, RISING);
 }
 

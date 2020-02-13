@@ -1,10 +1,10 @@
 #include "sensor.h"
 
 void sensorInit(){
-	Serial1.begin(57600);
+	Serial1.begin(115200);
 	pinMode(INTERUPT_PIN_A, OUTPUT);
 
-	Serial3.begin(57600);
+	Serial3.begin(115200);
 	pinMode(INTERUPT_PIN_B, OUTPUT);
 
 	pinMode(7, OUTPUT);
@@ -53,10 +53,10 @@ void readSensor(uint8_t *sensorData){
 		}
 	}
 	// 														MELEXIS
-	melexisInterrupt();
+	// melexisInterrupt();
 	// Serial.println(melexisGetValue(0));
-	sensorData[11]=((int)melexisGetValue(0));
-	sensorData[12]=((int)melexisGetValue(1));
+	// sensorData[11]=((int)melexisGetValue(0));
+	// sensorData[12]=((int)melexisGetValue(1));
 	
 	// 														LIGHT SENSOR
 	// digitalWrite(7, HIGH);

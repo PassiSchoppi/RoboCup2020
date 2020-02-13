@@ -16,7 +16,7 @@ void setup() {
 	pinMode(LED_R, INPUT);
 	pinMode(LED_G, INPUT);
 	pinMode(LED_B, INPUT);
-	Serial.begin(57600);
+	Serial.begin(115200);
 	attachInterrupt(digitalPinToInterrupt(INTERUPT_PIN), interupt, RISING);
 }
 

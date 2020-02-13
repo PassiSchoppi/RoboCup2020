@@ -10,7 +10,7 @@ void motorInit() {
 	motor[0].encbit = 4;
 	// motor[0].enc2 = PINC;
 	// motor[0].enc2bit = 6;
-	motor[0].steps = 0;
+	motor[0].steps = 1;
 	motor[0].pwm = 4;
   	motor[0].factor = 0.9968225247;
 	motor[0].direction = 0;
@@ -21,7 +21,7 @@ void motorInit() {
 	motor[1].encbit = 0;
 	// motor[1].enc2 = PINC;
 	// motor[1].enc2bit = 2;
-	motor[1].steps = 0;
+	motor[1].steps = 1;
   	motor[1].pwm = 3;
   	motor[1].factor = 0.9708457497;
 	motor[1].direction = 0;
@@ -32,7 +32,7 @@ void motorInit() {
 	motor[2].encbit = 4;
 	// motor[2].enc2 = PINL;
 	// motor[2].enc2bit = 2;
-	motor[2].steps = 0;
+	motor[2].steps = 1;
   	motor[2].pwm = 5;
   	motor[2].factor = 0.9565686154;
 	motor[2].direction = 0;
@@ -43,7 +43,7 @@ void motorInit() {
 	motor[3].encbit = 0;
 	// motor[3].enc2 = PING;
 	// motor[3].enc2bit = 2;
-	motor[3].steps = 0;
+	motor[3].steps = 1;
   	motor[3].pwm = 6;
   	motor[3].factor = 1.00000000;
 	motor[3].direction = 0;
@@ -81,7 +81,7 @@ void checkForStepsMade(uint8_t i){
 
 void resetAllSteps(){
 	for(uint8_t i=0; i<4; i++){
-		motor[i].steps = 0;
+		motor[i].steps = 1;
 	}
 }
 
@@ -89,7 +89,7 @@ short int stepsMotorMade(uint8_t i){
 	return(motor[i].steps);
 }
 
-void motorSetLeftSpeed(int16_t speed) {
+/*void motorSetLeftSpeed(int16_t speed) {
   	motorSetSpeed(0, speed);
   	motorSetSpeed(1, speed);
 }
@@ -97,6 +97,40 @@ void motorSetLeftSpeed(int16_t speed) {
 void motorSetRightSpeed(int16_t speed) {
   	motorSetSpeed(2, speed);
   	motorSetSpeed(3, speed);
+}*/
+
+int speedFromEnc(uint8_t encA, uint8_t encB, uint8_t encC, uint8_t encME, int speedME){
+	return (( ((encA+encB+encC)/3) *speedME) / (encME));
+}
+
+void motorDriveTo(uint8_t direction, int speed){
+	switch( direction ){
+		case FRONT:
+			motorSetSpeed(0, speedFromEnc(motor[1].steps, motor[2].steps, motor[3].steps, motor[0].steps, speed));
+			motorSetSpeed(1, speedFromEnc(motor[0].steps, motor[2].steps, motor[3].steps, motor[1].steps, speed));
+			motorSetSpeed(2, speedFromEnc(motor[0].steps, motor[1].steps, motor[3].steps, motor[2].steps, speed));
+			motorSetSpeed(3, speedFromEnc(motor[0].steps, motor[2].steps, motor[1].steps, motor[3].steps, speed));
+			break;
+		case RIGHT:
+			// das ergibt keinen sinn
+			motorSetSpeed(0, speedFromEnc(motor[1].steps, motor[2].steps, motor[3].steps, motor[0].steps, speed));
+			motorSetSpeed(1, speedFromEnc(motor[0].steps, motor[2].steps, motor[3].steps, motor[1].steps, speed));
+			motorSetSpeed(2, speedFromEnc(motor[0].steps, motor[1].steps, motor[3].steps, motor[2].steps, -speed));
+			motorSetSpeed(3, speedFromEnc(motor[0].steps, motor[2].steps, motor[1].steps, motor[3].steps, -speed));
+			break;
+		case LEFT:
+			motorSetSpeed(0, speedFromEnc(motor[1].steps, motor[2].steps, motor[3].steps, motor[0].steps, -speed));
+			motorSetSpeed(1, speedFromEnc(motor[0].steps, motor[2].steps, motor[3].steps, motor[1].steps, -speed));
+			motorSetSpeed(2, speedFromEnc(motor[0].steps, motor[1].steps, motor[3].steps, motor[2].steps, speed));
+			motorSetSpeed(3, speedFromEnc(motor[0].steps, motor[2].steps, motor[1].steps, motor[3].steps, speed));
+			break;
+		case BACK:
+			motorSetSpeed(0, speedFromEnc(motor[1].steps, motor[2].steps, motor[3].steps, motor[0].steps, -speed));
+			motorSetSpeed(1, speedFromEnc(motor[0].steps, motor[2].steps, motor[3].steps, motor[1].steps, -speed));
+			motorSetSpeed(2, speedFromEnc(motor[0].steps, motor[1].steps, motor[3].steps, motor[2].steps, -speed));
+			motorSetSpeed(3, speedFromEnc(motor[0].steps, motor[2].steps, motor[1].steps, motor[3].steps, -speed));
+			break;
+	}
 }
 
 void motorBrake() {

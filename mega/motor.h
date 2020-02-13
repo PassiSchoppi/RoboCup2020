@@ -46,9 +46,13 @@ void resetAllSteps();
 
 short int stepsMotorMade(uint8_t i);
 
-void motorSetLeftSpeed(int16_t speed);
+// void motorSetLeftSpeed(int16_t speed);
 
-void motorSetRightSpeed(int16_t speed);
+// void motorSetRightSpeed(int16_t speed);
+
+int speedFromEnc(uint8_t encA, uint8_t encB, uint8_t encC, uint8_t encME, int speedME);
+
+void motorDriveTo(uint8_t direction, int speed);
 
 void motorBrake();
 

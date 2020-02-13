@@ -9,12 +9,14 @@
 #include "wall.h"
 #include "i2cmaster.h"
 #include "melexis.h"
+#include "stabilize.h"
 
 uint8_t sensorData[15];
 uint8_t state;
 
 void setup() {
-	state = 1;
+	// stabilize und dann entscheiden
+	state = 8;
 
 	// ## INIT ##
   	motorInit();
@@ -37,13 +39,13 @@ void loop() {
 	for(uint8_t i=0; i<4; i++){
 		checkForStepsMade(i);
 	}
-
+	motorSetSpeed(0, 100);
 	// ## OUTPUT ##
     // # MOTOREN #
-	/*Serial.print(stepsMotorMade(0));Serial.print(" ");
+	Serial.print(stepsMotorMade(0));Serial.print(" ");
 	 Serial.print(stepsMotorMade(1));Serial.print(" ");
 	 Serial.print(stepsMotorMade(2));Serial.print(" ");
-	 Serial.println(stepsMotorMade(3));*/
+	 Serial.println(stepsMotorMade(3));
 	// # SIDE SHARPS #
 	/*Serial.print(sensorData[0]);Serial.print(" ");
 	 Serial.print(sensorData[1]);Serial.print(" ");
@@ -60,8 +62,8 @@ void loop() {
 	 Serial.println(sensorData[10]);*/
 	// # MELEXIS #
 	// melexisChangeAddress(0xA0);
-	 Serial.print(sensorData[11]);Serial.print(" ");
-	 Serial.println(sensorData[12]);
+	/*Serial.print(sensorData[11]);Serial.print(" ");
+	 Serial.println(sensorData[12]);*/
 	// # LIGHT #
 	/*Serial.print(sensorData[13]);Serial.print(" ");
 	 Serial.println(sensorData[14]);*/
@@ -70,7 +72,6 @@ void loop() {
 	 Serial.print(isWall(RIGHT, &sensorData[0]));Serial.print(" ");
 	 Serial.print(isWall(LEFT, &sensorData[0]));Serial.print(" ");
 	 Serial.println(isWall(BACK, &sensorData[0]));*/
-
 
 	// ## STATE ##
 	changeState(&state, &sensorData[0]);
