@@ -100,6 +100,7 @@ void motorSetRightSpeed(int16_t speed) {
 }*/
 
 int speedFromEnc(uint8_t encA, uint8_t encB, uint8_t encC, uint8_t encME, int speedME){
+	// Serial.print(( ((encA+encB+encC)/3) *speedME) / (encME));Serial.print(" ");
 	return (( ((encA+encB+encC)/3) *speedME) / (encME));
 }
 

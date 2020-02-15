@@ -23,8 +23,9 @@
 
 #define BASESPEED 		100
 
-#define STEPSFORONE 	130
-#define STEPFFORTURN 	74
+#define STEPSFORONE 	132
+#define STEPFFORRIGHT 	73
+#define STEPSFORLEFT 	73
 
 #define MAXWHITE 		190
 #define MINWHITE 		150

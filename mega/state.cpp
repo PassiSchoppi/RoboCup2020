@@ -72,7 +72,7 @@ void changeState(uint8_t *state, uint8_t *sensorData){
 				average = average + abs(stepsMotorMade(i));
 			}
 			average = average/4;
-			if( average > STEPFFORTURN )
+			if( average > STEPFFORRIGHT )
 			{
 				resetAllSteps();
 				motorBrake();
@@ -125,9 +125,10 @@ void changeState(uint8_t *state, uint8_t *sensorData){
 					average = average + abs(stepsMotorMade(i));
 			}
 			average = average/4;
-			if(average > STEPFFORTURN)
+			if(average > STEPSFORLEFT)
 			{
 				resetAllSteps();
+				stabilize();
 				*state = 3;
 			}
 			if( sensorData[11]>VICTIMTEMP || sensorData[12]>VICTIMTEMP ){
@@ -146,9 +147,10 @@ void changeState(uint8_t *state, uint8_t *sensorData){
 					average = average + abs(stepsMotorMade(i));
 			}
 			average = average/4;
-			if(average > STEPFFORTURN)
+			if(average > STEPSFORLEFT)
 			{
 				resetAllSteps();
+				stabilize();
 				*state = 4;
 			}
 			if( sensorData[11]>VICTIMTEMP || sensorData[12]>VICTIMTEMP ){
