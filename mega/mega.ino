@@ -10,6 +10,7 @@
 #include "i2cmaster.h"
 #include "melexis.h"
 #include "stabilize.h"
+#include "timer.h"
 
 uint8_t sensorData[15];
 uint8_t state;
@@ -23,6 +24,7 @@ void setup() {
 	sensorInit();
 	melexisInit();
 	mapInit();
+	timerInit();
 	
 	Serial.begin(2000000);
 }
@@ -33,15 +35,10 @@ void loop() {
 	digitalWrite(13, !digitalRead(13));
 	
 	// ## SENSORS ##
-	// readSensor(&sensorData[0]);
-
-	// ## MOTOR ##
-	// for(uint8_t i=0; i<4; i++){
-		// checkForStepsMade(i);
-	// }
+	readSensor(&sensorData[0]);
 
 	// ## STATE ##
-	// changeState(&state, &sensorData[0]);
+	changeState(&state, &sensorData[0]);
 	// Serial.println(state);
 
 	// ## OUTPUT ##
@@ -78,6 +75,6 @@ void loop() {
 	 Serial.println(isWall(BACK, &sensorData[0]));*/
 	
 	//FIXME
-	delay(100);
+	// delay(100);
 }
 

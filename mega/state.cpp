@@ -106,7 +106,6 @@ void changeState(uint8_t *state, uint8_t *sensorData){
 			if( sensorData[7]>132 ){
 				// kurz zurück und dann neu entscheiden
 				motorBrake();
-				delay(1000);
 				*state = 9;
 			}
 			if( sensorData[11]>VICTIMTEMP || sensorData[12]>VICTIMTEMP ){
@@ -203,7 +202,9 @@ void changeState(uint8_t *state, uint8_t *sensorData){
 			//kurz zurück fahren
 			motorBrake();
 			motorDriveTo(BACK, BASESPEED);
-			delay(250);
+			while(stepsMotorMade(0)<23){
+				checkForStepsMade(0);
+			}
 			resetAllSteps();
 			motorBrake();
 			// stabilize und dann neu entscheiden
