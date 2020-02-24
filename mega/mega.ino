@@ -33,7 +33,7 @@ void setup() {
 void loop() {
 	// ## LED ##
 	digitalWrite(13, !digitalRead(13));
-	
+
 	// ## SENSORS ##
 	readSensor(&sensorData[0]);
 

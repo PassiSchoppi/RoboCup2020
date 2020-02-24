@@ -1,5 +1,7 @@
 #include "sensor.h"
 
+uint8_t tryMe = 0;
+
 void sensorInit(){
 	Serial1.begin(115200);
 	pinMode(INTERUPT_PIN_A, OUTPUT);
@@ -23,8 +25,9 @@ void readSensor(uint8_t *sensorData){
 		digitalWrite(INTERUPT_PIN_A, HIGH);
 		digitalWrite(INTERUPT_PIN_A, LOW);
 	}
-	// warten auf Antwort (Programm könnte stecken bleiben)
-	while(Serial1.available()<6){}
+	// warten auf Antwort
+	while((Serial1.available()<6)){}
+	tryMe = 0;
 	while(Serial1.available())
 	{
 		bufferVar = Serial1.read();
@@ -41,8 +44,9 @@ void readSensor(uint8_t *sensorData){
 		digitalWrite(INTERUPT_PIN_B, HIGH);
 		digitalWrite(INTERUPT_PIN_B, LOW);
 	}
-	// auf Antwort warten (Programm könnte stecken bleiben)
-	while(Serial3.available()<5){}
+	// auf Antwort warten
+	while((Serial3.available()<5)){}
+	tryMe = 0;
 	sensorData[6] = Serial3.read();
 	sensorData[7] = Serial3.read();
 	sensorData[8] = Serial3.read();
@@ -88,4 +92,15 @@ void readSensor(uint8_t *sensorData){
 	//12  TEMP_R
 	//13  LIGHT_R
 	//14  LIGHT_L]
-} 
+}
+
+// dont call this function 255 times
+bool dontTryMe() {
+	if(tryMe>250){
+		tryMe=0;
+		Serial.println("fuck");
+		return(0);
+	}
+	++tryMe;
+	return(1);
+}
