@@ -97,5 +97,5 @@ void interupt(){
 	for(uint8_t i=0; i<5; ++i){
 		Serial.write(sensorData[i]);
 	}
-	digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));
+	// digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));
 }

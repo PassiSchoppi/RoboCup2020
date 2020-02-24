@@ -33,12 +33,16 @@ void loop() {
 	digitalWrite(13, !digitalRead(13));
 	
 	// ## SENSORS ##
-	readSensor(&sensorData[0]);
+	// readSensor(&sensorData[0]);
 
 	// ## MOTOR ##
-	for(uint8_t i=0; i<4; i++){
-		checkForStepsMade(i);
-	}
+	// for(uint8_t i=0; i<4; i++){
+		// checkForStepsMade(i);
+	// }
+
+	// ## STATE ##
+	// changeState(&state, &sensorData[0]);
+	// Serial.println(state);
 
 	// ## OUTPUT ##
     // # MOTOREN #
@@ -47,19 +51,19 @@ void loop() {
 	 Serial.print(stepsMotorMade(2));Serial.print(" ");
 	 Serial.println(stepsMotorMade(3));*/
 	// # SIDE SHARPS #
-	Serial.print(sensorData[0]);Serial.print(" ");
-	 Serial.print(sensorData[1]);Serial.print(" ");
-	 Serial.print(sensorData[2]);Serial.print(" ");
-	 Serial.print(sensorData[3]);Serial.print(" ");
+	// Serial.println(sensorData[0]);Serial.print(" ");
+	 // Serial.println(sensorData[1]);Serial.print(" ");
+	 // Serial.println(sensorData[2]);Serial.print(" ");
+	 // Serial.println(sensorData[3]);Serial.print(" ");
 	// # ACC #
 	/*Serial.print(sensorData[4]);Serial.print(" ");
 	 Serial.println(sensorData[5]);*/
 	// # FRONT/BACK SHARPS #
-	Serial.print(sensorData[6]);Serial.print(" ");
-	 Serial.print(sensorData[7]);Serial.print(" ");
-	 Serial.print(sensorData[8]);Serial.print(" ");
-	 Serial.print(sensorData[9]);Serial.print(" ");
-	 Serial.println(sensorData[10]);
+	// Serial.print(sensorData[6]);Serial.print(" ");
+	 // Serial.println(sensorData[7]);Serial.print(" ");
+	 // Serial.print(sensorData[8]);Serial.print(" ");
+	 // Serial.print(sensorData[9]);Serial.print(" ");
+	 // Serial.println(sensorData[10]);
 	// # MELEXIS #
 	// melexisChangeAddress(0xA0);
 	/*Serial.print(sensorData[11]);Serial.print(" ");
@@ -72,12 +76,8 @@ void loop() {
 	 Serial.print(isWall(RIGHT, &sensorData[0]));Serial.print(" ");
 	 Serial.print(isWall(LEFT, &sensorData[0]));Serial.print(" ");
 	 Serial.println(isWall(BACK, &sensorData[0]));*/
-
-	// ## STATE ##
-	changeState(&state, &sensorData[0]);
-	// Serial.println(state);
 	
 	//FIXME
-	// delay(100000);
+	delay(100);
 }
 

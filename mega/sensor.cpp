@@ -43,15 +43,24 @@ void readSensor(uint8_t *sensorData){
 	}
 	// auf Antwort warten (Programm könnte stecken bleiben)
 	while(Serial3.available()<5){}
+	sensorData[6] = Serial3.read();
+	sensorData[7] = Serial3.read();
+	sensorData[8] = Serial3.read();
+	sensorData[9] = Serial3.read();
+	sensorData[10] = Serial3.read();
 	while(Serial3.available())
 	{
 		bufferVar = Serial3.read();
-		if(i<11){
+		// if(i<11){
 			// Serial.println(i);
-			sensorData[i]=bufferVar;
-			++i;
-		}
+			// sensorData[i]=bufferVar;
+			// ++i;
+		// }
 	}
+
+	// 														SENSOR 9 BL
+	sensorData[9] = analogRead(A11) >> 2;
+
 	// 														MELEXIS
 	// melexisInterrupt();
 	// Serial.println(melexisGetValue(0));
