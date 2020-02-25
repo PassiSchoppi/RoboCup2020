@@ -71,7 +71,7 @@ void changeState(uint8_t *state, uint8_t *sensorData){
 			average = average/4;
 			if( average > STEPFFORRIGHT )
 			{
-				resetAllSteps();
+				motorResetAllSteps();
 				motorBrake();
 				stabilize();
 				*state = 3;
@@ -95,7 +95,7 @@ void changeState(uint8_t *state, uint8_t *sensorData){
 			}
 			average = average/4;
 			if( average>STEPSFORONE ){
-				resetAllSteps();
+				motorResetAllSteps();
 				// stabilize und dann neue entscheidung
 				*state = 8;
 			}
@@ -123,7 +123,7 @@ void changeState(uint8_t *state, uint8_t *sensorData){
 			average = average/4;
 			if(average > STEPSFORLEFT)
 			{
-				resetAllSteps();
+				motorResetAllSteps();
 				stabilize();
 				*state = 3;
 			}
@@ -145,7 +145,7 @@ void changeState(uint8_t *state, uint8_t *sensorData){
 			average = average/4;
 			if(average > STEPSFORLEFT)
 			{
-				resetAllSteps();
+				motorResetAllSteps();
 				stabilize();
 				*state = 4;
 			}
@@ -192,7 +192,7 @@ void changeState(uint8_t *state, uint8_t *sensorData){
 			motorBrake();
 			stabilize();
 			motorBrake();
-			resetAllSteps();
+			motorResetAllSteps();
 			*state = 1;
 			break;
 		case 9:
@@ -200,9 +200,9 @@ void changeState(uint8_t *state, uint8_t *sensorData){
 			motorBrake();
 			motorDriveTo(BACK, BASESPEED);
 			while(stepsMotorMade(0)<23){
-				checkForStepsMade(0);
+				motorCheckForStepsMade(0);
 			}
-			resetAllSteps();
+			motorResetAllSteps();
 			motorBrake();
 			// stabilize und dann neu entscheiden
 			*state = 8;

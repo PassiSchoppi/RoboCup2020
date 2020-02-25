@@ -27,18 +27,18 @@ void stabilize(){
 	if(isWall(BACK, &localSensorData[0])){
 		motorDriveTo(BACK, BASESPEED);
 		while(stepsMotorMade(0)<27){
-			checkForStepsMade(0);
+			motorCheckForStepsMade(0);
 		}
 		motorBrake();
-		resetAllSteps();
+		motorResetAllSteps();
 		motorDriveTo(FRONT, BASESPEED);
 		while(stepsMotorMade(0)<27){
 			checkForStepsMade(0);
 		}
 		motorBrake();
-		resetAllSteps();
+		motorResetAllSteps();
 	}
 
 	motorBrake();
-	resetAllSteps();
+	motorResetAllSteps();
 }

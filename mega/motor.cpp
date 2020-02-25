@@ -61,7 +61,7 @@ void motorSetSpeed(uint8_t i, int16_t speed) {
   	digitalWrite(motor[i].pin2, speed<=0);
 }
 
-void checkForStepsMade(uint8_t i){
+void motorCheckForStepsMade(uint8_t i){
 	// momentanes siganal auf enc1 des Motors i
 	bool currentEncSignal;
 	currentEncSignal = (*motor[i].enc >> motor[i].encbit & 1);
@@ -74,7 +74,7 @@ void checkForStepsMade(uint8_t i){
 	motor[i].lastEncSignal = currentEncSignal;
 }
 
-void resetAllSteps(){
+void motorResetAllSteps(){
 	for(uint8_t i=0; i<4; i++){
 		motor[i].steps = 1;
 	}

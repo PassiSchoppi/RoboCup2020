@@ -47,10 +47,10 @@ void motorSetSpeed(uint8_t motor, int16_t speed);
 
 // checks encoder steps
 // should be called every milli second
-void checkForStepsMade(uint8_t i);
+void motorCheckForStepsMade(uint8_t i);
 
 // set all motor steps to 0
-void resetAllSteps();
+void motorResetAllSteps();
 
 // returns steps an individual motor made
 short int stepsMotorMade(uint8_t i);

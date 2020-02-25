@@ -37,7 +37,7 @@ void timerInit() {
 ISR(TIMER0_COMPA_vect) {
 
 	for(uint8_t i=0; i<4; ++i) {
-		checkForStepsMade(i);	
+		motorCheckForStepsMade(i);	
 	}
 
 }
