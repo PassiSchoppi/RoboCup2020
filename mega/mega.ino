@@ -50,10 +50,10 @@ void loop() {
 
 	// ## OUTPUT ##
     // # MOTOREN #
-	/*Serial.print(stepsMotorMade(0));Serial.print(" ");
-	 Serial.print(stepsMotorMade(1));Serial.print(" ");
-	 Serial.print(stepsMotorMade(2));Serial.print(" ");
-	 Serial.println(stepsMotorMade(3));*/
+	/*Serial.print(motorStepsMade(0));Serial.print(" ");
+	 Serial.print(motorStepsMade(1));Serial.print(" ");
+	 Serial.print(motorStepsMade(2));Serial.print(" ");
+	 Serial.println(motorStepsMade(3));*/
 	// # SIDE SHARPS #
 	// Serial.println(sensorData[0]);Serial.print(" ");
 	 // Serial.println(sensorData[1]);Serial.print(" ");

@@ -66,7 +66,7 @@ void changeState(uint8_t *state, uint8_t *sensorData){
 			motorDriveTo(RIGHT, BASESPEED);
 			average = 0;
 			for(uint8_t i=0; i<4; ++i){
-				average = average + abs(stepsMotorMade(i));
+				average = average + abs(motorStepsMade(i));
 			}
 			average = average/4;
 			if( average > STEPFFORRIGHT )
@@ -91,7 +91,7 @@ void changeState(uint8_t *state, uint8_t *sensorData){
 			motorDriveTo(FRONT, BASESPEED);
 			average = 0;
 			for(uint8_t i=0; i<4; ++i){
-				average = average + stepsMotorMade(i);
+				average = average + motorStepsMade(i);
 			}
 			average = average/4;
 			if( average>STEPSFORONE ){
@@ -118,7 +118,7 @@ void changeState(uint8_t *state, uint8_t *sensorData){
 			motorDriveTo(LEFT, BASESPEED);
 			average = 0;
 			for(uint8_t i=0; i<4; ++i){
-					average = average + abs(stepsMotorMade(i));
+					average = average + abs(motorStepsMade(i));
 			}
 			average = average/4;
 			if(average > STEPSFORLEFT)
@@ -140,7 +140,7 @@ void changeState(uint8_t *state, uint8_t *sensorData){
 			motorDriveTo(LEFT, BASESPEED);
 			average = 0;
 			for(uint8_t i=0; i<4; ++i){
-					average = average + abs(stepsMotorMade(i));
+					average = average + abs(motorStepsMade(i));
 			}
 			average = average/4;
 			if(average > STEPSFORLEFT)
@@ -199,7 +199,7 @@ void changeState(uint8_t *state, uint8_t *sensorData){
 			//kurz zurück fahren
 			motorBrake();
 			motorDriveTo(BACK, BASESPEED);
-			while(stepsMotorMade(0)<23){
+			while(motorStepsMade(0)<23){
 				motorCheckForStepsMade(0);
 			}
 			motorResetAllSteps();

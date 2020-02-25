@@ -80,7 +80,7 @@ void motorResetAllSteps(){
 	}
 }
 
-short int stepsMotorMade(uint8_t i){
+short int motorStepsMade(uint8_t i){
 	return(motor[i].steps);
 }
 

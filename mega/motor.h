@@ -53,7 +53,7 @@ void motorCheckForStepsMade(uint8_t i);
 void motorResetAllSteps();
 
 // returns steps an individual motor made
-short int stepsMotorMade(uint8_t i);
+short int motorStepsMade(uint8_t i);
 
 // returns regulated speed so the robot moves straight
 int speedFromEnc(uint8_t encA, uint8_t encB, uint8_t encC, uint8_t encME, int speedME);
