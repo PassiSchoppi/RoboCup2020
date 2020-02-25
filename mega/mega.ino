@@ -45,7 +45,7 @@ void loop() {
 	// motorDriveTo(FRONT, 100);
 
 	// ## STATE ##
-	// changeState(&state, &sensorData[0]);
+	// stateChange(&state, &sensorData[0]);
 	// Serial.println(state);
 
 	// ## OUTPUT ##

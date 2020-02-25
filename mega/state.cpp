@@ -15,7 +15,7 @@ uint8_t nothing(){
 	return 0;
 }
 
-void changeState(uint8_t *state, uint8_t *sensorData){
+void stateChange(uint8_t *state, uint8_t *sensorData){
 	switch(*state) {
 		case 0:
 			// the end
