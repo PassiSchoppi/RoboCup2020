@@ -4,10 +4,7 @@
 bool isWall(uint8_t where, uint8_t *sensorData){
 	switch(where) {
 		case FRONT :
-			// FIXME
-			// nur 7 funktioniert richtig
-			// 6 funktiononiert komisch
-			//
+			// FIXME: test sensors and adapt code
 			// if(sensorData[6]<DISTANCETOWALL && sensorData[7]<DISTANCETOWALL && sensorData[8]<DISTANCETOWALL){
 			//  	return true;
 			// }
@@ -17,10 +14,7 @@ bool isWall(uint8_t where, uint8_t *sensorData){
 			}
 			break;
 		case RIGHT :
-			// FIXME
-			// nur 3 funktioniert
-			// 2 gibt den gleichen wert wie 1 aus
-			//
+			// FIXME: test sensors and adapt code
 			// if(sensorData[2]>DISTANCETOWALL && sensorData[3]>DISTANCETOWALL){
 			//  	return true;
 			// }
@@ -31,10 +25,7 @@ bool isWall(uint8_t where, uint8_t *sensorData){
 
 			break;
 		case BACK :
-			// FIXME
-			// nur 10 funktioniert
-			// 9 ist immer bei 200
-			//
+			// FIXME: test sensors and adapt code
 			// if(sensorData[9]>DISTANCETOWALL && sensorData[10]>DISTANCETOWALL){
 			//  	return true;
 			// }

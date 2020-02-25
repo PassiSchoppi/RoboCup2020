@@ -12,7 +12,7 @@ void sensorInit(){
 	pinMode(7, OUTPUT);
 }
 
-void readSensor(uint8_t *sensorData){
+void sensorRead(uint8_t *sensorData){
 	uint8_t i=0;
 	uint8_t bufferVar=0;
 	uint8_t newBufferVar;

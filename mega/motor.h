@@ -22,38 +22,46 @@
  * 
  */
 
-struct Motor {
+struct Motor 
+{
+    // pins to controll direction and speed
     uint8_t pin1;
     uint8_t pin2;
+    // value of current encoder signal (addr)
 	volatile uint8_t* enc;
 	uint8_t encbit;
-	// volatile uint8_t* enc2;
-	// uint8_t enc2bit;
-	short int 	steps;
+	// value of last encoder signal (value)
 	bool 	lastEncSignal;
+	// steps this motor made
+	short int 	steps;
+	// pwm pin on arduino
     uint8_t pwm;
+    // motor factor caused by manufacturing differences
     double  factor;
-	int16_t direction;
 };
 
 void motorInit();
 
+// set speed of individual motor
 void motorSetSpeed(uint8_t motor, int16_t speed);
 
+// checks encoder steps
+// should be called every milli second
 void checkForStepsMade(uint8_t i);
 
+// set all motor steps to 0
 void resetAllSteps();
 
+// returns steps an individual motor made
 short int stepsMotorMade(uint8_t i);
 
-// void motorSetLeftSpeed(int16_t speed);
-
-// void motorSetRightSpeed(int16_t speed);
-
+// returns regulated speed so the robot moves straight
 int speedFromEnc(uint8_t encA, uint8_t encB, uint8_t encC, uint8_t encME, int speedME);
 
+// let the robot drive in specific direction
 void motorDriveTo(uint8_t direction, int speed);
 
+// stop all motors
 void motorBrake();
 
 

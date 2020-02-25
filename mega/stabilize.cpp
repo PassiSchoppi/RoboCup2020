@@ -6,7 +6,7 @@ void stabilize(){
 	uint8_t localSensorData[15];
 	for(int i=0; i<1000; ++i){
 	
-	readSensor(&localSensorData[0]);
+	sensorRead(&localSensorData[0]);
 
 	if( isWall(LEFT, &localSensorData[0]) ){
 		motorSetSpeed(1, 50*(localSensorData[0]-localSensorData[1])/abs(localSensorData[0]-localSensorData[1]));

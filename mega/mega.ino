@@ -3,7 +3,6 @@
 #include "motor.h"
 #include "sensor.h"
 #include "map.h"
-#include "pid.h"
 #include "state.h"
 #include "led.h"
 #include "wall.h"
@@ -36,7 +35,7 @@ void loop() {
 	digitalWrite(13, !digitalRead(13));
 
 	// ## SENSORS ##
-	// readSensor(&sensorData[0]);
+	// sensorRead(&sensorData[0]);
 	
 	kitdropperSetTo(180);
 	delay(1000);
@@ -81,8 +80,5 @@ void loop() {
 	 Serial.print(isWall(RIGHT, &sensorData[0]));Serial.print(" ");
 	 Serial.print(isWall(LEFT, &sensorData[0]));Serial.print(" ");
 	 Serial.println(isWall(BACK, &sensorData[0]));*/
-	
-	//FIXME
-	// delay(100);
 }
 

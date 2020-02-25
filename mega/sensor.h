@@ -6,7 +6,9 @@
 #include "melexis.h"
 
 void sensorInit();
-void readSensor(uint8_t *sensorData);
+
+void sensorRead(uint8_t *sensorData);
+
 bool dontTryMe();
 
 #endif

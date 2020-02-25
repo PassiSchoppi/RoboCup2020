@@ -27,9 +27,6 @@ void changeState(uint8_t *state, uint8_t *sensorData){
 			motorBrake();
 			// Serial.println("new status");
 			LEDSetColor(WHITE);
-			
-			// FIXME
-			// delay(100);
 
 			// ## get direction to drive to ##
 			if(!isWall(RIGHT, &sensorData[0])){
@@ -165,16 +162,16 @@ void changeState(uint8_t *state, uint8_t *sensorData){
 			delay(1000);
 			if( sensorData[11]>VICTIMTEMP || sensorData[12]>VICTIMTEMP ){
 				delay(1000);
-				readSensor(&sensorData[0]);
+				sensorRead(&sensorData[0]);
 				if( sensorData[11]>VICTIMTEMP || sensorData[12]>VICTIMTEMP ){
 					delay(1000);
-					readSensor(&sensorData[0]);
+					sensorRead(&sensorData[0]);
 					if( sensorData[11]>VICTIMTEMP || sensorData[12]>VICTIMTEMP ){
 						delay(1000);
-						readSensor(&sensorData[0]);
+						sensorRead(&sensorData[0]);
 						if( sensorData[11]>VICTIMTEMP || sensorData[12]>VICTIMTEMP ){
 							delay(1000);
-							readSensor(&sensorData[0]);
+							sensorRead(&sensorData[0]);
 							if( sensorData[11]>VICTIMTEMP || sensorData[12]>VICTIMTEMP ){
 								//move the servo motor
 							}

@@ -13,7 +13,6 @@ void motorInit() {
 	motor[0].steps = 1;
 	motor[0].pwm = 4;
   	motor[0].factor = 0.9968225247;
-	motor[0].direction = 0;
 
   	motor[1].pin1 = 23;
   	motor[1].pin2 = 25;
@@ -24,7 +23,6 @@ void motorInit() {
 	motor[1].steps = 1;
   	motor[1].pwm = 3;
   	motor[1].factor = 0.9708457497;
-	motor[1].direction = 0;
 
   	motor[2].pin1 = 49;
   	motor[2].pin2 = 47;
@@ -35,7 +33,6 @@ void motorInit() {
 	motor[2].steps = 1;
   	motor[2].pwm = 5;
   	motor[2].factor = 0.9565686154;
-	motor[2].direction = 0;
 
   	motor[3].pin1 = 51;
   	motor[3].pin2 = 53;
@@ -46,7 +43,6 @@ void motorInit() {
 	motor[3].steps = 1;
   	motor[3].pwm = 6;
   	motor[3].factor = 1.00000000;
-	motor[3].direction = 0;
 
   	for(uint8_t i=0; i<4; i++) {
     	pinMode(motor[i].pin1, OUTPUT);
@@ -63,7 +59,6 @@ void motorSetSpeed(uint8_t i, int16_t speed) {
   	analogWrite(motor[i].pwm, pwm);
   	digitalWrite(motor[i].pin1, speed>=0);
   	digitalWrite(motor[i].pin2, speed<=0);
-	motor[i].direction = speed;
 }
 
 void checkForStepsMade(uint8_t i){
