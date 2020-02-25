@@ -29,23 +29,23 @@ void stateChange(uint8_t *state, uint8_t *sensorData){
 			LEDSetColor(WHITE);
 
 			// ## get direction to drive to ##
-			if(!isWall(RIGHT, &sensorData[0])){
+			if(!wallExists(RIGHT, &sensorData[0])){
 				// rechts drehen dann gerade aus
 				*state = 2;
 				break;
 			}
-			if(!isWall(FRONT, &sensorData[0])){
+			if(!wallExists(FRONT, &sensorData[0])){
 				// rechts drehen dann gerade aus
 				*state = 3;
 				break;
 			}
-			if(!isWall(LEFT, &sensorData[0])){
+			if(!wallExists(LEFT, &sensorData[0])){
 				// links drehen dann gerade aus
 				*state = 4;
 				break;
 			}
 			// wenn rechts und forne und links eine wand ist aber hinten keine
-			if(!isWall(BACK, &sensorData[0])){
+			if(!wallExists(BACK, &sensorData[0])){
 				// 2x links drehen dann gerade aus
 				*state = 5;
 				break;

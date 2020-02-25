@@ -4,6 +4,6 @@
 #include <Arduino.h>
 #include "config.h"
 
-bool isWall(uint8_t where, uint8_t *sensorData);
+bool wallExists(uint8_t where, uint8_t *sensorData);
 
 #endif

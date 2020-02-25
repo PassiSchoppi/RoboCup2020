@@ -1,7 +1,7 @@
 #include "wall.h"
 #include "config.h"
 
-bool isWall(uint8_t where, uint8_t *sensorData){
+bool wallExists(uint8_t where, uint8_t *sensorData){
 	switch(where) {
 		case FRONT :
 			// FIXME: test sensors and adapt code

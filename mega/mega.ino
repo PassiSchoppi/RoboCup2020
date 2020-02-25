@@ -76,9 +76,9 @@ void loop() {
 	/*Serial.print(sensorData[13]);Serial.print(" ");
 	 Serial.println(sensorData[14]);*/
 	// # ISWALL #
-	/*Serial.print(isWall(FRONT, &sensorData[0]));Serial.print(" ");
-	 Serial.print(isWall(RIGHT, &sensorData[0]));Serial.print(" ");
-	 Serial.print(isWall(LEFT, &sensorData[0]));Serial.print(" ");
-	 Serial.println(isWall(BACK, &sensorData[0]));*/
+	/*Serial.print(wallExists(FRONT, &sensorData[0]));Serial.print(" ");
+	 Serial.print(wallExists(RIGHT, &sensorData[0]));Serial.print(" ");
+	 Serial.print(wallExists(LEFT, &sensorData[0]));Serial.print(" ");
+	 Serial.println(wallExists(BACK, &sensorData[0]));*/
 }
 
