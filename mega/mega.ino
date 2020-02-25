@@ -11,6 +11,7 @@
 #include "melexis.h"
 #include "stabilize.h"
 #include "timer.h"
+#include "kitdropper.h"
 
 uint8_t sensorData[15];
 uint8_t state;
@@ -35,10 +36,17 @@ void loop() {
 	digitalWrite(13, !digitalRead(13));
 
 	// ## SENSORS ##
-	readSensor(&sensorData[0]);
+	// readSensor(&sensorData[0]);
+	
+	kitdropperSetTo(180);
+	delay(1000);
+	kitdropperSetTo(0);
+	delay(1000);
+
+	// motorDriveTo(FRONT, 100);
 
 	// ## STATE ##
-	changeState(&state, &sensorData[0]);
+	// changeState(&state, &sensorData[0]);
 	// Serial.println(state);
 
 	// ## OUTPUT ##

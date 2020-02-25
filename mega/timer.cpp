@@ -22,7 +22,7 @@ void timerInit() {
   	TCNT0 = t0_load;
   	// set compare register to t0_comp
   	OCR0A = t0_comp;
-
+	
   	// configure the clock 0 to throw an inetrrupt when
   	// the value of OCR0A is reached by clock 0
   	TIMSK0 = (1 << OCIE0A);
