@@ -9,4 +9,7 @@ const uint16_t t0_comp = 250;
 
 void timerInit();
 
+// there is a ISR in timer.cpp
+// to motorCheckForStepsMade()
+
 #endif 

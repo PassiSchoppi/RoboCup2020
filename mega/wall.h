@@ -4,6 +4,7 @@
 #include <Arduino.h>
 #include "config.h"
 
+// returns true if there is a wall in the given direction
 bool wallExists(uint8_t where, uint8_t *sensorData);
 
 #endif

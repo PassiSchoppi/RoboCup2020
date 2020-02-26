@@ -7,6 +7,7 @@
 #include "motor.h"
 #include "config.h"
 
+// stabilizes the robot to stay in the middle of field
 void stabilize();
 
 #endif 
