@@ -35,12 +35,9 @@ void loop() {
 	digitalWrite(13, !digitalRead(13));
 
 	// ## SENSORS ##
-	// sensorRead(&sensorData[0]);
+	sensorRead(&sensorData[0]);
 	
-	kitdropperSetTo(180);
-	delay(1000);
-	kitdropperSetTo(0);
-	delay(1000);
+	// kitdropperSetTo(0);
 
 	// motorDriveTo(FRONT, 100);
 
@@ -66,7 +63,7 @@ void loop() {
 	// Serial.print(sensorData[6]);Serial.print(" ");
 	 // Serial.println(sensorData[7]);Serial.print(" ");
 	 // Serial.print(sensorData[8]);Serial.print(" ");
-	 // Serial.print(sensorData[9]);Serial.print(" ");
+	 Serial.println(sensorData[9]);Serial.print(" ");
 	 // Serial.println(sensorData[10]);
 	// # MELEXIS #
 	// melexisChangeAddress(0xA0);

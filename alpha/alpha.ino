@@ -9,6 +9,7 @@ int 	pwm;
 void setup() {
 	pinMode(INTERUPT_PIN, INPUT_PULLUP);
 	pinMode(3, OUTPUT);
+	pinMode(0, OUTPUT);
 	Serial.begin(115200);
 	attachInterrupt(digitalPinToInterrupt(INTERUPT_PIN), interupt, RISING);
 }
@@ -38,12 +39,11 @@ void loop() {
 	sensorData[4] = (analogRead(ACC_X)-30) >> 2;
 	sensorData[5] = (analogRead(ACC_Z)-30) >> 2;
 
-	if(Serial.available())
+	/*if(Serial.available())
 	{
 		kitdropperDeg = Serial.read();
-	}
-
-	servoPulse(3, kitdropperDeg);
+	}*/
+	servoPulse(0, 180);
 }
 
 void servoPulse (int servo, int angle)

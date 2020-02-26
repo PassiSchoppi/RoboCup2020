@@ -26,8 +26,11 @@ void sensorRead(uint8_t *sensorData){
 		digitalWrite(INTERUPT_PIN_A, LOW);
 	}
 	// warten auf Antwort
-	while((Serial1.available()<6)){}
-	tryMe = 0;
+	Serial.println("waiting...");
+	while((Serial1.available()<6)){
+		// Serial.println("still waiting...");
+	}
+	Serial.println("got alpha");
 	while(Serial1.available())
 	{
 		bufferVar = Serial1.read();
@@ -46,7 +49,7 @@ void sensorRead(uint8_t *sensorData){
 	}
 	// auf Antwort warten
 	while((Serial3.available()<5)){}
-	tryMe = 0;
+	Serial.println("got beta");
 	sensorData[6] = Serial3.read();
 	sensorData[7] = Serial3.read();
 	sensorData[8] = Serial3.read();
@@ -63,7 +66,7 @@ void sensorRead(uint8_t *sensorData){
 	}
 
 	// 														SENSOR 9 BL
-	sensorData[9] = analogRead(A11) >> 2;
+	// sensorData[9] = analogRead(A11) >> 2;
 
 	// 														MELEXIS
 	// melexisInterrupt();

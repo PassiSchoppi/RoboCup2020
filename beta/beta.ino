@@ -91,11 +91,12 @@ void loop() {
 	sensorData[2] = analogRead(SHP_FR) >> 2;
 	sensorData[3] = analogRead(SHP_BL) >> 2;
 	sensorData[4] = analogRead(SHP_BR) >> 2;
+
+	digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));
 }
 
 void interupt(){
 	for(uint8_t i=0; i<5; ++i){
 		Serial.write(sensorData[i]);
 	}
-	// digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));
 }
