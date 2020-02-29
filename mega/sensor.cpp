@@ -1,8 +1,7 @@
 #include "sensor.h"
 
-uint8_t tryMe = 0;
-
-void sensorInit(){
+void sensorInit()
+{
 	Serial1.begin(115200);
 	pinMode(INTERUPT_PIN_A, OUTPUT);
 
@@ -12,24 +11,33 @@ void sensorInit(){
 	pinMode(7, OUTPUT);
 }
 
-void sensorRead(uint8_t *sensorData){
+void sensorRead(uint8_t *sensorData)
+{
 	uint8_t i=0;
 	uint8_t bufferVar=0;
 	uint8_t newBufferVar;
 
 	// 														ALPHA
 	//wenn noch Daten da sind kein Interrupt
-	if(!Serial1.available()){
+	if(!Serial1.available())
+	{
 		digitalWrite(INTERUPT_PIN_A, HIGH);
 		digitalWrite(INTERUPT_PIN_A, LOW);
 	}
 	// warten auf Antwort
-	while((Serial1.available()<6)){}
+	for(int i = 0; i < 100; ++i)
+	{
+		if(Serial1.available() > 6)
+		{
+			break;
+		}
+	}
 	// Serial.println("got alpha");
 	while(Serial1.available())
 	{
 		bufferVar = Serial1.read();
-		if(i<6){
+		if(i<6)
+		{
 			// Serial.println(bufferVar);
 			sensorData[i]=bufferVar;
 			++i;
@@ -38,7 +46,8 @@ void sensorRead(uint8_t *sensorData){
 	
 	// 														BETA
 	// wenn noch daten da sind kein Interrupt
-	if(!Serial3.available()){
+	if(!Serial3.available())
+	{
 		/*digitalWrite(INTERUPT_PIN_B, HIGH);
 		digitalWrite(INTERUPT_PIN_B, LOW);*/
 		pinMode(INTERUPT_PIN_B, OUTPUT);
@@ -46,16 +55,19 @@ void sensorRead(uint8_t *sensorData){
 		pinMode(INTERUPT_PIN_B, INPUT);
 	}
 	// auf Antwort warten
-	while((Serial3.available()<5)){}
-	/*sensorData[6] = Serial3.read();
-	sensorData[7] = Serial3.read();
-	sensorData[8] = Serial3.read();
-	sensorData[9] = Serial3.read();
-	sensorData[10] = Serial3.read();*/
+	for(int i = 0; i < 100; ++i)
+	{
+		if(Serial3.available() > 5)
+		{
+			break;
+		}
+	}
+	Serial.println("done");
 	while(Serial3.available())
 	{
 		bufferVar = Serial3.read();
-		if(i<11){
+		if(i<11)
+		{
 			sensorData[i]=bufferVar;
 			++i;
 		}
@@ -90,15 +102,4 @@ void sensorRead(uint8_t *sensorData){
 	//12  TEMP_R
 	//13  LIGHT_R
 	//14  LIGHT_L]
-}
-
-// dont call this function 255 times
-bool dontTryMe() {
-	if(tryMe>250){
-		tryMe=0;
-		Serial.println("fuck");
-		return(0);
-	}
-	++tryMe;
-	return(1);
 }

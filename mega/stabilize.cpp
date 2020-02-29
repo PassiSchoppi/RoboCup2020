@@ -1,7 +1,8 @@
 #include "stabilize.h"
 
 
-void stabilize(){
+void stabilize()
+{
 	motorBrake();
 	
 	uint8_t localSensorData[15];

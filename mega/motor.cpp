@@ -5,7 +5,8 @@ Motor motor[4];
 
 uint8_t localSensorData[15];
 
-void motorInit() {
+void motorInit() 
+{
   	motor[0].pin1 = 29;
   	motor[0].pin2 = 27;
   	motor[0].enc = &PINC;
@@ -46,7 +47,8 @@ void motorInit() {
   	motor[3].pwm = 6;
   	motor[3].factor = 1.00000000;
 
-  	for(uint8_t i=0; i<4; i++) {
+  	for(uint8_t i=0; i<4; i++) 
+	{
     	pinMode(motor[i].pin1, OUTPUT);
     	pinMode(motor[i].pin2, OUTPUT);
     	// pinMode(motor[i].enc, INPUT);
@@ -55,7 +57,8 @@ void motorInit() {
   	}
 }
 
-void motorSetSpeed(uint8_t i, int16_t speed) {
+void motorSetSpeed(uint8_t i, int16_t speed) 
+{
   	uint8_t pwm = min(255, round(abs(speed)*motor[i].factor));
 
   	analogWrite(motor[i].pwm, pwm);
@@ -63,40 +66,48 @@ void motorSetSpeed(uint8_t i, int16_t speed) {
   	digitalWrite(motor[i].pin2, speed<=0);
 }
 
-void motorCheckForStepsMade(uint8_t i){
+void motorCheckForStepsMade(uint8_t i)
+{
 	// momentanes siganal auf enc1 des Motors i
 	bool currentEncSignal;
 	currentEncSignal = (*motor[i].enc >> motor[i].encbit & 1);
 
 	// wenn ein rising edge auf current state ist
-	if(motor[i].lastEncSignal != currentEncSignal && currentEncSignal == HIGH){
+	if(motor[i].lastEncSignal != currentEncSignal && currentEncSignal == HIGH)
+	{
 			motor[i].steps = (motor[i].steps + 1);
 	}
 	// update lastEncSignal
 	motor[i].lastEncSignal = currentEncSignal;
 }
 
-void motorResetAllSteps(){
-	for(uint8_t i=0; i<4; i++){
+void motorResetAllSteps()
+{
+	for(uint8_t i=0; i<4; i++)
+	{
 		motor[i].steps = 1;
 	}
 }
 
-short int motorStepsMade(uint8_t i){
+short int motorStepsMade(uint8_t i)
+{
 	return(motor[i].steps);
 }
 
-/*void motorSetLeftSpeed(int16_t speed) {
+/*void motorSetLeftSpeed(int16_t speed) 
+{
   	motorSetSpeed(0, speed);
   	motorSetSpeed(1, speed);
 }
 
-void motorSetRightSpeed(int16_t speed) {
+void motorSetRightSpeed(int16_t speed) 
+{
   	motorSetSpeed(2, speed);
   	motorSetSpeed(3, speed);
 }*/
 
-int speedFromEnc(uint8_t encA, uint8_t encB, uint8_t encC, uint8_t encME, int speedME, bool stickToWall, bool leftMotor){
+int speedFromEnc(uint8_t encA, uint8_t encB, uint8_t encC, uint8_t encME, int speedME, bool stickToWall, bool leftMotor)
+{
 	/*if(stickToWall)
 	{
 		sensorRead(&localSensorData[0]);
@@ -129,26 +140,31 @@ int speedFromEnc(uint8_t encA, uint8_t encB, uint8_t encC, uint8_t encME, int sp
 	// return(speedME);
 }
 
-void motorDriveTo(uint8_t direction, int speed){
-	switch( direction ){
+void motorDriveTo(uint8_t direction, int speed)
+{
+	switch( direction )
+	{
 		case FRONT:
 			motorSetSpeed(0, speedFromEnc(motor[1].steps, motor[2].steps, motor[3].steps, motor[0].steps, speed, true, true));
 			motorSetSpeed(1, speedFromEnc(motor[0].steps, motor[2].steps, motor[3].steps, motor[1].steps, speed, true, true));
 			motorSetSpeed(2, speedFromEnc(motor[0].steps, motor[1].steps, motor[3].steps, motor[2].steps, speed, true, false));
 			motorSetSpeed(3, speedFromEnc(motor[0].steps, motor[2].steps, motor[1].steps, motor[3].steps, speed, true, false));
 			break;
+		
 		case RIGHT:
 			motorSetSpeed(0, speedFromEnc(motor[1].steps, motor[2].steps, motor[3].steps, motor[0].steps, speed, false, true));
 			motorSetSpeed(1, speedFromEnc(motor[0].steps, motor[2].steps, motor[3].steps, motor[1].steps, speed, false, true));
 			motorSetSpeed(2, speedFromEnc(motor[0].steps, motor[1].steps, motor[3].steps, motor[2].steps, -speed, false, false));
 			motorSetSpeed(3, speedFromEnc(motor[0].steps, motor[2].steps, motor[1].steps, motor[3].steps, -speed, false, false));
 			break;
+		
 		case LEFT:
 			motorSetSpeed(0, speedFromEnc(motor[1].steps, motor[2].steps, motor[3].steps, motor[0].steps, -speed, false, true));
 			motorSetSpeed(1, speedFromEnc(motor[0].steps, motor[2].steps, motor[3].steps, motor[1].steps, -speed, false, true));
 			motorSetSpeed(2, speedFromEnc(motor[0].steps, motor[1].steps, motor[3].steps, motor[2].steps, speed, false, false));
 			motorSetSpeed(3, speedFromEnc(motor[0].steps, motor[2].steps, motor[1].steps, motor[3].steps, speed, false, false));
 			break;
+		
 		case BACK:
 			motorSetSpeed(0, speedFromEnc(motor[1].steps, motor[2].steps, motor[3].steps, motor[0].steps, -speed, true, true));
 			motorSetSpeed(1, speedFromEnc(motor[0].steps, motor[2].steps, motor[3].steps, motor[1].steps, -speed, true, true));
@@ -158,8 +174,10 @@ void motorDriveTo(uint8_t direction, int speed){
 	}
 }
 
-void motorBrake() {
-  	for(uint8_t i=0; i<4; i++) {
+void motorBrake() 
+{
+  	for(uint8_t i=0; i<4; i++) 
+	{
     	motorSetSpeed(i, 0);
   	}
 }

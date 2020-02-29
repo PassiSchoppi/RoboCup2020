@@ -6,7 +6,8 @@ uint8_t sensorData[6];
 uint8_t kitdropperDeg = 90;
 int 	pwm;
 
-void setup() {
+void setup() 
+{
 	pinMode(INTERUPT_PIN, INPUT_PULLUP);
 	pinMode(3, OUTPUT);
 	// pinMode(0, OUTPUT);
@@ -14,7 +15,9 @@ void setup() {
 	attachInterrupt(digitalPinToInterrupt(INTERUPT_PIN), interupt, RISING);
 }
 
-void loop() {
+
+void loop() 
+{
 /*
  *
  *           Sensordata in ARRAYINDEX
@@ -56,8 +59,10 @@ void servoPulse (int servo, int angle)
  	delay(50);                   // Refresh cycle of servo
 }
 
-void interupt(){
-	for(uint8_t i=0; i<6; ++i){
+void interupt()
+{
+	for(uint8_t i=0; i<6; ++i)
+	{
 		Serial.write(sensorData[i]);
 	}
 }

@@ -5,7 +5,8 @@ uint8_t bufferVar;
 uint8_t sensorData[5];
 
 
-void setup() {
+void setup() 
+{
 	pinMode(INTERUPT_PIN, INPUT_PULLUP);
 	pinMode(SHP_FL, INPUT);
 	pinMode(SHP_FC, INPUT);
@@ -20,7 +21,8 @@ void setup() {
 	attachInterrupt(digitalPinToInterrupt(INTERUPT_PIN), interupt, RISING);
 }
 
-void loop() {
+void loop() 
+{
 	//              EDIT THIS \/ \/ \/
 
 	/*
@@ -40,44 +42,53 @@ void loop() {
 	 *
 	 * 
 	 */
-	while(Serial.available()){
+	while(Serial.available())
+	{
 		bufferVar = Serial.read();
-		switch(bufferVar) {
+		switch(bufferVar) 
+		{
 			case 0:
 				digitalWrite(LED_R, LOW);
 				digitalWrite(LED_G, LOW);
 				digitalWrite(LED_B, LOW);
 				break;
+		
 			case 1:
 				digitalWrite(LED_R, HIGH);
 				digitalWrite(LED_G, HIGH);
 				digitalWrite(LED_B, HIGH);
 				break;
+			
 			case 2:
 				digitalWrite(LED_R, HIGH);
 				digitalWrite(LED_G, LOW);
 				digitalWrite(LED_B, LOW);
 				break;
+			
 			case 3:
 				digitalWrite(LED_R, LOW);
 				digitalWrite(LED_G, HIGH);
 				digitalWrite(LED_B, LOW);
 				break;
+			
 			case 4:
 				digitalWrite(LED_R, LOW);
 				digitalWrite(LED_G, LOW);
 				digitalWrite(LED_B, HIGH);
 				break;
+			
 			case 5:
 				digitalWrite(LED_R, HIGH);
 				digitalWrite(LED_G, LOW);
 				digitalWrite(LED_B, HIGH);
 				break;
+			
 			case 6:
 				digitalWrite(LED_R, HIGH);
 				digitalWrite(LED_G, HIGH);
 				digitalWrite(LED_B, LOW);
 				break;
+			
 			case 7:
 				digitalWrite(LED_R, LOW);
 				digitalWrite(LED_G, HIGH);
@@ -95,8 +106,10 @@ void loop() {
 	digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));
 }
 
-void interupt(){
-	for(uint8_t i=0; i<5; ++i){
+void interupt()
+{
+	for(uint8_t i=0; i<5; ++i)
+	{
 		Serial.write(sensorData[i]);
 	}
 	

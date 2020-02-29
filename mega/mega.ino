@@ -15,7 +15,8 @@
 uint8_t sensorData[15];
 uint8_t state;
 
-void setup() {
+void setup() 
+{
 	// stabilize und dann entscheiden
 	state = 8;
 
@@ -33,7 +34,8 @@ void setup() {
 }
 
 
-void loop() {
+void loop() 
+{
 
 	// ## LED ##
 	digitalWrite(13, !digitalRead(13));

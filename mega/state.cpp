@@ -10,18 +10,22 @@
 int average;
 uint8_t lastState=0;
 
-uint8_t nothing(){
+uint8_t nothing()
+{
 	return 0;
 }
 
-void stateChange(uint8_t *state, uint8_t *sensorData){
-	switch(*state) {
+void stateChange(uint8_t *state, uint8_t *sensorData)
+{
+	switch(*state) 
+	{
 		case 0:
 			// the end
 			motorBrake();
 			*state = nothing();
 			LEDSetColor(OFF);
 			break;
+		
 		case 1:
 			motorBrake();
 			// Serial.println("new status");
@@ -65,6 +69,7 @@ void stateChange(uint8_t *state, uint8_t *sensorData){
 			Serial.println("kein neuer status");
 			
 			break;
+		
 		case 2:
 			// turn right
 			LEDSetColor(GREEN);
@@ -83,11 +88,13 @@ void stateChange(uint8_t *state, uint8_t *sensorData){
 				stabilize();
 				*state = 3;
 			}
-			if( sensorData[11]>VICTIMTEMP || sensorData[12]>VICTIMTEMP ){
+			if( sensorData[11]>VICTIMTEMP || sensorData[12]>VICTIMTEMP )
+			{
 				lastState = *state;
 				*state = 6;
 			}
 			break;
+		
 		case 3:
 			// drive staight
 			LEDSetColor(BLUE);
@@ -97,26 +104,31 @@ void stateChange(uint8_t *state, uint8_t *sensorData){
 			// motorSetLeftSpeed(BASESPEED);
 			motorDriveTo(FRONT, BASESPEED);
 			average = 0;
-			for(uint8_t i=0; i<4; ++i){
+			for(uint8_t i=0; i<4; ++i)
+			{
 				average = average + motorStepsMade(i);
 			}
 			average = average/4;
-			if( average>STEPSFORONE ){
+			if( average>STEPSFORONE )
+			{
 				motorResetAllSteps();
 				// stabilize und dann neue entscheidung
 				*state = 8;
 			}
 			// wenn zu nah an einer Wand
-			if( sensorData[7]>132 ){
+			if( sensorData[7]>132 )
+			{
 				// kurz zurück und dann neu entscheiden
 				motorBrake();
 				*state = 9;
 			}
-			if( sensorData[11]>VICTIMTEMP || sensorData[12]>VICTIMTEMP ){
+			if( sensorData[11]>VICTIMTEMP || sensorData[12]>VICTIMTEMP )
+			{
 				lastState = *state;
 				*state = 6;
 			}
 			break;
+		
 		case 4:
 			// drive left
 			LEDSetColor(RED);
@@ -124,7 +136,8 @@ void stateChange(uint8_t *state, uint8_t *sensorData){
 			// motorSetLeftSpeed(-BASESPEED);
 			motorDriveTo(LEFT, BASESPEED);
 			average = 0;
-			for(uint8_t i=0; i<4; ++i){
+			for(uint8_t i=0; i<4; ++i)
+			{
 					average = average + abs(motorStepsMade(i));
 			}
 			average = average/4;
@@ -134,11 +147,13 @@ void stateChange(uint8_t *state, uint8_t *sensorData){
 				stabilize();
 				*state = 3;
 			}
-			if( sensorData[11]>VICTIMTEMP || sensorData[12]>VICTIMTEMP ){
+			if( sensorData[11]>VICTIMTEMP || sensorData[12]>VICTIMTEMP )
+			{
 				lastState = *state;
 				*state = 6;
 			}
 			break;
+		
 		case 5:
 			// drive left
 			LEDSetColor(TURQUOISE);
@@ -146,7 +161,8 @@ void stateChange(uint8_t *state, uint8_t *sensorData){
 			// motorSetLeftSpeed(-BASESPEED);
 			motorDriveTo(LEFT, BASESPEED);
 			average = 0;
-			for(uint8_t i=0; i<4; ++i){
+			for(uint8_t i=0; i<4; ++i)
+			{
 					average = average + abs(motorStepsMade(i));
 			}
 			average = average/4;
@@ -156,35 +172,42 @@ void stateChange(uint8_t *state, uint8_t *sensorData){
 				stabilize();
 				*state = 4;
 			}
-			if( sensorData[11]>VICTIMTEMP || sensorData[12]>VICTIMTEMP ){
+			if( sensorData[11]>VICTIMTEMP || sensorData[12]>VICTIMTEMP )
+			{
 				lastState = *state;
 				*state = 6;
 			}
 			// if( sensorData[] )
 			break;
+		
 		case 6:
 			// temp victim
 			motorBrake();
 			// try for 5 seconds and blink
 			LEDSetColor(RED);
 			delay(1000);
-			if( sensorData[11]>VICTIMTEMP || sensorData[12]>VICTIMTEMP ){
+			if( sensorData[11]>VICTIMTEMP || sensorData[12]>VICTIMTEMP )
+			{
 				LEDSetColor(OFF);
 				delay(1000);
 				sensorRead(&sensorData[0]);
-				if( sensorData[11]>VICTIMTEMP || sensorData[12]>VICTIMTEMP ){
+				if( sensorData[11]>VICTIMTEMP || sensorData[12]>VICTIMTEMP )
+				{
 					LEDSetColor(RED);
 					delay(1000);
 					sensorRead(&sensorData[0]);
-					if( sensorData[11]>VICTIMTEMP || sensorData[12]>VICTIMTEMP ){
+					if( sensorData[11]>VICTIMTEMP || sensorData[12]>VICTIMTEMP )
+					{
 						LEDSetColor(OFF);
 						delay(1000);
 						sensorRead(&sensorData[0]);
-						if( sensorData[11]>VICTIMTEMP || sensorData[12]>VICTIMTEMP ){
+						if( sensorData[11]>VICTIMTEMP || sensorData[12]>VICTIMTEMP )
+						{
 							LEDSetColor(RED);
 							delay(1000);
 							sensorRead(&sensorData[0]);
-							if( sensorData[11]>VICTIMTEMP || sensorData[12]>VICTIMTEMP ){
+							if( sensorData[11]>VICTIMTEMP || sensorData[12]>VICTIMTEMP )
+							{
 								//move the servo motor
 								kitdropperSetTo(POSMIDD);
 								delay(1000);
@@ -198,11 +221,13 @@ void stateChange(uint8_t *state, uint8_t *sensorData){
 			}
 			*state = lastState;
 			break;
+		
 		case 7:
 			// black tile
 			motorBrake();
 			*state = 1;
 			break;
+		
 		case 8:
 			// stabilize und dann neu entscheiden
 			LEDSetColor(PINK);
@@ -212,11 +237,13 @@ void stateChange(uint8_t *state, uint8_t *sensorData){
 			motorResetAllSteps();
 			*state = 1;
 			break;
+		
 		case 9:
 			//kurz zurück fahren
 			motorBrake();
 			motorDriveTo(BACK, BASESPEED);
-			while(motorStepsMade(0)<23){
+			while(motorStepsMade(0)<23)
+			{
 				motorCheckForStepsMade(0);
 			}
 			motorResetAllSteps();

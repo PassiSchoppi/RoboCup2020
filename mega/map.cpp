@@ -1,22 +1,27 @@
 #include "map.h"
 
-void mapInit() {
+void mapInit() 
+{
 	Field map[3][3];
 }
 
-void mapNewField() {
+void mapNewField() 
+{
 	
 }
 
-void mapUpdateField() {
+void mapUpdateField() 
+{
 	
 }
 
-void mapSearchForUnvisited() {
+void mapSearchForUnvisited() 
+{
 	
 }
 
-void mapWhereToDrive() {
+void mapWhereToDrive() 
+{
 	
 }
 

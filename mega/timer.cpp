@@ -1,6 +1,7 @@
 #include "timer.h"
 
-void timerInit() {
+void timerInit() 
+{
 	
 	// reset default Arduino clock Controll Register
   	TCCR1A = 0;
@@ -33,8 +34,10 @@ void timerInit() {
 
 
 // Inerrupt service routine on timer 0 compare match with A
-ISR(TIMER1_COMPA_vect) {
-	for(uint8_t i=0; i<4; ++i) {
+ISR(TIMER1_COMPA_vect) 
+{
+	for(uint8_t i=0; i<4; ++i) 
+	{
 		motorCheckForStepsMade(i);	
 	}
 

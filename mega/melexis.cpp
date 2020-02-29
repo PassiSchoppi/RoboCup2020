@@ -5,7 +5,8 @@ Melexis melexis[2];
 
 uint8_t nextMelexis;
 
-void melexisInit() {
+void melexisInit() 
+{
     pinMode(SDA, INPUT_PULLUP);
     pinMode(SCL, INPUT_PULLUP);
     i2c_init();
@@ -15,11 +16,13 @@ void melexisInit() {
     nextMelexis = 0;
 }
 
-float melexisGetValue(uint8_t i){
+float melexisGetValue(uint8_t i)
+{
 	return melexis[i].value;
 }
 
-void melexisInterrupt() {
+void melexisInterrupt() 
+{
 	// Serial.println("interrupt");
     float value = melexis[nextMelexis].value;
 
@@ -31,7 +34,8 @@ void melexisInterrupt() {
     nextMelexis = (nextMelexis == 1 ? 0 : nextMelexis+1);
 }
 
-float melexisVerify(uint8_t i) {
+float melexisVerify(uint8_t i) 
+{
     return melexisTemperature(melexis[nextMelexis].address);
 }
 
