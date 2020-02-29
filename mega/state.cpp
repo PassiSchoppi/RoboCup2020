@@ -157,22 +157,32 @@ void stateChange(uint8_t *state, uint8_t *sensorData){
 		case 6:
 			// temp victim
 			motorBrake();
+			// try for 5 seconds and blink
 			LEDSetColor(RED);
 			delay(1000);
 			if( sensorData[11]>VICTIMTEMP || sensorData[12]>VICTIMTEMP ){
+				LEDSetColor(OFF);
 				delay(1000);
 				sensorRead(&sensorData[0]);
 				if( sensorData[11]>VICTIMTEMP || sensorData[12]>VICTIMTEMP ){
+					LEDSetColor(RED);
 					delay(1000);
 					sensorRead(&sensorData[0]);
 					if( sensorData[11]>VICTIMTEMP || sensorData[12]>VICTIMTEMP ){
+						LEDSetColor(OFF);
 						delay(1000);
 						sensorRead(&sensorData[0]);
 						if( sensorData[11]>VICTIMTEMP || sensorData[12]>VICTIMTEMP ){
+							LEDSetColor(RED);
 							delay(1000);
 							sensorRead(&sensorData[0]);
 							if( sensorData[11]>VICTIMTEMP || sensorData[12]>VICTIMTEMP ){
 								//move the servo motor
+								kitdropperSetTo(POSMIDD);
+								delay(1000);
+								kitdropperSetTo(POSRIGHT);
+								delay(1000);
+								kitdropperSetTo(POSMIDD);
 							}
 						}
 					}

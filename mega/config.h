@@ -19,7 +19,11 @@
 #define DISTANCETOWALL 	50
 #define CUTDATAVAL 		0
 
-#define VICTIMTEMP 		58
+#define VICTIMTEMP 		28
+
+#define POSLEFT 		70
+#define POSMIDD 		120
+#define POSRIGHT 		150
 
 #define BASESPEED 		100
 

@@ -99,7 +99,7 @@ int speedFromEnc(uint8_t encA, uint8_t encB, uint8_t encC, uint8_t encME, int sp
 	float Error = (float)(encME - D) / (float)encME;
 	float Correct = Error * (float)P;
 	float CorrectedSpeed = Correct + speedME;
-	Serial.println(CorrectedSpeed);
+	// Serial.println(CorrectedSpeed);
 	return ( round(CorrectedSpeed) );
 }
 

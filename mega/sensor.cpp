@@ -16,8 +16,6 @@ void sensorRead(uint8_t *sensorData){
 	uint8_t i=0;
 	uint8_t bufferVar=0;
 	uint8_t newBufferVar;
-	
-	digitalWrite(INTERUPT_PIN_B, LOW);
 
 	// 														ALPHA
 	//wenn noch Daten da sind kein Interrupt
@@ -41,8 +39,11 @@ void sensorRead(uint8_t *sensorData){
 	// 														BETA
 	// wenn noch daten da sind kein Interrupt
 	if(!Serial3.available()){
-		digitalWrite(INTERUPT_PIN_B, HIGH);
-		digitalWrite(INTERUPT_PIN_B, LOW);
+		/*digitalWrite(INTERUPT_PIN_B, HIGH);
+		digitalWrite(INTERUPT_PIN_B, LOW);*/
+		pinMode(INTERUPT_PIN_B, OUTPUT);
+  		digitalWrite(INTERUPT_PIN_B, HIGH);
+		pinMode(INTERUPT_PIN_B, INPUT);
 	}
 	// auf Antwort warten
 	while((Serial3.available()<5)){}
@@ -64,8 +65,7 @@ void sensorRead(uint8_t *sensorData){
 	// sensorData[9] = analogRead(A11) >> 2;
 
 	// 														MELEXIS
-	// melexisInterrupt();
-	// Serial.println(melexisGetValue(0));
+	melexisInterrupt();
 	sensorData[11]=((int)melexisGetValue(0));
 	sensorData[12]=((int)melexisGetValue(1));
 	

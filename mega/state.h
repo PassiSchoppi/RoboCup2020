@@ -3,6 +3,7 @@
 
 #include <Arduino.h>
 #include "config.h"
+#include "kitdropper.h"
 
 uint8_t nothing();
 

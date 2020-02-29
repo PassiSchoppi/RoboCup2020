@@ -25,7 +25,8 @@ void setup() {
 	melexisInit();
 	mapInit();
 	timerInit();
-	
+	kitdropperInit();
+
 	Serial.begin(2000000);
 
 	delay(1000);
@@ -34,19 +35,18 @@ void setup() {
 
 void loop() {
 
-	LEDSetColor(WHITE);
 	// ## LED ##
 	digitalWrite(13, !digitalRead(13));
 
 	// ## SENSORS ##
+	// Serial.print("reading Sensor Data ... ");
 	sensorRead(&sensorData[0]);
+	// Serial.println("done!");
 	
-	// kitdropperSetTo(0);
-
-	// motorDriveTo(FRONT, 100);
-
 	// ## STATE ##
-	// stateChange(&state, &sensorData[0]);
+	// Serial.print("changing state ... ");
+	stateChange(&state, &sensorData[0]);
+	// Serial.println("done!");
 	// Serial.println(state);
 	
 	// ## OUTPUT ##
@@ -64,15 +64,14 @@ void loop() {
 	/*Serial.print(sensorData[4]);Serial.print(" ");
 	 Serial.println(sensorData[5]);*/
 	// # FRONT/BACK SHARPS #
-	Serial.print(sensorData[6]);Serial.print(" ");
+	/*Serial.print(sensorData[6]);Serial.print(" ");
 	 Serial.print(sensorData[7]);Serial.print(" ");
 	 Serial.print(sensorData[8]);Serial.print(" ");
 	 Serial.print(sensorData[9]);Serial.print(" ");
-	 Serial.println(sensorData[10]);
+	 Serial.println(sensorData[10]);*/
 	// # MELEXIS #
-	// melexisChangeAddress(0xA0);
-	/*Serial.print(sensorData[11]);Serial.print(" ");
-	 Serial.println(sensorData[12]);*/
+	Serial.print(sensorData[11]);Serial.print(" ");
+	 Serial.println(sensorData[12]);
 	// # LIGHT #
 	/*Serial.print(sensorData[13]);Serial.print(" ");
 	 Serial.println(sensorData[14]);*/
