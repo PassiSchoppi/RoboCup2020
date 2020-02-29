@@ -6,7 +6,7 @@ void sensorInit(){
 	Serial1.begin(115200);
 	pinMode(INTERUPT_PIN_A, OUTPUT);
 
-	Serial3.begin(115200);
+	Serial3.begin(9600);
 	pinMode(INTERUPT_PIN_B, OUTPUT);
 
 	pinMode(7, OUTPUT);
@@ -17,7 +17,7 @@ void sensorRead(uint8_t *sensorData){
 	uint8_t bufferVar=0;
 	uint8_t newBufferVar;
 	
-	// digitalWrite(7, HIGH);
+	digitalWrite(INTERUPT_PIN_B, LOW);
 
 	// 														ALPHA
 	//wenn noch Daten da sind kein Interrupt
@@ -26,16 +26,13 @@ void sensorRead(uint8_t *sensorData){
 		digitalWrite(INTERUPT_PIN_A, LOW);
 	}
 	// warten auf Antwort
-	Serial.println("waiting...");
-	while((Serial1.available()<6)){
-		// Serial.println("still waiting...");
-	}
-	Serial.println("got alpha");
+	while((Serial1.available()<6)){}
+	// Serial.println("got alpha");
 	while(Serial1.available())
 	{
 		bufferVar = Serial1.read();
 		if(i<6){
-			// Serial.println(i);
+			// Serial.println(bufferVar);
 			sensorData[i]=bufferVar;
 			++i;
 		}
@@ -49,20 +46,18 @@ void sensorRead(uint8_t *sensorData){
 	}
 	// auf Antwort warten
 	while((Serial3.available()<5)){}
-	Serial.println("got beta");
-	sensorData[6] = Serial3.read();
+	/*sensorData[6] = Serial3.read();
 	sensorData[7] = Serial3.read();
 	sensorData[8] = Serial3.read();
 	sensorData[9] = Serial3.read();
-	sensorData[10] = Serial3.read();
+	sensorData[10] = Serial3.read();*/
 	while(Serial3.available())
 	{
 		bufferVar = Serial3.read();
-		// if(i<11){
-			// Serial.println(i);
-			// sensorData[i]=bufferVar;
-			// ++i;
-		// }
+		if(i<11){
+			sensorData[i]=bufferVar;
+			++i;
+		}
 	}
 
 	// 														SENSOR 9 BL

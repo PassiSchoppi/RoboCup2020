@@ -95,10 +95,12 @@ void motorSetRightSpeed(int16_t speed) {
 }*/
 
 int speedFromEnc(uint8_t encA, uint8_t encB, uint8_t encC, uint8_t encME, int speedME){
-	// Serial.print(( ((encA+encB+encC)/3) *speedME) / (encME));Serial.print(" ");
-	// Serial.println(( ((encA+encB+encC)/3) *speedME) / (encME));
-	// return (( ((encA+encB+encC)/3) *speedME) / (encME));
-	return(speedME);
+	int D = (encA + encB+ encC + encME) / 4;
+	float Error = (float)(encME - D) / (float)encME;
+	float Correct = Error * (float)P;
+	float CorrectedSpeed = Correct + speedME;
+	Serial.println(CorrectedSpeed);
+	return ( round(CorrectedSpeed) );
 }
 
 void motorDriveTo(uint8_t direction, int speed){

@@ -27,10 +27,14 @@ void setup() {
 	timerInit();
 	
 	Serial.begin(2000000);
+
+	delay(1000);
 }
 
 
 void loop() {
+
+	LEDSetColor(WHITE);
 	// ## LED ##
 	digitalWrite(13, !digitalRead(13));
 
@@ -44,7 +48,7 @@ void loop() {
 	// ## STATE ##
 	// stateChange(&state, &sensorData[0]);
 	// Serial.println(state);
-
+	
 	// ## OUTPUT ##
     // # MOTOREN #
 	/*Serial.print(motorStepsMade(0));Serial.print(" ");
@@ -60,11 +64,11 @@ void loop() {
 	/*Serial.print(sensorData[4]);Serial.print(" ");
 	 Serial.println(sensorData[5]);*/
 	// # FRONT/BACK SHARPS #
-	// Serial.print(sensorData[6]);Serial.print(" ");
-	 // Serial.println(sensorData[7]);Serial.print(" ");
-	 // Serial.print(sensorData[8]);Serial.print(" ");
-	 Serial.println(sensorData[9]);Serial.print(" ");
-	 // Serial.println(sensorData[10]);
+	Serial.print(sensorData[6]);Serial.print(" ");
+	 Serial.print(sensorData[7]);Serial.print(" ");
+	 Serial.print(sensorData[8]);Serial.print(" ");
+	 Serial.print(sensorData[9]);Serial.print(" ");
+	 Serial.println(sensorData[10]);
 	// # MELEXIS #
 	// melexisChangeAddress(0xA0);
 	/*Serial.print(sensorData[11]);Serial.print(" ");

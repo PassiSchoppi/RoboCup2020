@@ -7,16 +7,16 @@ uint8_t sensorData[5];
 
 void setup() {
 	pinMode(INTERUPT_PIN, INPUT_PULLUP);
-	pinMode(SHP_FL, INPUT);
+	/*pinMode(SHP_FL, INPUT);
 	pinMode(SHP_FC, INPUT);
 	pinMode(SHP_FR, INPUT);
 	pinMode(SHP_BL, INPUT);
 	pinMode(SHP_BR, INPUT);
 	
-	pinMode(LED_R, INPUT);
-	pinMode(LED_G, INPUT);
-	pinMode(LED_B, INPUT);
-	Serial.begin(115200);
+	pinMode(LED_R, OUTPUT);
+	pinMode(LED_G, OUTPUT);
+	pinMode(LED_B, OUTPUT);*/
+	Serial.begin(9600);
 	attachInterrupt(digitalPinToInterrupt(INTERUPT_PIN), interupt, RISING);
 }
 
@@ -99,4 +99,10 @@ void interupt(){
 	for(uint8_t i=0; i<5; ++i){
 		Serial.write(sensorData[i]);
 	}
+	
+	/*Serial.write(sensorData[0]);
+	Serial.write(sensorData[1]);
+	Serial.write(sensorData[2]);
+	Serial.write(sensorData[3]);
+	Serial.write(sensorData[4]);*/
 }

@@ -23,6 +23,8 @@
 
 #define BASESPEED 		100
 
+#define P 				30
+
 #define STEPSFORONE 	132
 #define STEPFFORRIGHT 	73
 #define STEPSFORLEFT 	73
