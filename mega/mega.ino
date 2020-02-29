@@ -37,7 +37,7 @@ void loop() {
 
 	// ## LED ##
 	digitalWrite(13, !digitalRead(13));
-
+	
 	// ## SENSORS ##
 	// Serial.print("reading Sensor Data ... ");
 	sensorRead(&sensorData[0]);
@@ -56,10 +56,10 @@ void loop() {
 	 Serial.print(motorStepsMade(2));Serial.print(" ");
 	 Serial.println(motorStepsMade(3));*/
 	// # SIDE SHARPS #
-	// Serial.println(sensorData[0]);Serial.print(" ");
-	 // Serial.println(sensorData[1]);Serial.print(" ");
-	 // Serial.println(sensorData[2]);Serial.print(" ");
-	 // Serial.println(sensorData[3]);Serial.print(" ");
+	/*Serial.print(sensorData[0]);Serial.print(" ");
+	 Serial.print(sensorData[1]);Serial.print(" ");
+	 Serial.print(sensorData[2]);Serial.print(" ");
+	 Serial.print(sensorData[3]);Serial.print(" ");*/
 	// # ACC #
 	/*Serial.print(sensorData[4]);Serial.print(" ");
 	 Serial.println(sensorData[5]);*/
@@ -70,15 +70,15 @@ void loop() {
 	 Serial.print(sensorData[9]);Serial.print(" ");
 	 Serial.println(sensorData[10]);*/
 	// # MELEXIS #
-	Serial.print(sensorData[11]);Serial.print(" ");
-	 Serial.println(sensorData[12]);
+	// Serial.print(sensorData[11]);Serial.print(" ");
+	 // Serial.println(sensorData[12]);
 	// # LIGHT #
 	/*Serial.print(sensorData[13]);Serial.print(" ");
 	 Serial.println(sensorData[14]);*/
 	// # ISWALL #
-	/*Serial.print(wallExists(FRONT, &sensorData[0]));Serial.print(" ");
+	Serial.print(wallExists(FRONT, &sensorData[0]));Serial.print(" ");
 	 Serial.print(wallExists(RIGHT, &sensorData[0]));Serial.print(" ");
 	 Serial.print(wallExists(LEFT, &sensorData[0]));Serial.print(" ");
-	 Serial.println(wallExists(BACK, &sensorData[0]));*/
+	 Serial.println(wallExists(BACK, &sensorData[0]));
 }
 

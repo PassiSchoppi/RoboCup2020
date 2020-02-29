@@ -77,14 +77,14 @@ void sensorRead(uint8_t *sensorData){
 
 	//0   [LF,
 	//1   LB,
-	//2   RF, ???
+	//2   RF,
 	//3   RB,
 	//4   ACC_X,
 	//5   ACC_Z,
 	//6   FL,
 	//7   FC,
-	//8   FR, ???
-	//9   BL,
+	//8   FR,
+	//9   BL, ???
 	//10  BR,
 	//11  TEMP_L,
 	//12  TEMP_R

@@ -3,6 +3,8 @@
 
 #include <Arduino.h>
 #include "config.h"
+#include "sensor.h"
+#include "wall.h"
 
 /*
  *

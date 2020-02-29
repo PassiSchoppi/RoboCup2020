@@ -4,26 +4,17 @@
 bool wallExists(uint8_t where, uint8_t *sensorData){
 	switch(where) {
 		case FRONT :
-			// FIXME: test sensors and adapt code
-			// if(sensorData[6]<DISTANCETOWALL && sensorData[7]<DISTANCETOWALL && sensorData[8]<DISTANCETOWALL){
-			//  	return true;
-			// }
-			//
-			if(sensorData[6]>90 || sensorData[7]>DISTANCETOWALL){
-				return true;
+			if(sensorData[6]>DISTANCETOWALL && sensorData[7]>DISTANCETOWALL && sensorData[8]>DISTANCETOWALL){
+			  	return true;
 			}
 			break;
-		case RIGHT :
-			// FIXME: test sensors and adapt code
-			// if(sensorData[2]>DISTANCETOWALL && sensorData[3]>DISTANCETOWALL){
-			//  	return true;
-			// }
-			// 
-			if(sensorData[3]>DISTANCETOWALL){
-				return true;
-			}
 
+		case RIGHT :
+			if(sensorData[2]>DISTANCETOWALL && sensorData[3]>DISTANCETOWALL){
+			 	return true;
+			}	
 			break;
+
 		case BACK :
 			// FIXME: test sensors and adapt code
 			// if(sensorData[9]>DISTANCETOWALL && sensorData[10]>DISTANCETOWALL){

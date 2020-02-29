@@ -28,24 +28,32 @@ void stateChange(uint8_t *state, uint8_t *sensorData){
 			LEDSetColor(WHITE);
 
 			// ## get direction to drive to ##
-			if(!wallExists(RIGHT, &sensorData[0])){
+			if(!wallExists(RIGHT, &sensorData[0]))
+			{
 				// rechts drehen dann gerade aus
+				Serial.println("Rechts abbiegen!");
 				*state = 2;
 				break;
 			}
-			if(!wallExists(FRONT, &sensorData[0])){
-				// rechts drehen dann gerade aus
+			if(!wallExists(FRONT, &sensorData[0]))
+			{
+				// gerade aus
+				Serial.println("Gerade aus!");
 				*state = 3;
 				break;
 			}
-			if(!wallExists(LEFT, &sensorData[0])){
+			if(!wallExists(LEFT, &sensorData[0]))
+			{
 				// links drehen dann gerade aus
+				Serial.println("Links abbiegen!");
 				*state = 4;
 				break;
 			}
 			// wenn rechts und forne und links eine wand ist aber hinten keine
-			if(!wallExists(BACK, &sensorData[0])){
+			if(!wallExists(BACK, &sensorData[0]))
+			{
 				// 2x links drehen dann gerade aus
+				Serial.println("Nach hinten!");
 				*state = 5;
 				break;
 			}
