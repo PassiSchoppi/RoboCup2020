@@ -241,10 +241,11 @@ void stateChange(uint8_t *state, uint8_t *sensorData)
 		case 9:
 			//kurz zurück fahren
 			motorBrake();
+			motorResetAllSteps();
 			motorDriveTo(BACK, BASESPEED);
-			while(motorStepsMade(0)<23)
+			while(motorStepsMade(0)<15)
 			{
-				motorCheckForStepsMade(0);
+				// motorCheckForStepsMade(0);
 			}
 			motorResetAllSteps();
 			motorBrake();

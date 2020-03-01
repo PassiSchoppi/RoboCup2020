@@ -35,7 +35,7 @@ struct Motor
 	// value of last encoder signal (value)
 	bool 	lastEncSignal;
 	// steps this motor made
-	short int 	steps;
+	volatile short int 	steps;
 	// pwm pin on arduino
     uint8_t pwm;
     // motor factor caused by manufacturing differences

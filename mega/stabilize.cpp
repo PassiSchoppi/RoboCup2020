@@ -22,7 +22,7 @@ void stabilize()
 	}
 
 	// ausrichten an der hinteren Wand
-	if(wallExists(BACK, &localSensorData[0]))
+	/*if(wallExists(BACK, &localSensorData[0]))
 	{
 		motorDriveTo(BACK, BASESPEED);
 		while(motorStepsMade(0)<27)
@@ -36,7 +36,7 @@ void stabilize()
 		}
 		motorBrake();
 		motorResetAllSteps();
-	}
+	}*/
 
 	motorBrake();
 	motorResetAllSteps();

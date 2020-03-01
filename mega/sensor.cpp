@@ -25,14 +25,18 @@ void sensorRead(uint8_t *sensorData)
 		digitalWrite(INTERUPT_PIN_A, LOW);
 	}
 	// warten auf Antwort
-	for(int i = 0; i < 100; ++i)
-	{
-		if(Serial1.available() > 6)
+		/*for(int k = 0; k < 100; ++k)
 		{
-			break;
-		}
+			if(Serial1.available() > 5)
+			{
+				k = 101;
+			}
+		}*/
+	while(Serial1.available()<6)
+	{
 	}
-	// Serial.println("got alpha");
+
+	// lesen und in array schreiben
 	while(Serial1.available())
 	{
 		bufferVar = Serial1.read();
@@ -43,6 +47,7 @@ void sensorRead(uint8_t *sensorData)
 			++i;
 		}
 	}
+
 	
 	// 														BETA
 	// wenn noch daten da sind kein Interrupt
@@ -54,15 +59,20 @@ void sensorRead(uint8_t *sensorData)
   		digitalWrite(INTERUPT_PIN_B, HIGH);
 		pinMode(INTERUPT_PIN_B, INPUT);
 	}
+
 	// auf Antwort warten
-	for(int i = 0; i < 100; ++i)
-	{
-		if(Serial3.available() > 5)
+		/*for(int j = 0; j < 100; ++j)
 		{
-			break;
-		}
+			if(Serial3.available() > 4)
+			{
+				j = 101;
+			}
+		}*/
+	while(Serial3.available()<5)
+	{
 	}
-	Serial.println("done");
+	
+	// lesen und in array schreiben
 	while(Serial3.available())
 	{
 		bufferVar = Serial3.read();
