@@ -51,6 +51,7 @@ void sensorRead(uint8_t *sensorData)
 	
 	// 														BETA
 	// wenn noch daten da sind kein Interrupt
+	// Serial.println("interrupt B");
 	if(!Serial3.available())
 	{
 		digitalWrite(INTERUPT_PIN_B, HIGH);
@@ -72,7 +73,10 @@ void sensorRead(uint8_t *sensorData)
 	{
 		// Serial.println(Serial3.read());
 	}
-	
+	// NICHT DIESE ZEILE LOESCHEN
+	// ES GEHT SONST NICHT
+	Serial.print("");
+
 	// lesen und in array schreiben
 	while(Serial3.available())
 	{

@@ -1,5 +1,6 @@
 #include "motor.h"
 #include <Arduino.h>
+#include "sensor.h"
 
 Motor motor[4];
 
@@ -134,8 +135,25 @@ int speedFromEnc(uint8_t encA, uint8_t encB, uint8_t encC, uint8_t encME, int sp
 	float CorrectedSpeed = Correct + speedME;
 	// Serial.println(CorrectedSpeed);
 	return ( round(CorrectedSpeed) );*/
+
 	
-	return (( ((encA+encB+encC+encME)/4) *speedME) / (encME));
+	volatile uint8_t localSensorData[15];
+	sensorRead(&localSensorData[0]);
+	uint8_t correctedSpeed = ( ((encA+encB+encC+encME)/4) *speedME) / (encME);
+	if( stickToWall )
+	{
+		if( leftMotor )
+		{
+			if(wallExists(LEFT, &localSensorData[0]))
+			correctedSpeed = correctedSpeed * ((localSensorData[0] + 100)/(localSensorData[1] + 100));
+		}
+		else
+		{
+			if(wallExists(RIGHT, &localSensorData[0]));
+			correctedSpeed = correctedSpeed * ((localSensorData[2] + 100)/(localSensorData[3] + 100));
+		}
+	}
+	return (correctedSpeed);
 
 	// return(speedME);
 }

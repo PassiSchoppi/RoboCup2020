@@ -18,10 +18,10 @@
 #define BACK 			2
 #define LEFT 			3
 
-#define DISTANCETOWALL 	48
+#define DISTANCETOWALL 	45
 #define CUTDATAVAL 		0
 
-#define VICTIMTEMP 		35
+#define VICTIMTEMP 		31
 
 #define POSLEFT 		70
 #define POSMIDD 		120

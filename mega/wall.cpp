@@ -33,7 +33,7 @@ bool wallExists(uint8_t where, uint8_t *sensorData)
 			break;
 		
 		case LEFT :
-			if(sensorData[0]>DISTANCETOWALL || sensorData[1]>DISTANCETOWALL)
+			if(sensorData[0]>DISTANCETOWALL && sensorData[1]>DISTANCETOWALL)
 			{
 				return true;
 			}
