@@ -6,6 +6,7 @@
 #include "led.h"
 #include "config.h"
 #include "stabilize.h"
+#include "map.h"
 
 int average;
 uint8_t lastState=0;
@@ -15,7 +16,7 @@ uint8_t nothing()
 	return 0;
 }
 
-void stateChange(uint8_t *state, uint8_t *sensorData)
+void stateChange(uint8_t *state, uint8_t *sensorData, uint8_t *robot_is_facing, Vector *robot_is_at)
 {
 	switch(*state) 
 	{
@@ -32,7 +33,8 @@ void stateChange(uint8_t *state, uint8_t *sensorData)
 			LEDSetColor(WHITE);
 
 			// ## get direction to drive to ##
-			if(!wallExists(RIGHT, &sensorData[0]))
+			// 																		RECHTSUMFAHRUNG
+			/*if(!wallExists(RIGHT, &sensorData[0]))
 			{
 				// rechts drehen dann gerade aus
 				Serial.println("Rechts abbiegen!");
@@ -61,13 +63,137 @@ void stateChange(uint8_t *state, uint8_t *sensorData)
 				*state = 5;
 				break;
 			}
-
+			
 			// wenn überall Wände sind:::
 			*state = 1;
-			LEDSetColor(OFF);
-
-			Serial.println("kein neuer status");
+			LEDSetColor(OFF);*/
 			
+
+			// 																		MAP
+			Serial.print("Facing: ");
+			Serial.println(*robot_is_facing);
+			mapUpdateField(&*robot_is_facing, &*robot_is_at);
+			uint8_t directionToGO;
+			directionToGO = mapWhereToDrive(&*robot_is_at);
+			Serial.print("direction: ");
+			Serial.println(directionToGO);
+			switch( directionToGO )
+			{
+				case NOTH:
+					(*robot_is_at).X = (*robot_is_at).X;
+					(*robot_is_at).Y -= 1;
+					switch( *robot_is_facing )
+					{
+						case NOTH:
+							*robot_is_facing = NOTH;
+							*state = 3;
+							break;
+
+						case EAST:
+							*robot_is_facing = NOTH;
+							*state = 4;
+							break;
+
+						case SOUTH:
+							*robot_is_facing = NOTH;
+							*state = 5;
+							break;
+
+						case WEST:
+							*robot_is_facing = NOTH;
+							*state = 2;
+							break;
+					}
+					break;
+
+				case EAST:
+					(*robot_is_at).X += 1;
+					(*robot_is_at).Y = (*robot_is_at).Y;
+					switch( *robot_is_facing )
+					{
+						case NOTH:
+							*robot_is_facing = EAST;
+							*state = 2;
+							break;
+
+						case EAST:
+							*robot_is_facing = EAST;
+							*state = 3;
+							break;
+
+						case SOUTH:
+							*robot_is_facing = EAST;
+							*state = 4;
+							break;
+
+						case WEST:
+							*robot_is_facing = EAST;
+							*state = 5;
+							break;
+					}
+					break;
+
+				case SOUTH:
+					(*robot_is_at).X = (*robot_is_at).X;
+					(*robot_is_at).Y += 1;
+					switch( *robot_is_facing )
+					{
+						case NOTH:
+							*robot_is_facing = SOUTH;
+							*state = 5;
+							break;
+
+						case EAST:
+							*robot_is_facing = SOUTH;
+							*state = 2;
+							break;
+
+						case SOUTH:
+							*robot_is_facing = SOUTH;
+							*state = 3;
+							break;
+
+						case WEST:
+							*robot_is_facing = SOUTH;
+							*state = 4;
+							break;
+					}
+					break;
+				
+				case WEST:
+					(*robot_is_at).X -= 1;
+					(*robot_is_at).Y = (*robot_is_at).Y;
+					switch( *robot_is_facing )
+					{
+						case NOTH:
+							*robot_is_facing = WEST;
+							*state = 4;
+							break;
+						
+						case EAST:
+							*robot_is_facing = WEST;
+							*state = 5;
+							break;
+						
+						case SOUTH:
+							*robot_is_facing = WEST;
+							*state = 2;
+							break;
+
+						case WEST:
+							*robot_is_facing = WEST;
+							*state = 3;
+							break;
+					}
+					break;
+
+				case 5:
+					*state = 0;
+					break;
+			}
+
+
+
 			break;
 		
 		case 2:
@@ -211,7 +337,14 @@ void stateChange(uint8_t *state, uint8_t *sensorData)
 								//move the servo motor
 								kitdropperSetTo(POSMIDD);
 								delay(1000);
-								kitdropperSetTo(POSRIGHT);
+								if( sensorData[11]>VICTIMTEMP )
+								{
+									kitdropperSetTo(POSLEFT);
+								}
+								else
+								{
+									kitdropperSetTo(POSRIGHT);
+								}
 								delay(1000);
 								kitdropperSetTo(POSMIDD);
 							}
@@ -225,7 +358,7 @@ void stateChange(uint8_t *state, uint8_t *sensorData)
 		case 7:
 			// black tile
 			motorBrake();
-			*state = 1;
+			*state = 0;
 			break;
 		
 		case 8:
@@ -236,6 +369,8 @@ void stateChange(uint8_t *state, uint8_t *sensorData)
 			motorBrake();
 			motorResetAllSteps();
 			*state = 1;
+			Serial.print("state: ");
+			Serial.println(*state);
 			break;
 		
 		case 9:

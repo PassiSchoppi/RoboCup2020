@@ -9,6 +9,8 @@
 #define SOUTH 			2
 #define WEST 			3
 
+// uint8_t robot_is_facing = NOTH;
+
 #define STOP 			0
 
 #define FRONT 			0
@@ -16,10 +18,10 @@
 #define BACK 			2
 #define LEFT 			3
 
-#define DISTANCETOWALL 	40
+#define DISTANCETOWALL 	48
 #define CUTDATAVAL 		0
 
-#define VICTIMTEMP 		28
+#define VICTIMTEMP 		35
 
 #define POSLEFT 		70
 #define POSMIDD 		120
@@ -29,8 +31,8 @@
 
 #define P 				30
 
-#define STEPSFORONE 	122
-#define STEPFFORRIGHT 	73
+#define STEPSFORONE 	117
+#define STEPFFORRIGHT 	72
 #define STEPSFORLEFT 	73
 
 #define MAXWHITE 		190

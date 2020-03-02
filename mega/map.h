@@ -8,23 +8,25 @@
 
 struct Vector
 {
-	uint8_t X;
-	uint8_t Y;
+	uint8_t X = 0;
+	uint8_t Y = 0;
 };
 
 struct Field
 {
 	bool directions[4] = {1, 1, 1, 1};
-	bool visited;
-	bool isSilver;
+	bool visited = false;
+	bool isSilver = false;
 };
+
+
 
 void mapInit();
 // void mapNewField(int x, int y, int north, int east, int south, int west);
-void mapUpdateField();
-void mapBlackFieldFront();
-bool mapFieldInSkip(Vector field, Vector skip[40]);
-uint8_t mapSearchForUnvisited(Vector startPoint, Vector skip[40]);
-uint8_t mapWhereToDrive();
+void mapUpdateField(uint8_t *robot_is_facing, Vector *robot_is_at);
+void mapBlackFieldFront(uint8_t *robot_is_facing, Vector robot_is_at);
+bool mapFieldInSkip(Vector field, Vector *skip);
+uint8_t mapSearchForUnvisited(Vector startPoint, Vector *skip);
+uint8_t mapWhereToDrive(Vector *robot_is_at);
 
-#endif MAP_H
+#endif
