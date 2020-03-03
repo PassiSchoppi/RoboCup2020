@@ -7,6 +7,8 @@
 #include "map.h"
 #include "map.h"
 
+// extern uint8_t nextState = 0;
+
 uint8_t nothing();
 
 // gets next step of state machine

@@ -10,6 +10,8 @@
 
 int average;
 uint8_t lastState=0;
+uint8_t nextState=0;
+bool seenVic = false;
 
 uint8_t nothing()
 {
@@ -18,6 +20,7 @@ uint8_t nothing()
 
 void stateChange(uint8_t *state, uint8_t *sensorData, uint8_t *robot_is_facing, Vector *robot_is_at)
 {
+	Serial.println(seenVic);
 	switch(*state) 
 	{
 		case 0:
@@ -28,10 +31,25 @@ void stateChange(uint8_t *state, uint8_t *sensorData, uint8_t *robot_is_facing, 
 			break;
 		
 		case 1:
+			
 			motorBrake();
 			// Serial.println("new status");
 			LEDSetColor(WHITE);
-
+			
+			// if black tile
+			if( sensorData[13]>MAXWHITE || sensorData[14]>MAXWHITE )
+			{
+				*state = 7;
+				break;
+			}
+			
+			// nächster State wenn gefragt
+			/*if( nextState != 0 )
+			{
+				*state = nextState;
+				nextState = 0;
+				break;
+			}*/
 			// ## get direction to drive to ##
 			// 																		RECHTSUMFAHRUNG
 			
@@ -202,7 +220,6 @@ void stateChange(uint8_t *state, uint8_t *sensorData, uint8_t *robot_is_facing, 
 					break;
 			}*/
 
-
 			break;
 		
 		case 2:
@@ -317,8 +334,9 @@ void stateChange(uint8_t *state, uint8_t *sensorData, uint8_t *robot_is_facing, 
 		
 		case 6:
 			// temp victim
-			motorBrake();
 			// try for 5 seconds and blink
+			if(!seenVic){
+			motorBrake();
 			LEDSetColor(RED);
 			delay(1000);
 			if( sensorData[11]>VICTIMTEMP || sensorData[12]>VICTIMTEMP )
@@ -346,6 +364,7 @@ void stateChange(uint8_t *state, uint8_t *sensorData, uint8_t *robot_is_facing, 
 								//move the servo motor
 								kitdropperSetTo(POSMIDD);
 								delay(1000);
+								seenVic = true;
 								if( sensorData[11]>VICTIMTEMP )
 								{
 									kitdropperSetTo(POSLEFT);
@@ -354,20 +373,33 @@ void stateChange(uint8_t *state, uint8_t *sensorData, uint8_t *robot_is_facing, 
 								{
 									kitdropperSetTo(POSRIGHT);
 								}
-								delay(1000);
+								delay(2000);
 								kitdropperSetTo(POSMIDD);
 							}
 						}
 					}
 				}
 			}
+			}
+
 			*state = lastState;
 			break;
 		
 		case 7:
 			// black tile
 			motorBrake();
+			sensorRead(&sensorData[0]);
+			if( wallExists(LEFT, &sensorData[0]) )
+			{
+				nextState = 5;
+			}
+			else
+			{
+				nextState = 3;
+			}
 			*state = 10;
+			Serial.println("black tile:");
+			Serial.println(wallExists(LEFT, &sensorData[0]));
 			break;
 		
 		case 8:
@@ -380,6 +412,7 @@ void stateChange(uint8_t *state, uint8_t *sensorData, uint8_t *robot_is_facing, 
 			*state = 1;
 			Serial.print("state: ");
 			Serial.println(*state);
+			seenVic = false;
 			break;
 		
 		case 9:
@@ -407,7 +440,15 @@ void stateChange(uint8_t *state, uint8_t *sensorData, uint8_t *robot_is_facing, 
 			motorBrake();
 			motorResetAllSteps();
 			mapBlackFieldFront(*robot_is_facing, robot_is_at);
-			*state = 1;
+			sensorRead(&sensorData[0]);
+			if( wallExists(LEFT, &sensorData[0]) )
+			{
+				*state = 5;
+			}
+			else
+			{
+				*state = 4;
+			}
 			break;
 	}
 }

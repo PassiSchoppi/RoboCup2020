@@ -147,14 +147,14 @@ int speedFromEnc(uint8_t encA, uint8_t encB, uint8_t encC, uint8_t encME, int sp
 		{
 			if(wallExists(LEFT, &localSensorData[0]))
 			{
-				correctedSpeed = ((correctedSpeed * (localSensorData[0] + 5))/(localSensorData[1] + 5));
+				correctedSpeed = ((correctedSpeed * (localSensorData[0] + 0))/(localSensorData[1] + 0));
 			}
 		}
 		else
 		{
 			if(wallExists(RIGHT, &localSensorData[0]))
 			{
-				correctedSpeed = ((correctedSpeed * (localSensorData[2] + 5))/(localSensorData[3] + 5));
+				correctedSpeed = ((correctedSpeed * (localSensorData[2] + 0))/(localSensorData[3] + 0));
 			}
 		}
 	}

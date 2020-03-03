@@ -37,7 +37,10 @@ void setup()
 
 	Serial.begin(2000000);
 
-	delay(1000);
+	for(int i=0; i<10; ++i)
+	{
+		sensorRead(&sensorData[0]);
+	}
 }
 
 
@@ -73,7 +76,7 @@ void loop()
 	 Serial.println(sensorData[3]);Serial.print(" ");*/
 	// # ACC #
 	/*Serial.print(sensorData[4]);Serial.print(" ");
-	 Serial.println(sensorData[5]);*/
+	 Serial.println(sensorData[5];*/
 	// # FRONT/BACK SHARPS #
 	/*Serial.print(sensorData[6]);Serial.print(" ");
 	 Serial.print(sensorData[7]);Serial.print(" ");
