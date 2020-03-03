@@ -20,13 +20,7 @@ bool wallExists(uint8_t where, uint8_t *sensorData)
 			break;
 
 		case BACK :
-			// FIXME: test sensors and adapt code
-			// if(sensorData[9]>DISTANCETOWALL && sensorData[10]>DISTANCETOWALL)
-			// {
-			//  	return true;
-			// }
-			//
-			if(sensorData[10]>DISTANCETOWALL)
+			if(sensorData[9]>DISTANCETOWALL && sensorData[10]>DISTANCETOWALL)
 			{
 				return true;
 			}

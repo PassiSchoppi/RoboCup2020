@@ -34,7 +34,8 @@ void stateChange(uint8_t *state, uint8_t *sensorData, uint8_t *robot_is_facing, 
 
 			// ## get direction to drive to ##
 			// 																		RECHTSUMFAHRUNG
-			if(!wallExists(RIGHT, &sensorData[0]))
+			/*
+			 if(!wallExists(RIGHT, &sensorData[0]))
 			{
 				// rechts drehen dann gerade aus
 				Serial.println("Rechts abbiegen!");
@@ -67,10 +68,12 @@ void stateChange(uint8_t *state, uint8_t *sensorData, uint8_t *robot_is_facing, 
 			// wenn überall Wände sind:::
 			*state = 1;
 			LEDSetColor(OFF);
+
+			*/
 			
 
 			// 																		MAP
-			/*Serial.print("Facing: ");
+			Serial.print("Facing: ");
 			Serial.println(*robot_is_facing);
 			mapUpdateField(&*robot_is_facing, &*robot_is_at);
 			uint8_t directionToGO;
@@ -190,7 +193,7 @@ void stateChange(uint8_t *state, uint8_t *sensorData, uint8_t *robot_is_facing, 
 				case 5:
 					*state = 0;
 					break;
-			}*/
+			}
 
 
 
@@ -358,7 +361,8 @@ void stateChange(uint8_t *state, uint8_t *sensorData, uint8_t *robot_is_facing, 
 		case 7:
 			// black tile
 			motorBrake();
-			*state = 0;
+			lastState = *state;
+			*state = 10;
 			break;
 		
 		case 8:
@@ -386,6 +390,18 @@ void stateChange(uint8_t *state, uint8_t *sensorData, uint8_t *robot_is_facing, 
 			motorBrake();
 			// stabilize und dann neu entscheiden
 			*state = 8;
+			break;
+
+		case 10:
+			// drive back one field
+			motorBrake();
+			motorDriveTo(BACK, BASESPEED);
+			while(motorStepsMade(0)<STEPSFORONE)
+			{
+			}
+			motorBrake();
+			motorResetAllSteps();
+			*state = 1;
 			break;
 	}
 }

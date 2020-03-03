@@ -11,6 +11,7 @@
 #include "stabilize.h"
 #include "timer.h"
 #include "kitdropper.h"
+#include "raspi.h"
 
 uint8_t sensorData[15];
 uint8_t state;
@@ -32,6 +33,7 @@ void setup()
 	mapInit();
 	timerInit();
 	kitdropperInit();
+	raspiInit();
 
 	Serial.begin(2000000);
 
@@ -47,12 +49,14 @@ void loop()
 	
 	// ## SENSORS ##
 	// Serial.print("reading Sensor Data ... ");
-	// sensorRead(&sensorData[0]);
+	sensorRead(&sensorData[0]);
 	// Serial.println("done!");
 	
+	// raspiRead();
+
 	// ## STATE ##
 	// Serial.println("changing state ... ");
-	// stateChange(&state, &sensorData[0], &robot_is_facing, &robot_is_at);
+	stateChange(&state, &sensorData[0], &robot_is_facing, &robot_is_at);
 	// Serial.print("done changing State: ");
 	// Serial.println(state);
 	
@@ -80,12 +84,13 @@ void loop()
 	/*Serial.print(sensorData[11]);Serial.print(" ");
 	 Serial.println(sensorData[12]);*/
 	// # LIGHT #
-	/*Serial.print(sensorData[13]);Serial.print(" ");
-	 Serial.println(sensorData[14]);*/
+	// Serial.print(sensorData[13]);Serial.print(" ");
+	 // Serial.println(sensorData[14]);
 	// # ISWALL #
-	Serial.print(wallExists(FRONT, &sensorData[0]));Serial.print(" ");
+	/*Serial.print("Walls: ");
+	 Serial.print(wallExists(FRONT, &sensorData[0]));Serial.print(" ");
 	 Serial.print(wallExists(RIGHT, &sensorData[0]));Serial.print(" ");
 	 Serial.print(wallExists(LEFT, &sensorData[0]));Serial.print(" ");
-	 Serial.println(wallExists(BACK, &sensorData[0]));
+	 Serial.println(wallExists(BACK, &sensorData[0]));*/
 }
 

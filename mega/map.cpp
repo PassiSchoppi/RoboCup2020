@@ -154,8 +154,15 @@ uint8_t mapSearchForUnvisited(Vector startPoint, Vector *skip)
 		++i;
 	}
 	skip[i] = startPoint;
+
+	for(uint8_t i=0; i<100; ++i)
+	{
+		Serial.print("[");
+		Serial.print(skip[i].X);Serial.print(", ");Serial.print(skip[i].Y);Serial.print("]  ");
+	}
+	Serial.println();
 		
-	// for every direction check if there is a unvisited
+	// for every direction check if there is an unvisited
 	Vector child;
 	uint8_t result;
 
@@ -163,10 +170,10 @@ uint8_t mapSearchForUnvisited(Vector startPoint, Vector *skip)
 	child.X = startPoint.X;
 	child.Y = startPoint.Y - 1;
 	// no wall in NOTH      &&     not in the skip array
-	if(!Map[ startPoint.X ][ startPoint.Y ].directions[NOTH] && !mapFieldInSkip( child, &skip[0] ));
+	if(!Map[ startPoint.X ][ startPoint.Y ].directions[NOTH] && !mapFieldInSkip( child, skip ));
 	{
 		// distance to nearest unvisited
-		result = mapSearchForUnvisited( child, &skip[0]);
+		result = mapSearchForUnvisited( child, skip);
 		// if there is an unvisited add 1 distance and return
 		if(result>0)
 		{
@@ -176,9 +183,9 @@ uint8_t mapSearchForUnvisited(Vector startPoint, Vector *skip)
 	// EAST child
 	child.X = startPoint.X + 1;
 	child.Y = startPoint.Y;
-	if(!Map[ startPoint.X ][ startPoint.Y ].directions[EAST] && !mapFieldInSkip( child, &skip[0] ))
+	if(!Map[ startPoint.X ][ startPoint.Y ].directions[EAST] && !mapFieldInSkip( child, skip ))
 	{
-		result = mapSearchForUnvisited( child, &skip[0]);
+		result = mapSearchForUnvisited( child, skip);
 		if(result>0)
 		{
 			return(result + 1);
@@ -187,9 +194,9 @@ uint8_t mapSearchForUnvisited(Vector startPoint, Vector *skip)
 	// SOUTH child
 	child.X = startPoint.X;
 	child.Y = startPoint.Y + 1;
-	if(!Map[ startPoint.X ][ startPoint.Y ].directions[SOUTH] && !mapFieldInSkip( child, &skip[0] ))
+	if(!Map[ startPoint.X ][ startPoint.Y ].directions[SOUTH] && !mapFieldInSkip( child, skip ))
 	{
-		result = mapSearchForUnvisited( child, &skip[0]);
+		result = mapSearchForUnvisited( child, skip);
 		if(result>0)
 		{
 			return(result + 1);
@@ -198,9 +205,9 @@ uint8_t mapSearchForUnvisited(Vector startPoint, Vector *skip)
 	// WEST child
 	child.X = startPoint.X - 1;
 	child.Y = startPoint.Y;
-	if(!Map[ startPoint.X ][ startPoint.Y ].directions[WEST] && !mapFieldInSkip( child, &skip[0] ))
+	if(!Map[ startPoint.X ][ startPoint.Y ].directions[WEST] && !mapFieldInSkip( child, skip ))
 	{
-		result = mapSearchForUnvisited( child, &skip[0]);
+		result = mapSearchForUnvisited( child, skip);
 		if(result>0)
 		{
 			return(result + 1);

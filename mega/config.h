@@ -31,7 +31,7 @@
 
 #define P 				30
 
-#define STEPSFORONE 	117
+#define STEPSFORONE 	127
 #define STEPFFORRIGHT 	72
 #define STEPSFORLEFT 	73
 
