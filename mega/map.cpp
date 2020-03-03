@@ -59,13 +59,45 @@ void mapUpdateField(uint8_t *robot_is_facing, Vector *robot_is_at)
 	}
 	
 	// write walls to current field
-	// i: FRONT, LEFT, RIGHT, BACK
+	// Directions as NOTH, EAST, SOUTH, WEST
+	bool DirIsBlack[4];
+	// i: FRONT, RIGHT, BACK, LEFT
 	for(uint8_t i = 0; i < 4; ++i)
 	{
+		// test wall if is black tile
+		switch( directionsInOrder[i] )
+		{
+			case NOTH:
+				DirIsBlack[NOTH] = Map[ (*robot_is_at).X ][ (*robot_is_at).Y-1 ].isBlack;
+				break;
+			
+			case EAST:
+				DirIsBlack[EAST] = Map[ (*robot_is_at).X+1 ][ (*robot_is_at).Y ].isBlack;
+				break;
+			
+			case SOUTH:
+				DirIsBlack[SOUTH] = Map[ (*robot_is_at).X ][ (*robot_is_at).Y+1 ].isBlack;
+				break;
+			
+			case WEST:
+				DirIsBlack[WEST] = Map[ (*robot_is_at).X-1 ][ (*robot_is_at).Y ].isBlack;
+				break;
+		}
 		// Map      X                Y          wall in  (NOTH, EAST, SOUTH, WEST) = wall in (FRONT, ...)
 		Map[(*robot_is_at).X][(*robot_is_at).Y].directions[directionsInOrder[i]] = wallExists( i, &localSensorData[0]);
 	}
 
+
+
+	// i: NOTH, EAST, SOUTH, WEST
+	for(int i=0; i<4; ++i)
+	{
+		if( DirIsBlack[i] )
+		{
+			Map[(*robot_is_at).X][(*robot_is_at).Y].directions[directionsInOrder[FRONT]] = true;
+		}
+	}
+	
 	// write fields to surrounding fields
 	// NOTH's field SOUTH wall is current's field NOTH wall
 	// Map      X                    Y-1         south wall       = Map       X                 Y            north wall
@@ -82,6 +114,22 @@ void mapUpdateField(uint8_t *robot_is_facing, Vector *robot_is_at)
 	// WEST's field EAST wall is current's field WEST wall
 	// Map      X-1                  Y           east wall       = Map         X                Y           west wall
 	Map[(*robot_is_at).X - 1][(*robot_is_at).Y].directions[EAST] = Map[(*robot_is_at).X][(*robot_is_at).Y].directions[WEST];
+	
+	/*if( FrontIsNotBlack )
+	{
+		switch( directionsInOrder[FRONT] )
+		{
+			case NOTH:
+				Map[(*robot_is_at).X][(*robot_is_at).Y - 1].directions[SOUTH] = ;
+				break;
+			case EAST:
+				break:
+			case SOUTH:
+				break;
+			case WEST:
+				break;
+		}
+	}*/
 
 	/*Serial.print(Map[robot_is_at.X][robot_is_at.Y].directions[NOTH]);
 	Serial.print(Map[robot_is_at.X][robot_is_at.Y].directions[EAST]);
@@ -137,6 +185,7 @@ void mapBlackFieldFront(uint8_t *robot_is_facing, Vector *robot_is_at)
 	// WEST's field EAST wall is current's field WEST wall
 	Map[ blackField.X - 1 ][ blackField.Y ].directions[EAST] = Map[ blackField.X ][ blackField.Y ].directions[ WEST ];
 
+	Map[ blackField.X ][ blackField.Y ].isBlack = true;
 }
 
 uint8_t mapSearchForUnvisited(Vector startPoint, Vector *skip) 

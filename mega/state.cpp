@@ -75,6 +75,13 @@ void stateChange(uint8_t *state, uint8_t *sensorData, uint8_t *robot_is_facing, 
 			// 																		MAP
 			Serial.print("Facing: ");
 			Serial.println(*robot_is_facing);
+			uint8_t localSensorDataA[15];
+			sensorRead(&localSensorDataA[0]);
+			if((localSensorDataA[13]>MAXWHITE) && (localSensorDataA[14]>MAXWHITE))
+			{
+				*state = 7;
+				break;
+			}
 			mapUpdateField(&*robot_is_facing, &*robot_is_at);
 			uint8_t directionToGO;
 			directionToGO = mapWhereToDrive(&*robot_is_at);
@@ -194,9 +201,6 @@ void stateChange(uint8_t *state, uint8_t *sensorData, uint8_t *robot_is_facing, 
 					*state = 0;
 					break;
 			}
-
-
-
 			break;
 		
 		case 2:
@@ -361,7 +365,6 @@ void stateChange(uint8_t *state, uint8_t *sensorData, uint8_t *robot_is_facing, 
 		case 7:
 			// black tile
 			motorBrake();
-			lastState = *state;
 			*state = 10;
 			break;
 		
@@ -401,6 +404,7 @@ void stateChange(uint8_t *state, uint8_t *sensorData, uint8_t *robot_is_facing, 
 			}
 			motorBrake();
 			motorResetAllSteps();
+			mapBlackFieldFront(*robot_is_facing, robot_is_at);
 			*state = 1;
 			break;
 	}

@@ -35,7 +35,7 @@
 #define STEPFFORRIGHT 	72
 #define STEPSFORLEFT 	73
 
-#define MAXWHITE 		190
+#define MAXWHITE 		230
 #define MINWHITE 		150
 
 #define OFF 			0

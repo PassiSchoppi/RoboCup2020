@@ -97,8 +97,8 @@ void sensorRead(uint8_t *sensorData)
 	sensorData[12]=((int)melexisGetValue(1));
 	
 	// 														LIGHT SENSOR
-	// digitalWrite(7, HIGH);
-	// delay(30);
+	digitalWrite(7, HIGH);
+	delay(30);
 	sensorData[13]=(analogRead(A6)>>2)-5;
 	sensorData[14]=analogRead(7)>>2;
 	digitalWrite(7, LOW);

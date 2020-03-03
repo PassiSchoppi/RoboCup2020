@@ -17,6 +17,7 @@ struct Field
 	bool directions[4] = {1, 1, 1, 1};
 	bool visited = false;
 	bool isSilver = false;
+	bool isBlack = false;
 };
 
 
@@ -24,7 +25,7 @@ struct Field
 void mapInit();
 // void mapNewField(int x, int y, int north, int east, int south, int west);
 void mapUpdateField(uint8_t *robot_is_facing, Vector *robot_is_at);
-void mapBlackFieldFront(uint8_t *robot_is_facing, Vector robot_is_at);
+void mapBlackFieldFront(uint8_t *robot_is_facing, Vector *robot_is_at);
 bool mapFieldInSkip(Vector field, Vector *skip);
 uint8_t mapSearchForUnvisited(Vector startPoint, Vector *skip);
 uint8_t mapWhereToDrive(Vector *robot_is_at);
