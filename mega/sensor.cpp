@@ -98,7 +98,7 @@ void sensorRead(uint8_t *sensorData)
 	
 	// 														LIGHT SENSOR
 	digitalWrite(7, HIGH);
-	delay(30);
+	delay(10);
 	sensorData[13]=(analogRead(A6)>>2)-5;
 	sensorData[14]=analogRead(7)>>2;
 	digitalWrite(7, LOW);

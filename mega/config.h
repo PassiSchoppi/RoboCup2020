@@ -18,10 +18,10 @@
 #define BACK 			2
 #define LEFT 			3
 
-#define DISTANCETOWALL 	45
+#define DISTANCETOWALL 	37
 #define CUTDATAVAL 		0
 
-#define VICTIMTEMP 		31
+#define VICTIMTEMP 		28
 
 #define POSLEFT 		70
 #define POSMIDD 		120
@@ -31,11 +31,11 @@
 
 #define P 				30
 
-#define STEPSFORONE 	127
+#define STEPSFORONE 	130
 #define STEPFFORRIGHT 	72
-#define STEPSFORLEFT 	73
+#define STEPSFORLEFT 	70
 
-#define MAXWHITE 		230
+#define MAXWHITE 		220
 #define MINWHITE 		150
 
 #define OFF 			0

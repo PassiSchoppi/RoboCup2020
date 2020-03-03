@@ -34,7 +34,7 @@ void stateChange(uint8_t *state, uint8_t *sensorData, uint8_t *robot_is_facing, 
 
 			// ## get direction to drive to ##
 			// 																		RECHTSUMFAHRUNG
-			/*
+			
 			 if(!wallExists(RIGHT, &sensorData[0]))
 			{
 				// rechts drehen dann gerade aus
@@ -69,11 +69,11 @@ void stateChange(uint8_t *state, uint8_t *sensorData, uint8_t *robot_is_facing, 
 			*state = 1;
 			LEDSetColor(OFF);
 
-			*/
+			
 			
 
 			// 																		MAP
-			Serial.print("Facing: ");
+			/*Serial.print("Facing: ");
 			Serial.println(*robot_is_facing);
 			uint8_t localSensorDataA[15];
 			sensorRead(&localSensorDataA[0]);
@@ -200,7 +200,9 @@ void stateChange(uint8_t *state, uint8_t *sensorData, uint8_t *robot_is_facing, 
 				case 5:
 					*state = 0;
 					break;
-			}
+			}*/
+
+
 			break;
 		
 		case 2:

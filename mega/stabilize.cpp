@@ -6,7 +6,7 @@ void stabilize()
 	motorBrake();
 	
 	uint8_t localSensorData[15];
-	for(int i=0; i<100; ++i)
+	for(int i=0; i<40; ++i)
 	{
 		sensorRead(&localSensorData[0]);
 		if( wallExists(LEFT, &localSensorData[0]) )

@@ -147,14 +147,14 @@ int speedFromEnc(uint8_t encA, uint8_t encB, uint8_t encC, uint8_t encME, int sp
 		{
 			if(wallExists(LEFT, &localSensorData[0]))
 			{
-				correctedSpeed = correctedSpeed * ((localSensorData[0] + 50)/(localSensorData[1] + 50));
+				correctedSpeed = ((correctedSpeed * (localSensorData[0] + 5))/(localSensorData[1] + 5));
 			}
 		}
 		else
 		{
 			if(wallExists(RIGHT, &localSensorData[0]))
 			{
-				correctedSpeed = correctedSpeed * ((localSensorData[2] + 50)/(localSensorData[3] + 50));
+				correctedSpeed = ((correctedSpeed * (localSensorData[2] + 5))/(localSensorData[3] + 5));
 			}
 		}
 	}
@@ -189,10 +189,11 @@ void motorDriveTo(uint8_t direction, int speed)
 			break;
 		
 		case BACK:
-			motorSetSpeed(0, speedFromEnc(motor[1].steps, motor[2].steps, motor[3].steps, motor[0].steps, -speed, true, true));
-			motorSetSpeed(1, speedFromEnc(motor[0].steps, motor[2].steps, motor[3].steps, motor[1].steps, -speed, true, true));
-			motorSetSpeed(2, speedFromEnc(motor[0].steps, motor[1].steps, motor[3].steps, motor[2].steps, -speed, true, false));
-			motorSetSpeed(3, speedFromEnc(motor[0].steps, motor[2].steps, motor[1].steps, motor[3].steps, -speed, true, false));
+			// FIXME
+			motorSetSpeed(0, speedFromEnc(motor[1].steps, motor[2].steps, motor[3].steps, motor[0].steps, -speed, false, true));
+			motorSetSpeed(1, speedFromEnc(motor[0].steps, motor[2].steps, motor[3].steps, motor[1].steps, -speed, false, true));
+			motorSetSpeed(2, speedFromEnc(motor[0].steps, motor[1].steps, motor[3].steps, motor[2].steps, -speed, false, false));
+			motorSetSpeed(3, speedFromEnc(motor[0].steps, motor[2].steps, motor[1].steps, motor[3].steps, -speed, false, false));
 			break;
 	}
 }
