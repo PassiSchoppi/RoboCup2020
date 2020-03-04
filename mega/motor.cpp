@@ -58,9 +58,9 @@ void motorInit()
   	}
 }
 
-void motorSetSpeed(uint8_t i, int16_t speed) 
+void motorSetSpeed(uint8_t i, int speed) 
 {
-  	uint8_t pwm = min(255, round(abs(speed)*motor[i].factor));
+  	int pwm = min(255, round(abs(speed)*motor[i].factor));
 
   	analogWrite(motor[i].pwm, pwm);
   	digitalWrite(motor[i].pin1, speed>=0);
@@ -95,52 +95,13 @@ short int motorStepsMade(uint8_t i)
 	return(motor[i].steps);
 }
 
-/*void motorSetLeftSpeed(int16_t speed) 
-{
-  	motorSetSpeed(0, speed);
-  	motorSetSpeed(1, speed);
-}
-
-void motorSetRightSpeed(int16_t speed) 
-{
-  	motorSetSpeed(2, speed);
-  	motorSetSpeed(3, speed);
-}*/
-
 int speedFromEnc(uint8_t encA, uint8_t encB, uint8_t encC, uint8_t encME, int speedME, bool stickToWall, bool leftMotor)
 {
-	/*if(stickToWall)
-	{
-		sensorRead(&localSensorData[0]);
-		if(leftMotor)
-		{
-			if(wallExists(LEFT, &localSensorData[0]))
-			{
-				return(speedME * (float)( (float)localSensorData[1] / (float)localSensorData[0] ) );
-			}
-		}
-		else
-		{
-			if(wallExists(RIGHT, &localSensorData[0]))
-			{
-				return(speedME * (float)( (float)localSensorData[3] / (float)localSensorData[2] ) );
-			}
-
-		}
-	}*/
-
-	/*int D = (encA + encB+ encC + encME) / 4;
-	float Error = (float)(encME - D) / (float)encME;
-	float Correct = Error * (float)P;
-	float CorrectedSpeed = Correct + speedME;
-	// Serial.println(CorrectedSpeed);
-	return ( round(CorrectedSpeed) );*/
-
-	
 	volatile uint8_t localSensorData[15];
 	sensorRead(&localSensorData[0]);
 	int correctedSpeed = ( ((encA+encB+encC+encME)/4) *speedME) / (encME);
-
+	// Serial.println( localSensorData[2] );
+	// Serial.println( wallExists(RIGHT, &localSensorData[0]) );
 	if( stickToWall )
 	{
 		if( leftMotor )
@@ -148,6 +109,7 @@ int speedFromEnc(uint8_t encA, uint8_t encB, uint8_t encC, uint8_t encME, int sp
 			if(wallExists(LEFT, &localSensorData[0]))
 			{
 				correctedSpeed = ((correctedSpeed * (localSensorData[0] + 0))/(localSensorData[1] + 0));
+				Serial.println("correcting LEFT");
 			}
 		}
 		else
@@ -155,6 +117,7 @@ int speedFromEnc(uint8_t encA, uint8_t encB, uint8_t encC, uint8_t encME, int sp
 			if(wallExists(RIGHT, &localSensorData[0]))
 			{
 				correctedSpeed = ((correctedSpeed * (localSensorData[2] + 0))/(localSensorData[3] + 0));
+				Serial.println("correcting RIGHT");
 			}
 		}
 	}

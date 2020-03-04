@@ -3,7 +3,7 @@
 
 uint8_t sensorData[6];
 
-uint8_t kitdropperDeg = 90;
+uint8_t kitdropperDeg = 120;
 int 	pwm;
 
 void setup() 

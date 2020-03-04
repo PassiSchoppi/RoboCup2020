@@ -43,11 +43,11 @@ void sensorRead(uint8_t *sensorData)
 		if(i<6)
 		{
 			// Serial.println(bufferVar);
-			if(i!=2 && i!=4 && i!=5){
-				sensorData[i]=bufferVar;
-			}else{
-				sensorData[i]=(((sensorData[i])*9)+bufferVar)/10;
-			}
+			// if(i!=2 && i!=4 && i!=5){
+				// sensorData[i]=bufferVar;
+			// }else{
+				sensorData[i]=(((sensorData[i])*19)+bufferVar)/20;
+			// }
 			++i;
 		}
 	}

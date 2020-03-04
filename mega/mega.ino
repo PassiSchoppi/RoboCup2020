@@ -59,7 +59,7 @@ void loop()
 
 	// ## STATE ##
 	// Serial.println("changing state ... ");
-	stateChange(&state, &sensorData[0], &robot_is_facing, &robot_is_at);
+	// stateChange(&state, &sensorData[0], &robot_is_facing, &robot_is_at);
 	// Serial.print("done changing State: ");
 	// Serial.println(state);
 	
@@ -90,10 +90,10 @@ void loop()
 	// Serial.print(sensorData[13]);Serial.print(" ");
 	 // Serial.println(sensorData[14]);
 	// # ISWALL #
-	/*Serial.print("Walls: ");
+	Serial.print("Walls: ");
 	 Serial.print(wallExists(FRONT, &sensorData[0]));Serial.print(" ");
 	 Serial.print(wallExists(RIGHT, &sensorData[0]));Serial.print(" ");
 	 Serial.print(wallExists(LEFT, &sensorData[0]));Serial.print(" ");
-	 Serial.println(wallExists(BACK, &sensorData[0]));*/
+	 Serial.println(wallExists(BACK, &sensorData[0]));
 }
 

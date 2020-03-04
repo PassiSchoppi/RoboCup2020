@@ -20,7 +20,7 @@ uint8_t nothing()
 
 void stateChange(uint8_t *state, uint8_t *sensorData, uint8_t *robot_is_facing, Vector *robot_is_at)
 {
-	Serial.println(seenVic);
+	// Serial.println(seenVic);
 	switch(*state) 
 	{
 		case 0:
@@ -37,23 +37,16 @@ void stateChange(uint8_t *state, uint8_t *sensorData, uint8_t *robot_is_facing, 
 			LEDSetColor(WHITE);
 			
 			// if black tile
-			if( sensorData[13]>MAXWHITE || sensorData[14]>MAXWHITE )
+/*			if( sensorData[13]>MAXWHITE || sensorData[14]>MAXWHITE )
 			{
-				*state = 7;
+				*state = 10;
 				break;
 			}
-			
-			// nächster State wenn gefragt
-			/*if( nextState != 0 )
-			{
-				*state = nextState;
-				nextState = 0;
-				break;
-			}*/
+*/			
 			// ## get direction to drive to ##
 			// 																		RECHTSUMFAHRUNG
 			
-			 if(!wallExists(RIGHT, &sensorData[0]))
+			if(!wallExists(RIGHT, &sensorData[0]))
 			{
 				// rechts drehen dann gerade aus
 				Serial.println("Rechts abbiegen!");
@@ -97,7 +90,7 @@ void stateChange(uint8_t *state, uint8_t *sensorData, uint8_t *robot_is_facing, 
 			sensorRead(&localSensorDataA[0]);
 			if((localSensorDataA[13]>MAXWHITE) && (localSensorDataA[14]>MAXWHITE))
 			{
-				*state = 7;
+				*state = 10;
 				break;
 			}
 			mapUpdateField(&*robot_is_facing, &*robot_is_at);
@@ -223,11 +216,10 @@ void stateChange(uint8_t *state, uint8_t *sensorData, uint8_t *robot_is_facing, 
 			break;
 		
 		case 2:
-			// turn right
+			// turn right und dann gerade aus
 			LEDSetColor(GREEN);
-			// motorSetRightSpeed(-BASESPEED);
-			// motorSetLeftSpeed(BASESPEED);
 			motorDriveTo(RIGHT, BASESPEED);
+			// drive RIGHT until average > STEPFFORRIGHT
 			average = 0;
 			for(uint8_t i=0; i<4; ++i){
 				average = average + abs(motorStepsMade(i));
@@ -238,8 +230,10 @@ void stateChange(uint8_t *state, uint8_t *sensorData, uint8_t *robot_is_facing, 
 				motorResetAllSteps();
 				motorBrake();
 				stabilize();
+				// gerade aus
 				*state = 3;
 			}
+			// wenn da ist ein Victim
 			if( sensorData[11]>VICTIMTEMP || sensorData[12]>VICTIMTEMP )
 			{
 				lastState = *state;
@@ -250,11 +244,8 @@ void stateChange(uint8_t *state, uint8_t *sensorData, uint8_t *robot_is_facing, 
 		case 3:
 			// drive staight
 			LEDSetColor(BLUE);
-			// motorSetRightSpeed(pid(70, sensorData[2], sensorData[3], false));
-			// motorSetLeftSpeed(pid(70, sensorData[0], sensorData[1], true));
-			// motorSetRightSpeed(BASESPEED);
-			// motorSetLeftSpeed(BASESPEED);
 			motorDriveTo(FRONT, BASESPEED);
+			// gerade aus bis average > STEPSFORONE
 			average = 0;
 			for(uint8_t i=0; i<4; ++i)
 			{
@@ -263,6 +254,7 @@ void stateChange(uint8_t *state, uint8_t *sensorData, uint8_t *robot_is_facing, 
 			average = average/4;
 			if( average>STEPSFORONE )
 			{
+				motorBrake();
 				motorResetAllSteps();
 				// stabilize und dann neue entscheidung
 				*state = 8;
@@ -274,6 +266,7 @@ void stateChange(uint8_t *state, uint8_t *sensorData, uint8_t *robot_is_facing, 
 				motorBrake();
 				*state = 9;
 			}
+			// wenn Victim
 			if( sensorData[11]>VICTIMTEMP || sensorData[12]>VICTIMTEMP )
 			{
 				lastState = *state;
@@ -282,11 +275,10 @@ void stateChange(uint8_t *state, uint8_t *sensorData, uint8_t *robot_is_facing, 
 			break;
 		
 		case 4:
-			// drive left
+			// drive left dann gerade aus
 			LEDSetColor(RED);
-			// motorSetRightSpeed(BASESPEED);
-			// motorSetLeftSpeed(-BASESPEED);
 			motorDriveTo(LEFT, BASESPEED);
+			// Left until average > STEPSFORLEFT
 			average = 0;
 			for(uint8_t i=0; i<4; ++i)
 			{
@@ -297,8 +289,10 @@ void stateChange(uint8_t *state, uint8_t *sensorData, uint8_t *robot_is_facing, 
 			{
 				motorResetAllSteps();
 				stabilize();
+				// gerade aus
 				*state = 3;
 			}
+			// wen victim
 			if( sensorData[11]>VICTIMTEMP || sensorData[12]>VICTIMTEMP )
 			{
 				lastState = *state;
@@ -307,11 +301,10 @@ void stateChange(uint8_t *state, uint8_t *sensorData, uint8_t *robot_is_facing, 
 			break;
 		
 		case 5:
-			// drive left
+			// drive left then left and then straight
 			LEDSetColor(TURQUOISE);
-			// motorSetRightSpeed(BASESPEED);
-			// motorSetLeftSpeed(-BASESPEED);
 			motorDriveTo(LEFT, BASESPEED);
+			// left bis average = STEPSFORLEFT
 			average = 0;
 			for(uint8_t i=0; i<4; ++i)
 			{
@@ -322,84 +315,81 @@ void stateChange(uint8_t *state, uint8_t *sensorData, uint8_t *robot_is_facing, 
 			{
 				motorResetAllSteps();
 				stabilize();
+				// dann left und dann gerade aus
 				*state = 4;
 			}
+			// wenn victim
 			if( sensorData[11]>VICTIMTEMP || sensorData[12]>VICTIMTEMP )
 			{
 				lastState = *state;
 				*state = 6;
 			}
-			// if( sensorData[] )
 			break;
 		
 		case 6:
 			// temp victim
 			// try for 5 seconds and blink
+			// wenn noch kein victim auf dem Feld ist
 			if(!seenVic){
-			motorBrake();
-			LEDSetColor(RED);
-			delay(1000);
-			if( sensorData[11]>VICTIMTEMP || sensorData[12]>VICTIMTEMP )
-			{
-				LEDSetColor(OFF);
+				// sekunde 1
+				motorBrake();
+				LEDSetColor(RED);
 				delay(1000);
-				sensorRead(&sensorData[0]);
 				if( sensorData[11]>VICTIMTEMP || sensorData[12]>VICTIMTEMP )
 				{
-					LEDSetColor(RED);
+					// sekunde 2
+					LEDSetColor(OFF);
 					delay(1000);
 					sensorRead(&sensorData[0]);
 					if( sensorData[11]>VICTIMTEMP || sensorData[12]>VICTIMTEMP )
 					{
-						LEDSetColor(OFF);
+						// senkunde 3
+						LEDSetColor(RED);
 						delay(1000);
 						sensorRead(&sensorData[0]);
 						if( sensorData[11]>VICTIMTEMP || sensorData[12]>VICTIMTEMP )
 						{
-							LEDSetColor(RED);
+							// sekunde 4
+							LEDSetColor(OFF);
 							delay(1000);
 							sensorRead(&sensorData[0]);
 							if( sensorData[11]>VICTIMTEMP || sensorData[12]>VICTIMTEMP )
 							{
-								//move the servo motor
-								kitdropperSetTo(POSMIDD);
+								// sekunde 5
+								LEDSetColor(RED);
 								delay(1000);
-								seenVic = true;
-								if( sensorData[11]>VICTIMTEMP )
+								sensorRead(&sensorData[0]);
+								if( sensorData[11]>VICTIMTEMP || sensorData[12]>VICTIMTEMP )
 								{
-									kitdropperSetTo(POSLEFT);
+									// abwurf
+									//move the servo motor
+									kitdropperSetTo(POSMIDD);
+									delay(1000);
+									seenVic = true;
+									if( sensorData[11]>VICTIMTEMP )
+									{
+										kitdropperSetTo(POSLEFT);
+									}
+									else
+									{
+										kitdropperSetTo(POSRIGHT);
+									}
+									// 2 sekunden warten und dann zurück zu mitte
+									delay(2000);
+									kitdropperSetTo(POSMIDD);
 								}
-								else
-								{
-									kitdropperSetTo(POSRIGHT);
-								}
-								delay(2000);
-								kitdropperSetTo(POSMIDD);
 							}
 						}
 					}
 				}
 			}
-			}
-
+			
+			// zurück zu dem was er gerade gemacht hat
 			*state = lastState;
 			break;
 		
 		case 7:
-			// black tile
-			motorBrake();
-			sensorRead(&sensorData[0]);
-			if( wallExists(LEFT, &sensorData[0]) )
-			{
-				nextState = 5;
-			}
-			else
-			{
-				nextState = 3;
-			}
-			*state = 10;
-			Serial.println("black tile:");
-			Serial.println(wallExists(LEFT, &sensorData[0]));
+			// freier State
 			break;
 		
 		case 8:
@@ -431,7 +421,7 @@ void stateChange(uint8_t *state, uint8_t *sensorData, uint8_t *robot_is_facing, 
 			break;
 
 		case 10:
-			// drive back one field
+			// black tile und dann drive back one field
 			motorBrake();
 			motorDriveTo(BACK, BASESPEED);
 			while(motorStepsMade(0)<STEPSFORONE)
@@ -441,6 +431,8 @@ void stateChange(uint8_t *state, uint8_t *sensorData, uint8_t *robot_is_facing, 
 			motorResetAllSteps();
 			mapBlackFieldFront(*robot_is_facing, robot_is_at);
 			sensorRead(&sensorData[0]);
+			// wenn links eine wand ist muss er 180 drehung machen
+			// wenn nicht dann nur links und gerade aus
 			if( wallExists(LEFT, &sensorData[0]) )
 			{
 				*state = 5;
