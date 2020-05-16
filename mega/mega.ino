@@ -59,7 +59,7 @@ void loop()
 
 	// ## STATE ##
 	// Serial.println("changing state ... ");
-	// stateChange(&state, &sensorData[0], &robot_is_facing, &robot_is_at);
+	stateChange(&state, &sensorData[0], &robot_is_facing, &robot_is_at);
 	// Serial.print("done changing State: ");
 	// Serial.println(state);
 	
