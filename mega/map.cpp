@@ -206,10 +206,10 @@ uint8_t mapSearchForUnvisited(Vector startPoint, Vector *skip)
 
 	for(uint8_t i=0; i<100; ++i)
 	{
-		Serial.print("[");
-		Serial.print(skip[i].X);Serial.print(", ");Serial.print(skip[i].Y);Serial.print("]  ");
+		// Serial.print("[");
+		// Serial.print(skip[i].X);Serial.print(", ");Serial.print(skip[i].Y);Serial.print("]  ");
 	}
-	Serial.println();
+	// Serial.println();
 		
 	// for every direction check if there is an unvisited
 	Vector child;
@@ -284,11 +284,11 @@ bool mapFieldInSkip(Vector field, Vector *skip)
 
 uint8_t indexofSmallestElement(uint8_t array[4])
 {
-	Serial.print("distances: ");
-	Serial.print(array[0]);Serial.print(" ");
-	Serial.print(array[1]);Serial.print(" ");
-	Serial.print(array[2]);Serial.print(" ");
-	Serial.println(array[3]);
+	// Serial.print("distances: ");
+	// Serial.print(array[0]);Serial.print(" ");
+	// Serial.print(array[1]);Serial.print(" ");
+	// Serial.print(array[2]);Serial.print(" ");
+	// Serial.println(array[3]);
 
 	uint8_t index;
 
@@ -317,9 +317,9 @@ uint8_t indexofSmallestElement(uint8_t array[4])
 uint8_t mapWhereToDrive(Vector *robot_is_at) 
 {
 
-	Serial.print("Koordinaten: ");
-	Serial.print((*robot_is_at).X);Serial.print(" ");
-	Serial.println((*robot_is_at).Y);
+	// Serial.print("Koordinaten: ");
+	// Serial.print((*robot_is_at).X);Serial.print(" ");
+	// Serial.println((*robot_is_at).Y);
 
 	uint8_t distance[4];
 	Vector startSearch;

@@ -12,6 +12,7 @@
 #include "timer.h"
 #include "kitdropper.h"
 #include "raspi.h"
+#include "output.h"
 
 uint8_t sensorData[15];
 uint8_t state;
@@ -35,7 +36,7 @@ void setup()
 	kitdropperInit();
 	raspiInit();
 
-	Serial.begin(2000000);
+	Serial.begin(1000000);
 
 	for(int i=0; i<10; ++i)
 	{
@@ -63,37 +64,6 @@ void loop()
 	// Serial.print("done changing State: ");
 	// Serial.println(state);
 	
-	// ## OUTPUT ##
-    // # MOTOREN #
-	/*Serial.print(motorStepsMade(0));Serial.print(" ");
-	 Serial.print(motorStepsMade(1));Serial.print(" ");
-	 Serial.print(motorStepsMade(2));Serial.print(" ");
-	 Serial.println(motorStepsMade(3));*/
-	// # SIDE SHARPS #
-	/*Serial.print(sensorData[0]);Serial.print(" ");
-	 Serial.print(sensorData[1]);Serial.print(" ");
-	 Serial.print(sensorData[2]);Serial.print(" ");
-	 Serial.println(sensorData[3]);Serial.print(" ");*/
-	// # ACC #
-	/*Serial.print(sensorData[4]);Serial.print(" ");
-	 Serial.println(sensorData[5];*/
-	// # FRONT/BACK SHARPS #
-	/*Serial.print(sensorData[6]);Serial.print(" ");
-	 Serial.print(sensorData[7]);Serial.print(" ");
-	 Serial.print(sensorData[8]);Serial.print(" ");
-	 Serial.print(sensorData[9]);Serial.print(" ");
-	 Serial.println(sensorData[10]);*/
-	// # MELEXIS #
-	/*Serial.print(sensorData[11]);Serial.print(" ");
-	 Serial.println(sensorData[12]);*/
-	// # LIGHT #
-	// Serial.print(sensorData[13]);Serial.print(" ");
-	 // Serial.println(sensorData[14]);
-	// # ISWALL #
-	Serial.print("Walls: ");
-	 Serial.print(wallExists(FRONT, &sensorData[0]));Serial.print(" ");
-	 Serial.print(wallExists(RIGHT, &sensorData[0]));Serial.print(" ");
-	 Serial.print(wallExists(LEFT, &sensorData[0]));Serial.print(" ");
-	 Serial.println(wallExists(BACK, &sensorData[0]));
-}
+	output();
 
+}

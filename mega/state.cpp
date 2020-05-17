@@ -49,21 +49,21 @@ void stateChange(uint8_t *state, uint8_t *sensorData, uint8_t *robot_is_facing, 
 			if(!wallExists(RIGHT, &sensorData[0]))
 			{
 				// rechts drehen dann gerade aus
-				Serial.println("Rechts abbiegen!");
+				// Serial.println("Rechts abbiegen!");
 				*state = 2;
 				break;
 			}
 			if(!wallExists(FRONT, &sensorData[0]))
 			{
 				// gerade aus
-				Serial.println("Gerade aus!");
+				// Serial.println("Gerade aus!");
 				*state = 3;
 				break;
 			}
 			if(!wallExists(LEFT, &sensorData[0]))
 			{
 				// links drehen dann gerade aus
-				Serial.println("Links abbiegen!");
+				// Serial.println("Links abbiegen!");
 				*state = 4;
 				break;
 			}
@@ -71,7 +71,7 @@ void stateChange(uint8_t *state, uint8_t *sensorData, uint8_t *robot_is_facing, 
 			if(!wallExists(BACK, &sensorData[0]))
 			{
 				// 2x links drehen dann gerade aus
-				Serial.println("Nach hinten!");
+				// Serial.println("Nach hinten!");
 				*state = 5;
 				break;
 			}
@@ -400,8 +400,8 @@ void stateChange(uint8_t *state, uint8_t *sensorData, uint8_t *robot_is_facing, 
 			motorBrake();
 			motorResetAllSteps();
 			*state = 1;
-			Serial.print("state: ");
-			Serial.println(*state);
+			// Serial.print("state: ");
+			// Serial.println(*state);
 			seenVic = false;
 			break;
 		
