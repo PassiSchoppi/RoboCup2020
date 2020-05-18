@@ -11,9 +11,10 @@ void mapInit()
 
 void mapUpdateField(uint8_t *robot_is_facing, Vector *robot_is_at) 
 {
-	uint8_t localSensorData[15];
+	// uint8_t localSensorData[15];
 	uint8_t directionsInOrder[4];
-	sensorRead(&localSensorData[0]);
+	// sensorRead(&localSensorData[0]);
+	sensorRead();
 	
 	// set current field to visited
 	Map[(*robot_is_at).X][(*robot_is_at).Y].visited = true;
@@ -84,7 +85,7 @@ void mapUpdateField(uint8_t *robot_is_facing, Vector *robot_is_at)
 				break;
 		}
 		// Map      X                Y          wall in  (NOTH, EAST, SOUTH, WEST) = wall in (FRONT, ...)
-		Map[(*robot_is_at).X][(*robot_is_at).Y].directions[directionsInOrder[i]] = wallExists( i, &localSensorData[0]);
+		Map[(*robot_is_at).X][(*robot_is_at).Y].directions[directionsInOrder[i]] = wallExists( i, &sensorData[0]);
 	}
 
 

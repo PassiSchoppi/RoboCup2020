@@ -340,25 +340,25 @@ void stateChange(uint8_t *state, uint8_t *sensorData, uint8_t *robot_is_facing, 
 					// sekunde 2
 					LEDSetColor(OFF);
 					delay(1000);
-					sensorRead(&sensorData[0]);
+					sensorRead();
 					if( sensorData[11]>VICTIMTEMP || sensorData[12]>VICTIMTEMP )
 					{
 						// senkunde 3
 						LEDSetColor(RED);
 						delay(1000);
-						sensorRead(&sensorData[0]);
+						sensorRead();
 						if( sensorData[11]>VICTIMTEMP || sensorData[12]>VICTIMTEMP )
 						{
 							// sekunde 4
 							LEDSetColor(OFF);
 							delay(1000);
-							sensorRead(&sensorData[0]);
+							sensorRead();
 							if( sensorData[11]>VICTIMTEMP || sensorData[12]>VICTIMTEMP )
 							{
 								// sekunde 5
 								LEDSetColor(RED);
 								delay(1000);
-								sensorRead(&sensorData[0]);
+								sensorRead();
 								if( sensorData[11]>VICTIMTEMP || sensorData[12]>VICTIMTEMP )
 								{
 									// abwurf
@@ -430,7 +430,7 @@ void stateChange(uint8_t *state, uint8_t *sensorData, uint8_t *robot_is_facing, 
 			motorBrake();
 			motorResetAllSteps();
 			mapBlackFieldFront(*robot_is_facing, robot_is_at);
-			sensorRead(&sensorData[0]);
+			sensorRead();
 			// wenn links eine wand ist muss er 180 drehung machen
 			// wenn nicht dann nur links und gerade aus
 			if( wallExists(LEFT, &sensorData[0]) )

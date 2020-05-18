@@ -14,7 +14,9 @@
 #include "raspi.h"
 #include "output.h"
 
-uint8_t sensorData[15];
+// uint8_t sensorData[15];
+// ## GLOBAL VARIABLES (see config.h) ##
+volatile uint8_t sensorData[15];
 uint8_t state;
 
 uint8_t robot_is_facing;
@@ -38,32 +40,22 @@ void setup()
 
 	Serial.begin(1000000);
 
-	for(int i=0; i<10; ++i)
-	{
-		sensorRead(&sensorData[0]);
-	}
+	// for(int i=0; i<10; ++i)
+	// {
+		// sensorRead(&sensorData[0]);
+	// }
 }
 
 
 void loop() 
 {
-
-	// ## LED ##
 	digitalWrite(13, !digitalRead(13));
-	
-	// ## SENSORS ##
-	// Serial.print("reading Sensor Data ... ");
-	sensorRead(&sensorData[0]);
-	// Serial.println("done!");
 	
 	// raspiRead();
 
 	// ## STATE ##
 	// Serial.println("changing state ... ");
-	stateChange(&state, &sensorData[0], &robot_is_facing, &robot_is_at);
+	// stateChange(&state, &sensorData[0], &robot_is_facing, &robot_is_at);
 	// Serial.print("done changing State: ");
-	// Serial.println(state);
-	
 	output();
-
 }

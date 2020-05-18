@@ -11,89 +11,73 @@ void sensorInit()
 	pinMode(7, OUTPUT);
 }
 
-void sensorRead(uint8_t *sensorData)
+void sensorRead()
 {
-	uint8_t i=0;
 	uint8_t bufferVar=0;
 	uint8_t newBufferVar;
+	uint8_t counter=0;
 
 	// 														ALPHA
-	//wenn noch Daten da sind kein Interrupt
+	// wenn noch Daten da sind kein Interrupt
 	if(!Serial1.available())
 	{
 		digitalWrite(INTERUPT_PIN_A, HIGH);
 		digitalWrite(INTERUPT_PIN_A, LOW);
 	}
-	// warten auf Antwort
-		/*for(int k = 0; k < 100; ++k)
-		{
-			if(Serial1.available() > 5)
-			{
-				k = 101;
-			}
-		}*/
+	
+	// auf Daten warten
 	while(Serial1.available()<6)
 	{
+		++counter;
+		if(counter>100)
+		{
+			return(0);
+		}
 	}
 
 	// lesen und in array schreiben
+	for(uint8_t i=0; i<6; ++i)
+	{
+		sensorData[i] = Serial1.read();
+	}
+
+	// Serial buffer leeren
 	while(Serial1.available())
 	{
-		bufferVar = Serial1.read();
-		if(i<6)
-		{
-			// Serial.println(bufferVar);
-			// if(i!=2 && i!=4 && i!=5){
-				// sensorData[i]=bufferVar;
-			// }else{
-				sensorData[i]=(((sensorData[i])*19)+bufferVar)/20;
-			// }
-			++i;
-		}
+		Serial1.read();
 	}
 
 	
 	// 														BETA
 	// wenn noch daten da sind kein Interrupt
-	// Serial.println("interrupt B");
 	if(!Serial3.available())
 	{
 		digitalWrite(INTERUPT_PIN_B, HIGH);
 		digitalWrite(INTERUPT_PIN_B, LOW);
-		/*pinMode(INTERUPT_PIN_B, OUTPUT);
-  		digitalWrite(INTERUPT_PIN_B, HIGH);
-		pinMode(INTERUPT_PIN_B, INPUT);*/
 	}
-
-	// auf Antwort warten
-		/*for(int j = 0; j < 100; ++j)
-		{
-			if(Serial3.available() > 4)
-			{
-				j = 101;
-			}
-		}*/
+	
+	// auf Daten warten
+	counter = 0;
 	while(Serial3.available()<5)
 	{
-		// Serial.println(Serial3.read());
-	}
-	// NICHT DIESE ZEILE LOESCHEN
-	// ES GEHT SONST NICHT
-	Serial.print("");
-
-	// lesen und in array schreiben
-	while(Serial3.available())
-	{
-		bufferVar = Serial3.read();
-		if(i<11)
+		++counter;
+		if(counter>100)
 		{
-			sensorData[i]=bufferVar;
-			++i;
+			return(0);
 		}
 	}
 
-	// 														SENSOR 9 BL
-	// sensorData[9] = analogRead(A11) >> 2;
+	// lesen und in array schreiben
+	for(uint8_t i=0; i<5; ++i)
+	{
+		sensorData[i+6] = Serial3.read();
+	}
+	
+	// Serial buffer leeren
+	while(Serial3.available())
+	{
+		Serial3.read();
+	}
 
 	// 														MELEXIS
 	melexisInterrupt();
@@ -101,11 +85,24 @@ void sensorRead(uint8_t *sensorData)
 	sensorData[12]=((int)melexisGetValue(1));
 	
 	// 														LIGHT SENSOR
-	digitalWrite(7, HIGH);
-	delay(10);
-	sensorData[13]=(analogRead(A6)>>2)-5;
-	sensorData[14]=analogRead(7)>>2;
-	digitalWrite(7, LOW);
+	// if( BLCKTILEDETECT ){
+	if(digitalRead(7))
+	{
+		sensorData[13]=(analogRead(A6)>>2)-5;
+		sensorData[14]=analogRead(7)>>2;
+		digitalWrite(7, LOW);
+	}
+	else
+	{
+		// digitalWrite(7, HIGH);
+	}
+	// }
+
+	 /*Serial.print(sensorData[6]);Serial.print(" ");
+	 Serial.print(sensorData[7]);Serial.print(" ");
+	 Serial.print(sensorData[8]);Serial.print(" ");
+	 Serial.println(sensorData[10]);*/
+
 
 	//0   [LF,
 	//1   LB,

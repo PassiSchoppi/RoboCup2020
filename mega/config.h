@@ -9,6 +9,10 @@
 #define SOUTH 			2
 #define WEST 			3
 
+// ## GLOBAL VARIABLES ##
+extern volatile uint8_t sensorData[15];
+extern uint8_t state;
+
 // uint8_t robot_is_facing = NOTH;
 
 #define STOP 			0
