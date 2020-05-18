@@ -9,7 +9,9 @@ const uint16_t t1_comp = 250;
 
 
 const uint16_t t3_load = 0;
-const uint16_t t3_comp = 3125;
+const uint16_t t3_comp = 500;
+
+
 
 void timerInit();
 

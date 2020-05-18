@@ -94,7 +94,7 @@ void sensorRead()
 	}
 	else
 	{
-		// digitalWrite(7, HIGH);
+		digitalWrite(7, HIGH);
 	}
 	// }
 

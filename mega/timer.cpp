@@ -1,5 +1,9 @@
 #include "timer.h"
 
+
+
+uint8_t counterABC = 0;
+
 void timerInit() 
 {
 	
@@ -20,39 +24,15 @@ void timerInit()
 
   	// set clock to 0
   	TCNT1 = t1_load;
-  	// set compare register to t0_comp
+  	// set compare register to t1_comp
   	OCR1A = t1_comp;
+	// set compare register B to t3_comp
+	// OCR1B = t3_comp;
 	
   	// configure the clock 0 to throw an inetrrupt when
-  	// the value of OCR1A is reached by clock 0
+  	// the value of OCR1A and OCIE1B is reached by clock 0
   	TIMSK1 = (1 << OCIE1A);
-
-
-
-
-	// reset default Arduino clock Controll Register
-  	TCCR3A = 0;
-
-	// enable CTC to auto reset clock after CMI
-	TCCR3B |= (1 << WGM32);
-  	TCCR3B &= ~(1 << WGM33);
-
-  	// set prescaler to 64
-  	// set CS32 to 0
-  	TCCR3B &= ~(1 << CS32);
-  	// set CS31 to 1
-  	TCCR3B |= (1 << CS31);
-  	// set CS30 to 1
-  	TCCR3B |= (1 << CS30);
-
-  	// set clock to 0
-  	TCNT3 = t3_load;
-  	// set compare register to t3_comp
-  	OCR3A = t3_comp;
-
-  	// configure the clock 0 to throw an inetrrupt when
-  	// the value of OCR3A is reached by clock 0
-  	TIMSK3 = (1 << OCIE3A);
+	// TIMSK1 = (1 << OCIE1B);
 
   	// enable global interrupts
   	sei();
@@ -61,18 +41,33 @@ void timerInit()
 
 
 // Inerrupt service routine on timer 1 compare match with A
-ISR(TIMER1_COMPA_vect) 
+ISR( TIMER1_COMPA_vect) 
 {
+
 	for(uint8_t i=0; i<4; ++i) 
 	{
 		motorCheckForStepsMade(i);	
 	}
 
+	counterABC += 1;
+	if (counterABC == 10)
+	{
+		counterABC = 0;
+		sensorRead();
+	}
 }
 
-// Inerrupt service routine on timer 3 compare match with A
-ISR( TIMER3_COMPA_vect )
+// Inerrupt service routine on timer 1 compare match with B
+/*ISR( TIMER1_COMPB_vect )
 {
-sensorRead();
-}
+
+	
+	sensorRead();
+	for(uint8_t i=0; i<4; ++i) 
+	{
+		motorCheckForStepsMade(i);	
+	}
+ 	
+
+}*/
 
