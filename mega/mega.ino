@@ -29,6 +29,7 @@ void setup()
 	robot_is_facing = NOTH;
 	robot_is_at.X = 5;
 	robot_is_at.Y = 5;
+	
 	// ## INIT ##
   	motorInit();
 	sensorInit();
@@ -57,6 +58,6 @@ void loop()
 	// Serial.println("changing state ... ");
 	// stateChange(&state, &sensorData[0], &robot_is_facing, &robot_is_at);
 	// Serial.print("done changing State: ");
-	output();
+	// output();
 	motorResetAllSteps();
 }

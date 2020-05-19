@@ -57,17 +57,3 @@ ISR( TIMER1_COMPA_vect)
 	}
 }
 
-// Inerrupt service routine on timer 1 compare match with B
-/*ISR( TIMER1_COMPB_vect )
-{
-
-	
-	sensorRead();
-	for(uint8_t i=0; i<4; ++i) 
-	{
-		motorCheckForStepsMade(i);	
-	}
- 	
-
-}*/
-
