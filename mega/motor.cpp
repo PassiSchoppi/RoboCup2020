@@ -90,19 +90,15 @@ void motorResetAllSteps()
 	}
 }
 
-short int motorStepsMade(uint8_t i)
+unsigned int motorStepsMade(uint8_t i)
 {
 	return(motor[i].steps);
 }
 
-int speedFromEnc(uint8_t encA, uint8_t encB, uint8_t encC, uint8_t encME, int speedME, bool stickToWall, bool leftMotor)
+int speedFromEnc(unsigned int encA, unsigned int encB, unsigned int encC, unsigned int encME, int speedME, bool stickToWall, bool leftMotor)
 {
-	// volatile uint8_t localSensorData[15];
-	// sensorRead(&localSensorData[0]);
-	// sensorRead();
-	int correctedSpeed = ( ((encA+encB+encC+encME)/4) *speedME) / (encME);
-	// Serial.println( localSensorData[2] );
-	// Serial.println( wallExists(RIGHT, &localSensorData[0]) );
+	int correctedSpeed = ( ((float)(encA+encB+encC+encME)/4) *speedME) / (encME);
+
 	if( stickToWall )
 	{
 		if( leftMotor )
@@ -110,7 +106,6 @@ int speedFromEnc(uint8_t encA, uint8_t encB, uint8_t encC, uint8_t encME, int sp
 			if(wallExists(LEFT, &sensorData[0]))
 			{
 				correctedSpeed = ((correctedSpeed * (sensorData[0] + 0))/(sensorData[1] + 0));
-				Serial.println("correcting LEFT");
 			}
 		}
 		else
@@ -118,7 +113,6 @@ int speedFromEnc(uint8_t encA, uint8_t encB, uint8_t encC, uint8_t encME, int sp
 			if(wallExists(RIGHT, &sensorData[0]))
 			{
 				correctedSpeed = ((correctedSpeed * (sensorData[2] + 0))/(sensorData[3] + 0));
-				Serial.println("correcting RIGHT");
 			}
 		}
 	}
