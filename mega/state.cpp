@@ -330,58 +330,46 @@ void stateChange(uint8_t *state, uint8_t *sensorData, uint8_t *robot_is_facing, 
 			// temp victim
 			// try for 5 seconds and blink
 			// wenn noch kein victim auf dem Feld ist
-			if(!seenVic){
+			if(!seenVic)
+			{
+				// zweites mal testen und seite herausfinden
+				bool victimIsLeftNotRight = false;
+				if ( sensorData[11]>VICTIMTEMP )
+				{
+					victimIsLeftNotRight = true;
+				}
 				// sekunde 1
 				motorBrake();
 				LEDSetColor(RED);
 				delay(1000);
-				if( sensorData[11]>VICTIMTEMP || sensorData[12]>VICTIMTEMP )
+				// sekunde 2
+				LEDSetColor(OFF);
+				delay(1000);
+				// senkunde 3
+				LEDSetColor(RED);
+				delay(1000);
+				// sekunde 4
+				LEDSetColor(OFF);
+				delay(1000);
+				// sekunde 5
+				LEDSetColor(RED);
+				delay(1000);
+				
+				// abwurf
+				kitdropperSetTo(POSMIDD);
+				delay(1000);
+				seenVic = true;
+				if( victimIsLeftNotRight )
 				{
-					// sekunde 2
-					LEDSetColor(OFF);
-					delay(1000);
-					sensorRead();
-					if( sensorData[11]>VICTIMTEMP || sensorData[12]>VICTIMTEMP )
-					{
-						// senkunde 3
-						LEDSetColor(RED);
-						delay(1000);
-						sensorRead();
-						if( sensorData[11]>VICTIMTEMP || sensorData[12]>VICTIMTEMP )
-						{
-							// sekunde 4
-							LEDSetColor(OFF);
-							delay(1000);
-							sensorRead();
-							if( sensorData[11]>VICTIMTEMP || sensorData[12]>VICTIMTEMP )
-							{
-								// sekunde 5
-								LEDSetColor(RED);
-								delay(1000);
-								sensorRead();
-								if( sensorData[11]>VICTIMTEMP || sensorData[12]>VICTIMTEMP )
-								{
-									// abwurf
-									//move the servo motor
-									kitdropperSetTo(POSMIDD);
-									delay(1000);
-									seenVic = true;
-									if( sensorData[11]>VICTIMTEMP )
-									{
-										kitdropperSetTo(POSLEFT);
-									}
-									else
-									{
-										kitdropperSetTo(POSRIGHT);
-									}
-									// 2 sekunden warten und dann zurück zu mitte
-									delay(2000);
-									kitdropperSetTo(POSMIDD);
-								}
-							}
-						}
-					}
+					kitdropperSetTo(POSLEFT);
 				}
+				else
+				{
+					kitdropperSetTo(POSRIGHT);
+				}
+				// 2 sekunden warten und dann zurück zu mitte
+				delay(2000);
+				kitdropperSetTo(POSMIDD);
 			}
 			
 			// zurück zu dem was er gerade gemacht hat
