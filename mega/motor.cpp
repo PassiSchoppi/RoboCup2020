@@ -97,7 +97,7 @@ unsigned int motorStepsMade(uint8_t i)
 
 int speedFromEnc(unsigned int encA, unsigned int encB, unsigned int encC, unsigned int encME, int speedME, bool stickToWall, bool leftMotor)
 {
-	int correctedSpeed = ( ((float)(encA+encB+encC+encME)/4) *speedME) / (encME);
+	int correctedSpeed = ((float)((( ((float)(encA+encB+encC+encME)/4) *speedME) / (encME))-speedME)*5)+speedME;
 
 	if( stickToWall )
 	{
@@ -117,8 +117,6 @@ int speedFromEnc(unsigned int encA, unsigned int encB, unsigned int encC, unsign
 		}
 	}
 	return (correctedSpeed);
-
-	// return(speedME);
 }
 
 void motorDriveTo(uint8_t direction, int speed)
