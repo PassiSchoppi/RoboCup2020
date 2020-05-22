@@ -29,6 +29,7 @@ extern uint8_t state;
 #define LEFT 			3
 
 #define DISTANCETOWALL 	36
+#define MINDISTANCETOW 	100
 #define CUTDATAVAL 		0
 
 #define VICTIMTEMP 		28

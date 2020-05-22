@@ -105,6 +105,11 @@ int speedFromEnc(unsigned int encA, unsigned int encB, unsigned int encC, unsign
 		{
 			if(wallExists(LEFT, &sensorData[0]))
 			{
+				if ( sensorData[0]>MINDISTANCETOW || sensorData[1]>MINDISTANCETOW )
+				{
+					correctedSpeed += 20*CORECTIONAGGRESSIVE;
+				}
+				else
 				correctedSpeed = correctedSpeed + (( sensorData[0] - sensorData[1]) * CORECTIONAGGRESSIVE );
 			}
 		}
@@ -112,6 +117,11 @@ int speedFromEnc(unsigned int encA, unsigned int encB, unsigned int encC, unsign
 		{
 			if(wallExists(RIGHT, &sensorData[0]))
 			{
+				if ( sensorData[2]>MINDISTANCETOW || sensorData[3]>MINDISTANCETOW )
+				{
+					correctedSpeed += 20*CORECTIONAGGRESSIVE;
+				}
+				else
 				correctedSpeed = correctedSpeed + (( sensorData[2] - sensorData[3] ) * CORECTIONAGGRESSIVE );
 			}
 		}
