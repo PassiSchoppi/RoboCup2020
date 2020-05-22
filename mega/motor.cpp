@@ -105,14 +105,14 @@ int speedFromEnc(unsigned int encA, unsigned int encB, unsigned int encC, unsign
 		{
 			if(wallExists(LEFT, &sensorData[0]))
 			{
-				correctedSpeed = ((correctedSpeed * (sensorData[0] + 0))/(sensorData[1] + 0));
+				correctedSpeed = correctedSpeed + (( sensorData[0] - sensorData[1]) * CORECTIONAGGRESSIVE );
 			}
 		}
 		else
 		{
 			if(wallExists(RIGHT, &sensorData[0]))
 			{
-				correctedSpeed = ((correctedSpeed * (sensorData[2] + 0))/(sensorData[3] + 0));
+				correctedSpeed = correctedSpeed + (( sensorData[2] - sensorData[3] ) * CORECTIONAGGRESSIVE );
 			}
 		}
 	}

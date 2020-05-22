@@ -5,7 +5,9 @@
 #define DOBLACKTILEDETECTION 	false
 #define DOMAP 					false
 #define DODRIVINGCORECTION 		true
+#define CORECTIONAGGRESSIVE 	3
 #define DOVICTIMEDETECTION 		true
+#define SMOOTHENSENSORDATA 		15
 
 // ## GLOBAL VARIABLES ##
 extern volatile uint8_t sensorData[15];

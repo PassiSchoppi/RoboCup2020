@@ -38,7 +38,7 @@ void sensorRead()
 	// lesen und in array schreiben
 	for(uint8_t i=0; i<6; ++i)
 	{
-		sensorData[i] = Serial1.read();
+		sensorData[i] = ( sensorData[i]*(SMOOTHENSENSORDATA-1) + Serial1.read() )/SMOOTHENSENSORDATA ;
 	}
 
 	// Serial buffer leeren
@@ -70,7 +70,7 @@ void sensorRead()
 	// lesen und in array schreiben
 	for(uint8_t i=0; i<5; ++i)
 	{
-		sensorData[i+6] = Serial3.read();
+		sensorData[i+6] = ( sensorData[i+6]*(SMOOTHENSENSORDATA-1) + Serial3.read() )/SMOOTHENSENSORDATA ;
 	}
 	
 	// Serial buffer leeren
