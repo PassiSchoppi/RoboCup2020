@@ -8,6 +8,7 @@
 #define CORECTIONAGGRESSIVE 	3
 #define DOVICTIMEDETECTION 		true
 #define SMOOTHENSENSORDATA 		15
+#define MAPSIZE 				10
 
 // ## GLOBAL VARIABLES ##
 extern volatile uint8_t sensorData[15];

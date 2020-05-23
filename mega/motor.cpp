@@ -103,7 +103,7 @@ int speedFromEnc(unsigned int encA, unsigned int encB, unsigned int encC, unsign
 	{
 		if( leftMotor )
 		{
-			if(wallExists(LEFT, &sensorData[0]))
+			if(wallExists(LEFT))
 			{
 				if ( sensorData[0]>MINDISTANCETOW || sensorData[1]>MINDISTANCETOW )
 				{
@@ -115,7 +115,7 @@ int speedFromEnc(unsigned int encA, unsigned int encB, unsigned int encC, unsign
 		}
 		else
 		{
-			if(wallExists(RIGHT, &sensorData[0]))
+			if(wallExists(RIGHT))
 			{
 				if ( sensorData[2]>MINDISTANCETOW || sensorData[3]>MINDISTANCETOW )
 				{

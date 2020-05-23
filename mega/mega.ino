@@ -13,22 +13,18 @@
 #include "kitdropper.h"
 #include "raspi.h"
 #include "output.h"
+#include "ramp.h"
 
 // uint8_t sensorData[15];
 // ## GLOBAL VARIABLES (see config.h) ##
 volatile uint8_t sensorData[15];
 uint8_t state;
 
-uint8_t robot_is_facing;
-Vector robot_is_at;
 
 void setup() 
 {
 	// stabilize und dann entscheiden
 	state = 8;
-	robot_is_facing = NOTH;
-	robot_is_at.X = 5;
-	robot_is_at.Y = 5;
 	
 	// ## INIT ##
   	motorInit();
@@ -60,4 +56,6 @@ void loop()
 	// Serial.print("done changing State: ");
 	// output();
 	motorResetAllSteps();
+	mapUpdateField();
+	mapDisplay();
 }
