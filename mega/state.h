@@ -12,6 +12,6 @@
 uint8_t nothing();
 
 // gets next step of state machine
-void stateChange(uint8_t *state, uint8_t *sensorData, uint8_t *robot_is_facing, Vector *robot_is_at);
+void stateChange();
 
 #endif

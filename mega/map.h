@@ -24,8 +24,8 @@ struct Field
 uint8_t mapDirectionToCompas(uint8_t directionI);
 
 void mapInit();
-// void mapNewField(int x, int y, int north, int east, int south, int west);
 void mapUpdateField();
+void mapMoveTo(uint8_t directionToGo);
 void mapBlackFieldFront(uint8_t *robot_is_facing, Vector *robot_is_at);
 bool mapFieldInSkip(Vector field, Vector *skip);
 uint8_t mapSearchForUnvisited(Vector startPoint, Vector *skip);

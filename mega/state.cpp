@@ -18,15 +18,14 @@ uint8_t nothing()
 	return 0;
 }
 
-void stateChange(uint8_t *state, uint8_t *sensorData, uint8_t *robot_is_facing, Vector *robot_is_at)
+void stateChange()
 {
-	// Serial.println(seenVic);
-	switch(*state) 
+	switch(state) 
 	{
 		case 0:
 			// the end
 			motorBrake();
-			*state = nothing();
+			state = nothing();
 			LEDSetColor(OFF);
 			break;
 		
@@ -36,6 +35,8 @@ void stateChange(uint8_t *state, uint8_t *sensorData, uint8_t *robot_is_facing, 
 			// Serial.println("new status");
 			LEDSetColor(WHITE);
 			
+			mapUpdateField();
+
 			// if black tile
 /*			if( sensorData[13]>MAXWHITE || sensorData[14]>MAXWHITE )
 			{
@@ -50,21 +51,24 @@ void stateChange(uint8_t *state, uint8_t *sensorData, uint8_t *robot_is_facing, 
 			{
 				// rechts drehen dann gerade aus
 				// Serial.println("Rechts abbiegen!");
-				*state = 2;
+				state = 2;
+				mapMoveTo(RIGHT);
 				break;
 			}
 			if(!wallExists(FRONT))
 			{
 				// gerade aus
 				// Serial.println("Gerade aus!");
-				*state = 3;
+				state = 3;
+				mapMoveTo(FRONT);
 				break;
 			}
 			if(!wallExists(LEFT))
 			{
 				// links drehen dann gerade aus
 				// Serial.println("Links abbiegen!");
-				*state = 4;
+				state = 4;
+				mapMoveTo(LEFT);
 				break;
 			}
 			// wenn rechts und forne und links eine wand ist aber hinten keine
@@ -72,15 +76,15 @@ void stateChange(uint8_t *state, uint8_t *sensorData, uint8_t *robot_is_facing, 
 			{
 				// 2x links drehen dann gerade aus
 				// Serial.println("Nach hinten!");
-				*state = 5;
+				mapMoveTo(BACK);
+				state = 5;
 				break;
 			}
 			
 			// wenn überall Wände sind:::
-			*state = 1;
+			state = 1;
 			LEDSetColor(OFF);
 
-			// 																		MAP
 			break;
 		
 		case 2:
@@ -99,13 +103,13 @@ void stateChange(uint8_t *state, uint8_t *sensorData, uint8_t *robot_is_facing, 
 				motorBrake();
 				stabilize();
 				// gerade aus
-				*state = 3;
+				state = 3;
 			}
 			// wenn da ist ein Victim
 			if( sensorData[11]>VICTIMTEMP || sensorData[12]>VICTIMTEMP )
 			{
-				lastState = *state;
-				*state = 6;
+				lastState = state;
+				state = 6;
 			}
 			break;
 		
@@ -125,21 +129,21 @@ void stateChange(uint8_t *state, uint8_t *sensorData, uint8_t *robot_is_facing, 
 				motorBrake();
 				motorResetAllSteps();
 				// stabilize und dann neue entscheidung
-				*state = 8;
+				state = 8;
 			}
 			
 			// wenn zu nah an einer Wand
-			if( sensorData[7]>132 )
+			if( sensorData[7]>124 )
 			{
 				// kurz zurück und dann neu entscheiden
 				motorBrake();
-				*state = 9;
+				state = 9;
 			}
 			// wenn Victim
 			if( sensorData[11]>VICTIMTEMP || sensorData[12]>VICTIMTEMP )
 			{
-				lastState = *state;
-				*state = 6;
+				lastState = state;
+				state = 6;
 			}
 			// wenn ramp
 			// if (  )
@@ -161,13 +165,13 @@ void stateChange(uint8_t *state, uint8_t *sensorData, uint8_t *robot_is_facing, 
 				motorResetAllSteps();
 				stabilize();
 				// gerade aus
-				*state = 3;
+				state = 3;
 			}
 			// wen victim
 			if( sensorData[11]>VICTIMTEMP || sensorData[12]>VICTIMTEMP )
 			{
-				lastState = *state;
-				*state = 6;
+				lastState = state;
+				state = 6;
 			}
 			break;
 		
@@ -179,7 +183,7 @@ void stateChange(uint8_t *state, uint8_t *sensorData, uint8_t *robot_is_facing, 
 			average = 0;
 			for(uint8_t i=0; i<4; ++i)
 			{
-					average = average + abs(motorStepsMade(i));
+				average = average + abs(motorStepsMade(i));
 			}
 			average = average/4;
 			if(average > STEPSFORLEFT)
@@ -187,13 +191,13 @@ void stateChange(uint8_t *state, uint8_t *sensorData, uint8_t *robot_is_facing, 
 				motorResetAllSteps();
 				stabilize();
 				// dann left und dann gerade aus
-				*state = 4;
+				state = 4;
 			}
 			// wenn victim
 			if( sensorData[11]>VICTIMTEMP || sensorData[12]>VICTIMTEMP )
 			{
-				lastState = *state;
-				*state = 6;
+				lastState = state;
+				state = 6;
 			}
 			break;
 		
@@ -244,7 +248,7 @@ void stateChange(uint8_t *state, uint8_t *sensorData, uint8_t *robot_is_facing, 
 			}
 			
 			// zurück zu dem was er gerade gemacht hat
-			*state = lastState;
+			state = lastState;
 			break;
 		
 		case 7:
@@ -258,7 +262,7 @@ void stateChange(uint8_t *state, uint8_t *sensorData, uint8_t *robot_is_facing, 
 			stabilize();
 			motorBrake();
 			motorResetAllSteps();
-			*state = 1;
+			state = 1;
 			// Serial.print("state: ");
 			// Serial.println(*state);
 			seenVic = false;
@@ -273,7 +277,7 @@ void stateChange(uint8_t *state, uint8_t *sensorData, uint8_t *robot_is_facing, 
 			motorResetAllSteps();
 			motorBrake();
 			// stabilize und dann neu entscheiden
-			*state = 8;
+			state = 8;
 			break;
 
 		case 10:
@@ -283,17 +287,17 @@ void stateChange(uint8_t *state, uint8_t *sensorData, uint8_t *robot_is_facing, 
 			while(motorStepsMade(0)<STEPSFORONE){}
 			motorBrake();
 			motorResetAllSteps();
-			mapBlackFieldFront(*robot_is_facing, robot_is_at);
+			// write to map
 			sensorRead();
 			// wenn links eine wand ist muss er 180 drehung machen
 			// wenn nicht dann nur links und gerade aus
 			if( wallExists(LEFT) )
 			{
-				*state = 5;
+				state = 5;
 			}
 			else
 			{
-				*state = 4;
+				state = 4;
 			}
 			break;
 	}

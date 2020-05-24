@@ -75,6 +75,7 @@ uint8_t mapDirectionToCompas(uint8_t directionI)
 void mapInit() 
 {
 	robot_is_facing = NOTH;
+	// FIXME: half of MAPSIZE
 	robot_is_at.X = 5;
 	robot_is_at.Y = 5;
 }
@@ -82,12 +83,45 @@ void mapInit()
 
 void mapUpdateField()
 {
-		Map[robot_is_at.X][robot_is_at.Y].directions[ mapDirectionToCompas( FRONT ) ]=wallExists(FRONT);
-		Map[robot_is_at.X][robot_is_at.Y].directions[ mapDirectionToCompas( RIGHT ) ]=wallExists(RIGHT);
-		Map[robot_is_at.X][robot_is_at.Y].directions[ mapDirectionToCompas( BACK ) ]=wallExists(BACK);
-		Map[robot_is_at.X][robot_is_at.Y].directions[ mapDirectionToCompas( LEFT ) ]=wallExists(LEFT);
+	// add walls to current field
+	Map[robot_is_at.X][robot_is_at.Y].directions[ mapDirectionToCompas( FRONT ) ] = wallExists(FRONT);
+	Map[robot_is_at.X][robot_is_at.Y].directions[ mapDirectionToCompas( RIGHT ) ] = wallExists(RIGHT);
+	Map[robot_is_at.X][robot_is_at.Y].directions[ mapDirectionToCompas( BACK ) ] = 	wallExists(BACK);
+	Map[robot_is_at.X][robot_is_at.Y].directions[ mapDirectionToCompas( LEFT ) ] = 	wallExists(LEFT);
+	
+	// change walls of sourounding
+	Map[robot_is_at.X][robot_is_at.Y-1].directions[ SOUTH ] = 	Map[robot_is_at.X][robot_is_at.Y].directions[NOTH];
+	Map[robot_is_at.X+1][robot_is_at.Y].directions[ WEST ] = 	Map[robot_is_at.X][robot_is_at.Y].directions[EAST];
+	Map[robot_is_at.X][robot_is_at.Y+1].directions[ NOTH ] = 	Map[robot_is_at.X][robot_is_at.Y].directions[SOUTH];
+	Map[robot_is_at.X-1][robot_is_at.Y].directions[ EAST ] = 	Map[robot_is_at.X][robot_is_at.Y].directions[WEST];
+
+	// mark current field as visited
+	Map[robot_is_at.X][robot_is_at.Y].visited = true;
+	
 }
 
+
+void mapMoveTo(uint8_t directionToGo)
+{
+	switch( mapDirectionToCompas( directionToGo ) ) {
+		case NOTH:
+			robot_is_at.Y -= 1;
+			robot_is_facing = NOTH;
+			break;
+		case EAST:
+			robot_is_at.X += 1;
+			robot_is_facing = EAST;
+			break;
+		case SOUTH:
+			robot_is_at.Y += 1;
+			robot_is_facing = SOUTH;
+			break;
+		case WEST:
+			robot_is_at.X -= 1;
+			robot_is_facing = WEST;
+			break;
+	}
+}
 
 void mapBlackFieldFront(uint8_t *robot_is_facing, Vector *robot_is_at)
 {
@@ -140,8 +174,10 @@ void mapDisplay()
 		}
 
 		// STATUS
-		Serial.print(" ");
-		
+		if ( Map[i][o].visited )
+			Serial.print("V");
+		else
+			Serial.print("X");
 		// OSTEN
 		if ( Map[i][o].directions[EAST] )
 		{	

@@ -28,7 +28,7 @@ void setup()
 	
 	// ## INIT ##
   	motorInit();
-	sensorInit();
+	sensorInit(); // 1 second delay
 	melexisInit();
 	mapInit();
 	timerInit();
@@ -36,26 +36,18 @@ void setup()
 	raspiInit();
 
 	Serial.begin(1000000);
-
-	// for(int i=0; i<10; ++i)
-	// {
-		// sensorRead(&sensorData[0]);
-	// }
 }
 
 
 void loop() 
 {
 	digitalWrite(13, !digitalRead(13));
-	
+	// motorDriveTo(FRONT, 100);
 	// raspiRead();
-	motorDriveTo(FRONT, 100);
 	// ## STATE ##
 	// Serial.println("changing state ... ");
-	// stateChange(&state, &sensorData[0], &robot_is_facing, &robot_is_at);
+	stateChange();
 	// Serial.print("done changing State: ");
 	// output();
-	motorResetAllSteps();
-	mapUpdateField();
 	mapDisplay();
 }
