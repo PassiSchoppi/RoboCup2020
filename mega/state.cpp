@@ -44,47 +44,70 @@ void stateChange()
 				break;
 			}
 */			
-			// ## get direction to drive to ##
-			// 																		RECHTSUMFAHRUNG
-			
-			if(!wallExists(RIGHT))
+			if ( !DOMAP )
 			{
-				// rechts drehen dann gerade aus
-				// Serial.println("Rechts abbiegen!");
-				state = 2;
-				mapMoveTo(RIGHT);
-				break;
+				// ## get direction to drive to ##
+				// 																		RECHTSUMFAHRUNG
+				
+				if(!wallExists(RIGHT))
+				{
+					// rechts drehen dann gerade aus
+					// Serial.println("Rechts abbiegen!");
+					state = 2;
+					mapMoveTo(RIGHT);
+					break;
+				}
+				if(!wallExists(FRONT))
+				{
+					// gerade aus
+					// Serial.println("Gerade aus!");
+					state = 3;
+					mapMoveTo(FRONT);
+					break;
+				}
+				if(!wallExists(LEFT))
+				{
+					// links drehen dann gerade aus
+					// Serial.println("Links abbiegen!");
+					state = 4;
+					mapMoveTo(LEFT);
+					break;
+				}
+				// wenn rechts und forne und links eine wand ist aber hinten keine
+				if(!wallExists(BACK))
+				{
+					// 2x links drehen dann gerade aus
+					// Serial.println("Nach hinten!");
+					mapMoveTo(BACK);
+					state = 5;
+					break;
+				}
+				
+				// wenn überall Wände sind:::
+				state = 1;
+				LEDSetColor(OFF);
 			}
-			if(!wallExists(FRONT))
+			else
 			{
-				// gerade aus
-				// Serial.println("Gerade aus!");
-				state = 3;
-				mapMoveTo(FRONT);
-				break;
+				Vector skip[100];
+				uint8_t compasToGoTo = mapWhereToDrive();
+				switch ( mapCompasToDirection( compasToGoTo ) ) {
+					case FRONT:
+						state = 3;
+						break;
+					case RIGHT:
+						state = 2;
+						break;
+					case BACK:
+						state = 5;
+						break;
+					case LEFT:
+						state = 4;
+						break;
+				}
+				mapDisplay();
+				mapMoveTo( mapCompasToDirection( compasToGoTo ) );
 			}
-			if(!wallExists(LEFT))
-			{
-				// links drehen dann gerade aus
-				// Serial.println("Links abbiegen!");
-				state = 4;
-				mapMoveTo(LEFT);
-				break;
-			}
-			// wenn rechts und forne und links eine wand ist aber hinten keine
-			if(!wallExists(BACK))
-			{
-				// 2x links drehen dann gerade aus
-				// Serial.println("Nach hinten!");
-				mapMoveTo(BACK);
-				state = 5;
-				break;
-			}
-			
-			// wenn überall Wände sind:::
-			state = 1;
-			LEDSetColor(OFF);
-
 			break;
 		
 		case 2:

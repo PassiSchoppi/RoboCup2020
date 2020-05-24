@@ -3,7 +3,7 @@
 
 // ## SETTINGS ##
 #define DOBLACKTILEDETECTION 	false
-#define DOMAP 					false
+#define DOMAP 					true
 #define DODRIVINGCORECTION 		true
 #define CORECTIONAGGRESSIVE 	3
 #define DOVICTIMEDETECTION 		true

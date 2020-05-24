@@ -49,5 +49,5 @@ void loop()
 	stateChange();
 	// Serial.print("done changing State: ");
 	// output();
-	mapDisplay();
+	// mapDisplay();
 }

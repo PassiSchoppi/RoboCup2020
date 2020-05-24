@@ -5,6 +5,71 @@ Field Map[MAPSIZE][MAPSIZE];
 uint8_t robot_is_facing;
 Vector robot_is_at;
 
+// translates compas to direction
+uint8_t mapCompasToDirection(uint8_t compasI)
+{
+	switch(robot_is_facing)
+	{
+		// robot is facing NOTH
+		case NOTH:
+			return(compasI);
+			break;
+		
+		// robot is facing EAST 
+		case EAST:
+			switch(compasI){
+				case NOTH:
+					return(LEFT);
+					break;
+				case EAST:
+					return(FRONT);
+					break;
+				case SOUTH:
+					return(RIGHT);
+					break;
+				case WEST:
+					return(BACK);
+					break;
+			}
+			break;
+		
+		// robot is facing SOUTH
+		case SOUTH:
+			switch(compasI){
+				case NOTH:
+					return(BACK);
+					break;
+				case EAST:
+					return(LEFT);
+					break;
+				case SOUTH:
+					return(FRONT);
+					break;
+				case WEST:
+					return(RIGHT);
+					break;
+			}
+			break;
+				
+		// robot is facing WEST
+		case WEST:
+			switch(compasI){
+				case NOTH:
+					return(RIGHT);
+					break;
+				case EAST:
+					return(BACK);
+					break;
+				case SOUTH:
+					return(LEFT);
+					break;
+				case WEST:
+					return(FRONT);
+					break;
+			}
+			break;
+	}
+}
 
 // translates direction to compas
 uint8_t mapDirectionToCompas(uint8_t directionI)
@@ -159,10 +224,12 @@ uint8_t mapSearchForUnvisited(Vector startPoint, Vector *skip, bool returnBestDi
 	child.X = startPoint.X;
 	child.Y = startPoint.Y - 1;
 	// no wall in NOTH      &&     not in the skip array
-	if(!Map[ startPoint.X ][ startPoint.Y ].directions[NOTH] && !mapFieldInSkip( child, skip));
+	if(!Map[ startPoint.X ][ startPoint.Y ].directions[NOTH] && !mapFieldInSkip( child, skip ))
 	{
 		// distance to nearest unvisited
 		results[ NOTH ] = mapSearchForUnvisited( child, skip, false);
+	}else{
+		results[ NOTH ] = 0;
 	}
 	// EAST child
 	child.X = startPoint.X + 1;
@@ -170,6 +237,8 @@ uint8_t mapSearchForUnvisited(Vector startPoint, Vector *skip, bool returnBestDi
 	if(!Map[ startPoint.X ][ startPoint.Y ].directions[EAST] && !mapFieldInSkip( child, skip ))
 	{
 		results[ EAST ] = mapSearchForUnvisited( child, skip, false);
+	}else{
+		results[ EAST ] = 0;
 	}
 	// SOUTH child
 	child.X = startPoint.X;
@@ -177,6 +246,8 @@ uint8_t mapSearchForUnvisited(Vector startPoint, Vector *skip, bool returnBestDi
 	if(!Map[ startPoint.X ][ startPoint.Y ].directions[SOUTH] && !mapFieldInSkip( child, skip ))
 	{
 		results[ SOUTH ] = mapSearchForUnvisited( child, skip, false);
+	}else{
+		results[ SOUTH ] = 0;
 	}
 	// WEST child
 	child.X = startPoint.X - 1;
@@ -184,6 +255,8 @@ uint8_t mapSearchForUnvisited(Vector startPoint, Vector *skip, bool returnBestDi
 	if(!Map[ startPoint.X ][ startPoint.Y ].directions[WEST] && !mapFieldInSkip( child, skip ))
 	{
 		results[ WEST ] = mapSearchForUnvisited( child, skip, false);
+	}else{
+		results[ WEST ] = 0;
 	}
 
 	uint8_t resultIndex = indexofSmallestElement( &results[0] );
@@ -247,8 +320,10 @@ uint8_t indexofSmallestElement(uint8_t array[4])
 }
 
 
-uint8_t mapWhereToDrive(Vector *robot_is_at) 
+uint8_t mapWhereToDrive() 
 {
+	Vector skip[100];
+	return( mapSearchForUnvisited( robot_is_at, skip, true ) );
 }
 
 
@@ -284,7 +359,7 @@ void mapDisplay()
 		test.X = i;
 		test.Y = o;
 		// skip[0] = *robot_is_at;
-		Serial.print( mapSearchForUnvisited( test, skip, true ) );
+		Serial.print( mapSearchForUnvisited( test, skip, false ) );
 		// if ( Map[i][o].visited )
 			// Serial.print("V");
 		// else
