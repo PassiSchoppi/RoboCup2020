@@ -163,6 +163,17 @@ void mapUpdateField()
 	// mark current field as visited
 	Map[robot_is_at.X][robot_is_at.Y].visited = true;
 	
+	// update distance to nearest unvisited
+	for ( uint8_t i=0; i<MAPSIZE; ++i ){
+		for ( uint8_t o=0; o<MAPSIZE; ++o ){
+			Vector test;
+			test.X = i;
+			test.Y = o;
+			Vector skipMe[LENGTHOFSKIP];
+			Serial.print("Field: ");Serial.print(i);Serial.print(", ");Serial.println(o);
+			Map[i][o].distanceToUnvisited = mapSearchForUnvisited( test, skipMe);
+		}
+	}
 }
 
 
@@ -192,14 +203,9 @@ void mapBlackFieldFront(uint8_t *robot_is_facing, Vector *robot_is_at)
 {
 }
 
-uint8_t mapSearchForUnvisited(Vector startPoint, Vector *skip, bool returnBestDirection) 
+uint8_t mapSearchForUnvisited(Vector startPoint, Vector *skip) 
 {
-	// check if startpoit is unvisited
-	if(Map[ startPoint.X ][ startPoint.Y ].visited == false)
-	{
-		return(1);
-	}
-
+	
 	// add startpoint to end of skip array
 	uint8_t i=0;
 	while((skip[i].X != 0) && (skip[i].Y != 0))
@@ -207,14 +213,22 @@ uint8_t mapSearchForUnvisited(Vector startPoint, Vector *skip, bool returnBestDi
 		++i;
 	}
 	skip[i] = startPoint;
+	
 
-	/*for(uint8_t i=0; i<100; ++i)
+	for(uint8_t i=0; i<LENGTHOFSKIP; ++i)
 	{
 		Serial.print("[");
 		Serial.print(skip[i].X);Serial.print(", ");Serial.print(skip[i].Y);Serial.print("]  ");
 	}
 	Serial.println();
-	*/
+	
+	// check if startpoit is unvisited
+	if(Map[ startPoint.X ][ startPoint.Y ].visited == false)
+	{
+		return(1);
+	}
+
+
 
 	// for every direction check if there is an unvisited
 	Vector child;
@@ -227,7 +241,10 @@ uint8_t mapSearchForUnvisited(Vector startPoint, Vector *skip, bool returnBestDi
 	if(!Map[ startPoint.X ][ startPoint.Y ].directions[NOTH] && !mapFieldInSkip( child, skip ))
 	{
 		// distance to nearest unvisited
-		results[ NOTH ] = mapSearchForUnvisited( child, skip, false);
+		// create new skip array (call by value)
+		Vector newSkip[LENGTHOFSKIP];
+		memcpy(newSkip, skip, LENGTHOFSKIP * sizeof *skip);
+		results[ NOTH ] = mapSearchForUnvisited( child, newSkip);
 	}else{
 		results[ NOTH ] = 0;
 	}
@@ -236,7 +253,11 @@ uint8_t mapSearchForUnvisited(Vector startPoint, Vector *skip, bool returnBestDi
 	child.Y = startPoint.Y;
 	if(!Map[ startPoint.X ][ startPoint.Y ].directions[EAST] && !mapFieldInSkip( child, skip ))
 	{
-		results[ EAST ] = mapSearchForUnvisited( child, skip, false);
+		// distance to nearest unvisited
+		// create new skip array (call by value)
+		Vector newSkip[LENGTHOFSKIP];
+		memcpy(newSkip, skip, LENGTHOFSKIP * sizeof *skip);
+		results[ EAST ] = mapSearchForUnvisited( child, newSkip);
 	}else{
 		results[ EAST ] = 0;
 	}
@@ -245,7 +266,11 @@ uint8_t mapSearchForUnvisited(Vector startPoint, Vector *skip, bool returnBestDi
 	child.Y = startPoint.Y + 1;
 	if(!Map[ startPoint.X ][ startPoint.Y ].directions[SOUTH] && !mapFieldInSkip( child, skip ))
 	{
-		results[ SOUTH ] = mapSearchForUnvisited( child, skip, false);
+		// distance to nearest unvisited
+		// create new skip array (call by value)
+		Vector newSkip[LENGTHOFSKIP];
+		memcpy(newSkip, skip, LENGTHOFSKIP * sizeof *skip);
+		results[ SOUTH ] = mapSearchForUnvisited( child, newSkip);
 	}else{
 		results[ SOUTH ] = 0;
 	}
@@ -254,16 +279,16 @@ uint8_t mapSearchForUnvisited(Vector startPoint, Vector *skip, bool returnBestDi
 	child.Y = startPoint.Y;
 	if(!Map[ startPoint.X ][ startPoint.Y ].directions[WEST] && !mapFieldInSkip( child, skip ))
 	{
-		results[ WEST ] = mapSearchForUnvisited( child, skip, false);
+		// distance to nearest unvisited
+		// create new skip array (call by value)
+		Vector newSkip[LENGTHOFSKIP];
+		memcpy(newSkip, skip, LENGTHOFSKIP * sizeof *skip);
+		results[ WEST ] = mapSearchForUnvisited( child, newSkip);
 	}else{
 		results[ WEST ] = 0;
 	}
 
 	uint8_t resultIndex = indexofSmallestElement( &results[0] );
-	if ( returnBestDirection )
-	{
-		return( resultIndex );
-	}
 
 	if ( resultIndex != 5 ){
 		return( results[ resultIndex ]+1 );
@@ -277,7 +302,7 @@ uint8_t mapSearchForUnvisited(Vector startPoint, Vector *skip, bool returnBestDi
 bool mapFieldInSkip(Vector field, Vector *skip)
 { 	
 	// checks if field is in skip
-	for(uint8_t i=0; i<100; ++i)
+	for(uint8_t i=0; i<LENGTHOFSKIP; ++i)
 	{
 		if( (skip[i].X == field.X) && (skip[i].Y == field.Y) )
 		{
@@ -322,8 +347,19 @@ uint8_t indexofSmallestElement(uint8_t array[4])
 
 uint8_t mapWhereToDrive() 
 {
-	Vector skip[100];
-	return( mapSearchForUnvisited( robot_is_at, skip, true ) );
+	uint8_t distancesForCompas[4];
+	if( !Map[robot_is_at.X][robot_is_at.Y].directions[ NOTH ] )
+		distancesForCompas[ NOTH ] = Map[robot_is_at.X][robot_is_at.Y-1].distanceToUnvisited;
+	if( !Map[robot_is_at.X][robot_is_at.Y].directions[ EAST ] )
+		distancesForCompas[ EAST ] = Map[robot_is_at.X+1][robot_is_at.Y].distanceToUnvisited;
+	if( !Map[robot_is_at.X][robot_is_at.Y].directions[ SOUTH ] )
+		distancesForCompas[ SOUTH ]= Map[robot_is_at.X][robot_is_at.Y+1].distanceToUnvisited;
+	if( !Map[robot_is_at.X][robot_is_at.Y].directions[ WEST ] )
+		distancesForCompas[ WEST ] = Map[robot_is_at.X-1][robot_is_at.Y].distanceToUnvisited;
+
+	return( indexofSmallestElement( distancesForCompas ) );
+	// Vector skip[LENGTHOFSKIP];
+	// return( mapSearchForUnvisited( robot_is_at, skip) );
 }
 
 
@@ -354,12 +390,13 @@ void mapDisplay()
 		}
 
 		// STATUS
-		Vector skip[100];
+		Vector skip[LENGTHOFSKIP];
 		Vector test;
 		test.X = i;
 		test.Y = o;
 		// skip[0] = *robot_is_at;
-		Serial.print( mapSearchForUnvisited( test, skip, false ) );
+		// Serial.print( mapSearchForUnvisited( test, skip, false ) );
+		Serial.print( Map[i][o].distanceToUnvisited );
 		// if ( Map[i][o].visited )
 			// Serial.print("V");
 		// else

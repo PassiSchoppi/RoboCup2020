@@ -35,6 +35,8 @@ void stateChange()
 			// Serial.println("new status");
 			LEDSetColor(WHITE);
 			
+			delay(1000);
+
 			mapUpdateField();
 
 			// if black tile

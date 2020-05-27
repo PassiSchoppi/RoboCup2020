@@ -9,6 +9,7 @@
 #define DOVICTIMEDETECTION 		true
 #define SMOOTHENSENSORDATA 		15
 #define MAPSIZE 				10
+#define LENGTHOFSKIP 			10
 
 // ## GLOBAL VARIABLES ##
 extern volatile uint8_t sensorData[15];

@@ -18,6 +18,7 @@ struct Field
 	bool visited = false;
 	bool isSilver = false;
 	bool isBlack = false;
+	uint8_t distanceToUnvisited;
 };
 
 
@@ -29,7 +30,7 @@ void mapUpdateField();
 void mapMoveTo(uint8_t directionToGo);
 void mapBlackFieldFront(uint8_t *robot_is_facing, Vector *robot_is_at);
 bool mapFieldInSkip(Vector field, Vector *skip);
-uint8_t mapSearchForUnvisited(Vector startPoint, Vector *skip, bool returnBestDirection);
+uint8_t mapSearchForUnvisited(Vector startPoint, Vector *skip);
 uint8_t mapWhereToDrive();
 void mapDisplay();
 
