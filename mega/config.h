@@ -1,6 +1,20 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
+// ## SETTINGS ##
+#define DOBLACKTILEDETECTION 	false
+#define DOMAP 					true
+#define DODRIVINGCORECTION 		true
+#define CORECTIONAGGRESSIVE 	3
+#define DOVICTIMEDETECTION 		true
+#define SMOOTHENSENSORDATA 		15
+#define MAPSIZE 				10
+#define LENGTHOFSKIP 			10
+
+// ## GLOBAL VARIABLES ##
+extern volatile uint8_t sensorData[15];
+extern uint8_t state;
+
 #define INTERUPT_PIN_A 	8
 #define INTERUPT_PIN_B 	9
 
@@ -8,8 +22,6 @@
 #define EAST 			1
 #define SOUTH 			2
 #define WEST 			3
-
-// uint8_t robot_is_facing = NOTH;
 
 #define STOP 			0
 
@@ -19,6 +31,7 @@
 #define LEFT 			3
 
 #define DISTANCETOWALL 	36
+#define MINDISTANCETOW 	100
 #define CUTDATAVAL 		0
 
 #define VICTIMTEMP 		28

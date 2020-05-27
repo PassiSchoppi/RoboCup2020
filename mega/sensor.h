@@ -8,7 +8,8 @@
 void sensorInit();
 
 // reads and saves all sensor data to sensorData
-void sensorRead(uint8_t *sensorData);
+// void sensorRead(uint8_t *sensorData);
+void sensorRead();
 
 bool dontTryMe();
 

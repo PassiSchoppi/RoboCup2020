@@ -35,7 +35,7 @@ struct Motor
 	// value of last encoder signal (value)
 	bool 	lastEncSignal;
 	// steps this motor made
-	volatile short int 	steps;
+	volatile unsigned int 	steps;
 	// pwm pin on arduino
     uint8_t pwm;
     // motor factor caused by manufacturing differences
@@ -55,10 +55,10 @@ void motorCheckForStepsMade(uint8_t i);
 void motorResetAllSteps();
 
 // returns steps an individual motor made
-short int motorStepsMade(uint8_t i);
+unsigned int motorStepsMade(uint8_t i);
 
 // returns regulated speed so the robot moves straight
-int speedFromEnc(uint8_t encA, uint8_t encB, uint8_t encC, uint8_t encME, int speedME);
+int speedFromEnc(unsigned int encA, unsigned int encB, unsigned int encC, unsigned int encME, int speedME);
 
 // let the robot drive in specific direction
 void motorDriveTo(uint8_t direction, int speed);
